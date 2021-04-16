@@ -341,6 +341,7 @@ class Pragma extends Node {
     }
 
     _on(event, ...cbs) {
+        if (!this._events.has(event)) this.createEvent(event) 
         let keys = this._addToEventChain(event, ...cbs)
         if (keys === null) return console.error(`pragma doesnt have ${event} - cannot .on("${event}")`, this)
         return keys
