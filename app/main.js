@@ -2,8 +2,8 @@
 // const xfready = import("./build/xfready2.umd.js")
 
 // self.importScripts("./build/jolene.js")
-
-const controllers = [ "install" ]
+// importScripts("libs/xfready2.umd")
+const controllers = [ "install", "pragma" ]
 controllers.forEach(script => {
     importScripts(`./controllers/${script}_controller.js`)
 })
@@ -34,21 +34,20 @@ chrome.action.onClicked.addListener((tab) => {
     // injectScript(tab, "test")
 })
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-    if (request === "inject"){
-        console.log(request, sender, sendResponse)
-        sendResponse({ tab: sender.tab.id})
-        injectScripts(sender.tab.id, "libs/xfready2.umd", "libs/bridge", "test")
-    }
-    // chrome.scripting.executeScript(sender.tab.id, {
-        // file: `scripts/${script}.js`
-    // })
-})
 
 chrome.runtime.onConnect.addListener(function (port) {
     console.log("CONNECTED", port)
     port.onMessage.addListener(function (msg) {
         console.log("CONNECTED", port, "SEND", msg)
         port.postMessage({ question: "Who's there?", key: msg.key });
-    });
-});
+    })
+})
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request === "inject"){
+        console.log(request, sender)
+        injectScripts(sender.tab.id, "libs/xfready2.umd", "libs/helpers", "libs/bridge", "user")
+        sendResponse({ tab: sender.tab.id })
+    }
+})
+

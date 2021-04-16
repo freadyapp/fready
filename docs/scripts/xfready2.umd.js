@@ -139,11 +139,18 @@
         window[key] = val;
     }
 
-    G();
-
     function xfready2Test(){
         console.log("hello from _xfready2");
     }
+
+    Promise.resolve().then(function () { return pragmajs; }).then(pragmajs => {
+        for (let [key, value] of Object.entries(pragmajs)) {
+            window[key] = value;
+        }
+    });
+
+    // window.pragmajs = await import('pragmajs')
+    // window.pragmajs.globalify()
 
     exports.SVG = SVG;
     exports.compose = compose;

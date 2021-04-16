@@ -15,7 +15,7 @@ def params(key=None):
         return _params[key]
     return None
 
-env = params('env') or "dev"
+env = params('env') or params('--env') or "dev"
 os.environ[f"{config('package_name')}_ENV"] = env
 
 pkg_manager = params('use') or config('manager')
