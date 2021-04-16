@@ -3,10 +3,11 @@
 ![npm-size](https://img.shields.io/npm/dw/xfready2?style=flat-square)
 
 # xfready2 
-> made with ❤ ️by robo-monk
+> made with ❤ ️by Fready
 
+The code of our chrome extension in all its glory
 
-### [ Demo ](https://robo-monk.github.io/xfready2)
+### [ Demo ](https://freadyapp.github.io/xfready2)
 
 
 ## First time:
@@ -26,13 +27,4 @@ Depends on your package manager (my recommendation would be `yarn`)
 ```bash
 pnpm dev # will start a server and watch the code. Will
          # also check whether tests pass if configed so;
-```
-
-```bash
-pnpm release # will release the package to npm repository
-
-# fast release with no confirmation
-pnpm release --prepatch # will release the package directly after
-                        # prepatching the version number 
-pnpm release --patch 
 ```
