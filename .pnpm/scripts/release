@@ -100,7 +100,7 @@ c.done("Package published succesfully to the NPM repository.")
 
 version =  get_from_package('version')
 dir_name = "app"
-output_filename = "releases/xfready_v{version}"
+output_filename = f"releases/xfready_v{version}"
 shutil.make_archive(output_filename, 'zip', dir_name)
 
 c = spawn("Commiting to git")
