@@ -27,7 +27,7 @@
         __proto__: null
     });
 
-    var main = "@charset \"utf-8\";@import url(https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;600&family=IBM+Plex+Sans&display=swap);body{background-color:#161616;color:whitesmoke}body h1,body h2,body h3,body h4,body h5,body h6{font-family:'IBM Plex Mono',monospace}body p{font-family:'IBM Plex Sans',sans-serif}.page-container{height:100vh}.flex-center{display:flex;align-items:center;justify-content:center;flex-direction:column}.fade-onload{-webkit-animation:fadein .5s;-moz-animation:fadein .5s;-ms-animation:fadein .5s;-o-animation:fadein .5s;animation:fadein .5s}@keyframes fadein{from{opacity:0}to{opacity:1}}@-moz-keyframes fadein{from{opacity:0}to{opacity:1}}@-webkit-keyframes fadein{from{opacity:0}to{opacity:1}}@-ms-keyframes fadein{.fade-onload from{opacity:0}.fade-onload to{opacity:1}}@-o-keyframes fadein{from{opacity:0}to{opacity:1}}";
+    var main = "@charset \"utf-8\";@import url(https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;600&family=IBM+Plex+Sans&display=swap);div[xfready]{all:initial;font-family:'IBM Plex Sans',sans-serif}div[xfready] h1,div[xfready] h2,div[xfready] h3,div[xfready] h4,div[xfready] h5,div[xfready] h6{font-family:'IBM Plex Mono',monospace}div[xfready] p{font-family:'IBM Plex Sans',sans-serif}div[xfready][popup]{background-color:black;position:fixed;z-index:99999999999;width:2000px;height:2000px;user-select:none;width:281px;height:fit-content;box-shadow:rgba(0,0,0,0.1) 0 0 10px;position:fixed;top:10px;right:5px;z-index:2147483647;font-size:17px;box-sizing:content-box !important;background:white;border-radius:5px;padding:10px}div[xfready] .page-container{height:100vh}div[xfready] .flex-center{display:flex;align-items:center;justify-content:center;flex-direction:column}div.fade-onload[xfready]{-webkit-animation:fadein .2s;-moz-animation:fadein .2s;-ms-animation:fadein .2s;-o-animation:fadein .2s;animation:fadein .2s}@keyframes fadein{from{opacity:0}to{opacity:1}}@-moz-keyframes fadein{from{opacity:0}to{opacity:1}}@-webkit-keyframes fadein{from{opacity:0}to{opacity:1}}@-ms-keyframes fadein{div.fade-onload[xfready] from{opacity:0}div.fade-onload[xfready] to{opacity:1}}@-o-keyframes fadein{from{opacity:0}to{opacity:1}}";
     var styles = {
     	main: main
     };
@@ -139,6 +139,35 @@
         window[key] = val;
     }
 
+    let element = X`
+<div xfready popup class='fade-onload'>
+    <h1> This is freadys popup </h1>
+</div>
+`;
+
+    class Popup extends q {
+        constructor() {
+            super();
+            console.log("created new popup", this);
+            this.as(element);
+        }
+    }
+
+    function _popup(){
+        return new Popup
+    }
+
+    class Xfready extends q {
+        constructor() {
+            super();
+            console.log("created new xfready", this);
+            this.as('html');
+            // this.setElement('body')
+
+            this.popup = _popup().appendTo(this);
+        }
+    }
+
     function xfready2Test(){
         console.log("hello from _xfready2");
     }
@@ -149,8 +178,13 @@
         }
     });
 
+    injectStyle("main");
+    window.xfready = new Xfready();
+
     // window.pragmajs = await import('pragmajs')
     // window.pragmajs.globalify()
+
+    // _e("body").hide()
 
     exports.SVG = SVG;
     exports.compose = compose;
