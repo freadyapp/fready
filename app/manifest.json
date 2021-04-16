@@ -5,10 +5,28 @@
     "version": "0.1",
     "description": "Read more focused",
     "permissions": [
-        "activeTab",
-        "scripting"
+        "tabs",
+        "scripting",
+        "storage"
     ],
+
+    "host_permissions": [
+        "*://*/*",
+        "file:///*"
+    ],
+
     "background": {
         "service_worker": "main.js"
-    }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./scripts/xfreadyBase.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ]
 }

@@ -42,6 +42,10 @@ export default [
       name: 'xfready2',
       file: "docs/scripts/xfready2.umd.js",
       format: 'umd'
+    }, {
+      name: 'xfready2',
+      file: "app/scripts/libs/xfready2.umd.js",
+      format: 'umd'
     }],
     plugins: [
       resolve(), // so Rollup can find `ms`
