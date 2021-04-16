@@ -1,0 +1,6 @@
+manager: yarn
+
+package_npm_name: xfready2
+package_name: xfready2
+
+test?: no # or yes

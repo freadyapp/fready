@@ -1,0 +1,31 @@
+#!/usr/local/bin/python3
+
+from script import * 
+
+def run(sub):
+    sb.call(f"python3 .pnpm/{sub}", shell=True)
+
+final = "src/.build_assets/icons.json"
+icons_dir = "src/icons"
+
+package_manager = pkg_manager
+
+if not os.path.isdir(".pnpm/icona"):
+    icona_repo = "git@github.com:robo-monk/ICONA.git"
+    shell(f"git clone {icona_repo} .pnpm/icona")
+
+
+# build icons
+c = spawn(f"Bundling icons...")
+
+run(f"icona/icona {icons_dir}")
+shell(f"mv {icons_dir}.json {final}")
+c.done()
+# subprocess.call(f"python .pnpm/icona/icona {icons_dir}", shell=True)
+
+c = spawn(f"Bundling with {package_manager}...")
+# subprocess.call("python3 .pnpm/scripts/sass", shell=True)
+run(f"scripts/sass")
+shell(f"{package_manager} run build")
+
+c.done()

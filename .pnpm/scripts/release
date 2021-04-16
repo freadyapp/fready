@@ -1,0 +1,102 @@
+#!/usr/local/bin/python3
+
+from script import *
+
+pkg_name = config('package_npm')
+pkg_name_npm = config('package_npm_name') 
+
+import requests
+
+
+c = spawn("Releasing...")
+
+def release():
+    c.log('releasing...')
+    npm("publish")
+
+package_manager = config('manager') or "yarn"
+
+
+if len(sys.argv) > 1:
+    package_manager = sys.argv[1]
+
+
+# os.environ[f"{pkg_name}_ENV"] = 'production'
+
+# test
+
+if (config('test?')):
+    passed = popen("yarn test")
+    if passed:
+        c.log(f"[italic green] Tests passed!")
+    else:
+        c.fail(f"Tests failed!")
+        quit()
+
+
+# set version
+jayson = requests.get(f"https://registry.npmjs.org/{pkg_name_npm}").json()
+v = "-1.0.0"
+if 'dist-tags' in jayson:
+    v = jayson['dist-tags']['latest']
+    c.log(f"Latest version published on npm: {str(v)}")
+else:
+    c.warn(f"Didn't find {pkg_name_npm} on npm!")
+    # quit()
+
+
+package = {}
+def get_from_package(key):
+    with open('package.json', 'r') as f:
+        package = json.load(f)
+        if key is None: return package
+        return package[key]
+
+
+
+with open('package.json', 'r') as f:
+    package = json.load(f)
+
+pv = package['version']
+tag = "bold green" if str(v) == str(pv) else "bold yellow"
+c.log(f"[{tag}]Current local version: {pv}")
+
+print(params())
+skip_conf = False
+
+if params("--patch"):
+    c.log('patching version')
+    npm('version patch')
+    skip_conf = True
+elif params("--prepatch"):
+    c.log('patching version')
+    npm('version prepatch')
+    skip_conf = True
+    # c = spawn("updating version")
+else:
+    new_version = c.input(f"Input new version please: ")
+
+    if len(new_version) ==  0:
+        new_version = pv
+
+    c.done()
+    c = spawn(f"publish this as version: {new_version}")
+
+pnpm("build --env production")
+if not skip_conf: 
+    if c.input(f"Confirm?", "[y/n]") == 'y':
+        package['version'] = new_version
+        with open('package.json', 'w') as outfile:
+            json.dump(package, outfile, indent=4)
+
+    else:
+        c.warn('Aborted')
+        c.done()
+        quit()
+
+release()
+c.done("Package published succesfully to the NPM repository.")
+
+c = spawn("Commiting to git")
+shell(f"git add . && git commit -m 'release version {get_from_package('version')}'")
+c.done()

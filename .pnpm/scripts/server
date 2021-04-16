@@ -1,0 +1,52 @@
+#!/usr/local/bin/python3
+
+from script import *
+import uuid
+
+from flask import Flask, render_template, send_file
+
+
+
+app = Flask(__name__, template_folder="../../docs", static_folder="../../docs")
+app.config['TEMPLATES_AUTO_RELOAD'] = True
+
+@app.route('/')
+def index():
+    return render('index')
+          
+@app.route("/<file>")
+def render(file):
+    global c
+    if "favicon" in file: return "<>"
+    r=uuid.uuid4().hex
+    c.log(f"Serving [bold][blue]{file}[/bold] [white dim]as[/white dim] [bold italic]#{r}")
+    return render_template(f"{file}.html", random=r)
+          
+@app.route("/docs/<a>")
+@app.route("/docs/<a>/<b>")
+@app.route("/docs/<a>/<b>/<c>")
+def serve(**e):
+    return send_file("../../docs/" + "/".join(e.values()))
+          
+global c
+def run_app(port, attempts=10):
+    global c
+    if attempts <= 0: return print("Could not start server. Too many ports in use.")
+    try:
+        attempts -= 1
+        c = spawn(f"Starting server at http://localhost:{port} ...")
+        with console.status(f"Running server at [bold blue underline]http://localhost:{port}\n", spinner='arrow3', spinner_style='cyan') as status:
+            app.run(debug=False, port=port)
+    except:
+        c.warn(f"Aborted! port {port} is currently in use... Trying {port+1}")
+        port += 1
+        run_app(port, attempts)
+
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
+if __name__ == '__main__':
+    os.environ['WERKZEUG_RUN_MAIN'] = 'true'
+    run_app(3333)
+    c.done()

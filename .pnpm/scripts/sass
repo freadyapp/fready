@@ -1,0 +1,38 @@
+#!/usr/local/bin/python3
+from script import *
+from css_html_js_minify import css_minify
+import sass
+import glob
+
+def compile(t):
+    return sass.compile(string=t)
+
+def minify(t):
+    return css_minify(t)
+
+
+# info("Compiling styles...")
+c = spawn("Compiling styles...")
+
+path = 'src/styles'
+jayson_name = "styles"
+
+jayson_fn = f"src/.build_assets/{jayson_name}.json"
+
+files = [ f for f in glob.glob(f"{path}/*.*css") ]
+jayson = {}
+
+for file in files:
+    with open(file, "r") as f:
+        t=f.read()
+        title = file.split('/')[-1].split('.')[0]
+        jayson[title] = minify(compile(t))
+
+with open(jayson_fn, "w") as j:
+    json.dump(jayson, j)
+    
+check = ""
+# check = "[green bold](✓)[/green bold]"
+c.log(f"{check} compiled & minified [bold]{path}[/bold] to {{{jayson_fn}}}")
+c.log(f"{check} size - [bold]{round(os.stat(jayson_fn).st_size/1000, 2)} KB")
+c.done()

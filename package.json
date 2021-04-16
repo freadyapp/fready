@@ -1,0 +1,64 @@
+{
+    "name": "xfready2",
+    "version": "0.0.1",
+    "description": "xfready2 is awesome",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/robo-monk/xfready2.git"
+    },
+    "source": "src/index.js",
+    "main": "dist/xfready2.cjs.js",
+    "module": "dist/xfready2.esm.js",
+    "browser": "dist/xfready2.umd.js",
+    "files": [
+        "dist/"
+    ],
+    "keywords": [
+        "xfready2"
+    ],
+    "devDependencies": {
+        "@babel/core": "^7.12.3",
+        "@babel/preset-env": "^7.12.1",
+        "@rollup/plugin-commonjs": "^17.0.0",
+        "@rollup/plugin-json": "^4.1.0",
+        "@rollup/plugin-node-resolve": "^11.0.1",
+        "@types/jquery": "^3.5.4",
+        "babel-jest": "^26.6.3",
+        "babelify": "^10.0.0",
+        "browserify-css": "^0.15.0",
+        "css-loader": "^5.0.1",
+        "eslint": "^7.19.0",
+        "identity-obj-proxy": "^3.0.0",
+        "jest": "^26.6.3",
+        "nodemon": "^2.0.7",
+        "rollup": "^2.36.1",
+        "rollup-plugin-execute": "^1.1.1",
+        "rollup-plugin-sizes": "^1.0.3",
+        "rollup-plugin-terser": "^7.0.2",
+        "rollup-plugin-visualizer": "^4.2.0",
+        "style-loader": "^2.0.0"
+    },
+    "scripts": {
+        "build": "rollup -c",
+        "dev-style": "nodemon -w 'src/styles/**' -e css,scss --exec python3 .pnpm/scripts/sass",
+        "dev": "nodemon -w 'src/' -e css,scss,js,svg --exec python3 .pnpm/scripts/build",
+        "dev-rollup": "rollup -c -w",
+        "lint": "yarn run eslint src",
+        "test": "jest",
+        "test:watch": "jest --watchAll"
+    },
+    "dependencies": {
+        "pragmajs": "latest"
+    },
+    "bugs": {
+        "url": "https://github.com/robo-monk/xfready2/issues"
+    },
+    "homepage": "https://robo-monk.github.io/xfready2/",
+
+    "directories": {
+        "doc": "docs",
+        "test": "test"
+    },
+    "author": ""
+}

@@ -1,0 +1,4 @@
+#!/usr/local/bin/python3
+
+from script import *
+sb.call(f"{script.pkg_manager} run dev", shell=True)

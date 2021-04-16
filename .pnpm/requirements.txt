@@ -1,0 +1,11 @@
+colorama==0.4.4
+commonmark==0.9.1
+css-html-js-minify==2.5.5
+libsass==0.20.1
+Pygments==2.8.1
+rich==9.13.0
+six==1.15.0
+typing-extensions==3.7.4.3
+click==7.1.2
+pyyaml==5.4.1
+Flask==1.1.2
