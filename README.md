@@ -4,6 +4,7 @@
 
 # xfready2 
 > made with ❤ ️by Fready
+
 The code of our chrome extension in all its glory
 
 ### [ Demo ](https://freadyapp.github.io/xfready2)
