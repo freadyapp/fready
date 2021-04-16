@@ -55,7 +55,6 @@
         "url": "https://github.com/robo-monk/xfready2/issues"
     },
     "homepage": "https://robo-monk.github.io/xfready2/",
-
     "directories": {
         "doc": "docs",
         "test": "test"

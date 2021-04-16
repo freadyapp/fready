@@ -1,6 +1,7 @@
 #!/usr/local/bin/python3
 
 from script import *
+import shutil
 
 pkg_name = config('package_npm')
 pkg_name_npm = config('package_npm_name') 
@@ -97,6 +98,11 @@ if not skip_conf:
 release()
 c.done("Package published succesfully to the NPM repository.")
 
+version =  get_from_package('version')
+dir_name = "app"
+output_filename = "releases/xfready_v{version}"
+shutil.make_archive(output_filename, 'zip', dir_name)
+
 c = spawn("Commiting to git")
-shell(f"git add . && git commit -m 'release version {get_from_package('version')}'")
+shell(f"git add . && git commit -m 'release version {version}'")
 c.done()
