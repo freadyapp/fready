@@ -13,7 +13,7 @@ The code of our chrome extension in all its glory
 ## First time:
 
 ```bash
-git clone git@github.com:robo-monk/xfready2.git
+git clone git@github.com:freadyapp/xfready2.git
 cd xfready2
 pnpm dev -r # reload dependencies
 ```
