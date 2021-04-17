@@ -2,11 +2,20 @@ import { Pragma, html } from "pragmajs"
 import { _lector } from "./lectorPragma"
 
 let element = html`
-<div xfready id=popup class='fade-onload'>
-    <h1> This is freadys popup </h1>
-    <div class='button' id='read'> Read </div>
-    <div class='button' id='exit'> X </div>
-</div>
+    <div xfready id=popup class='fade-onload'>
+        <div class='article-panel'>
+            <div class='time-url'>
+                <h1 class='time blue'>15'</h1>
+                <p class='url'>www.en.wikipedia.org</p>
+            </div>
+            <h1 class='title'>Legality of bitcoin by country or territory</h1>
+            <div class='save-read'>
+                <div class='button-gray' id='exit'> Save </div>
+                <div class='button-gray' id='read'> Read </div>
+            </div> 
+        </div>
+        
+    </div>
 `
 
 export class Popup extends Pragma {

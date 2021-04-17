@@ -19,9 +19,28 @@ div[xfready]{
         font-family: 'IBM Plex Sans', sans-serif;
     }
 
+    h1 {
+        font-size: 17px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+
     h1, h2, h3, h4, h5, h6 {
         font-family: 'IBM Plex Mono', monospace;
         font-weight: bold;
+        color: #fff;
+
+        @media (prefers-color-scheme: light) {
+            h1, h2, h3, h4, h5 {
+                color: black
+            }
+        }
+    }
+
+    .blue {
+        color: #2b6cce !important;
     }
 
    
@@ -35,7 +54,7 @@ div[xfready]{
         height: 2000px;
 
         // user-select: none;
-        width: 281px;
+        width: 350px;
         height: fit-content;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
         position: fixed;
@@ -44,18 +63,67 @@ div[xfready]{
         // z-index: 2147483647;
         font-size: 17px;
         box-sizing: content-box !important;
-        background: rgb(255, 255, 255);
+        background-color: #35363A;
+
         border-radius: 5px;
-        padding: 10px;
+        padding: 15px;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+
+        
     }
 
+    @media (prefers-color-scheme: light) {
+        &#popup {
+            background: rgb(255, 255, 255);
+
+        }
+    }
+
+    .article-panel {
+        position: relative;
+        background-color: #3F4044;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        width: 100%;
+        padding: 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+        .time-url {
+
+            .url {
+                color: #9F9F9F;
+            }
+        }
+
+        .title {
+            margin: 10px 0px;
+        }
+
+        #exit {                     //TODO change exit to save
+            margin-right: 50px
+        }
+
+       
+
+    }
 
     .button {
         @extend .no-select;
 
         background-color: #303030;
         border-radius: 2px;
-        padding: 5px 8px;
+        padding: 6px 10px;
         color :whitesmoke;
         cursor: pointer;
 
@@ -68,6 +136,12 @@ div[xfready]{
         }
 
         transition: all ease .2s;
+
+        &-gray {
+            @extend .button;
+            background-color: #67686F;
+            color: #fff;
+        }
     }
 
         
