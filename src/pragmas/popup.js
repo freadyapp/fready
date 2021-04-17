@@ -12,7 +12,11 @@ let element = html`
             <div class='save-read'>
                 <div class='button-gray' id='exit'> Save </div>
                 <div class='button-gray' id='read'> Read </div>
-            </div> 
+            </div>
+        </div>
+        <div class='upload-dash'>
+            <div class='hyperbutton upload'>Upload PDF</div>
+            <div class='hyperbutton dashboard'>Dashboard</div>
         </div>
         
     </div>

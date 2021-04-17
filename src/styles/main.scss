@@ -6,7 +6,7 @@ body.xfready-lector-open {
 
 div[xfready]{
 
-    // css reset 
+    //css reset 
     all: initial;
     * {
         all: initial;
@@ -54,7 +54,7 @@ div[xfready]{
         height: 2000px;
 
         // user-select: none;
-        width: 350px;
+        width: 330px;
         height: fit-content;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
         position: fixed;
@@ -95,7 +95,7 @@ div[xfready]{
         align-items: stretch;
         align-content: stretch;
         width: 100%;
-        padding: 10px;
+        padding: 15px 10px;
         box-sizing: border-box;
         border-radius: 5px;
 
@@ -111,11 +111,19 @@ div[xfready]{
         }
 
         #exit {                     //TODO change exit to save
-            margin-right: 50px
+            margin-right: 10px
         }
+    }
 
-       
+    .upload-dash {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: stretch;
 
+        
     }
 
     .button {
@@ -123,9 +131,10 @@ div[xfready]{
 
         background-color: #303030;
         border-radius: 2px;
-        padding: 6px 10px;
+        padding: 6px 20px;
         color :whitesmoke;
         cursor: pointer;
+        display: inline-block;
 
         &:hover {
             background-color: #464646;
