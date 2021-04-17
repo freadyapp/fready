@@ -4445,10 +4445,10 @@ postcss@^8.2.8:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
-pragmajs@latest:
-  version "0.8.1"
-  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.1.tgz#3f6eab0d1cb820461c1393ce255bbcbeaa793779"
-  integrity sha512-0noYj9zLgVLoaZIHmH3uzi92eRQnIbAJemvaugjBGDcZf7P6P5gkSSqEYQPizcFTgMpKiVF/XxKS/UK9+zNMvg==
+pragmajs@^0.8.2:
+  version "0.8.2"
+  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.2.tgz#284763a158c3c08403deb0b3c2e22795d3f23662"
+  integrity sha512-VL9V9MznpaOSvglPebken46sVWo/M2+ZK+Mtb3JfmMiGICEN7LeNa5psROySv0Om1bRiS7CBuOxPo2n4CqjoZg==
 
 prelude-ls@^1.2.1:
   version "1.2.1"

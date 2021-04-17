@@ -1,34 +1,53 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;500;600&family=IBM+Plex+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
 
 div[xfready]{
 
+    // css reset 
     all: initial;
+    * {
+        all: initial;
+    }
+
     font-family: 'IBM Plex Sans', sans-serif;
 
-    h1, h2, h3, h4, h5, h6 {
-        font-family: 'IBM Plex Mono', monospace;
-    }
     
-    p {
+    * {
         font-family: 'IBM Plex Sans', sans-serif;
     }
 
-    &[popup] {
-        background-color: black;
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'IBM Plex Mono', monospace;
+        font-weight: bold;
+    }
+
+   
+
+    &#lector {
+        position: fixed;
+        width: 100vw;
+        height: 100vh;
+        background-color: gray;
+        top: 0;
+        left: 0;
+        z-index: 9999999999 !important;
+    }
+
+    &#popup {
+        z-index: 9999999999 !important;
+
         position: fixed;
 
-        z-index: 99999999999;
         width: 2000px;
         height: 2000px;
 
-        user-select: none;
+        // user-select: none;
         width: 281px;
         height: fit-content;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
         position: fixed;
         top: 10px;
         right: 5px;
-        z-index: 2147483647;
+        // z-index: 2147483647;
         font-size: 17px;
         box-sizing: content-box !important;
         background: rgb(255, 255, 255);
@@ -36,7 +55,31 @@ div[xfready]{
         padding: 10px;
     }
 
+
+    .button {
+        @extend .no-select;
+
+        background-color: #303030;
+        border-radius: 2px;
+        padding: 5px 8px;
+        color :whitesmoke;
+        cursor: pointer;
+
+        &:hover {
+            background-color: #464646;
+        }
+
+        &:active {
+            background-color: #2b6cce;
+        }
+
+        transition: all ease .2s;
+    }
+
         
+    .no-select {
+        user-select: none !important;
+    }
 
     .page-container {
         height: 100vh;

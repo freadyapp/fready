@@ -54,7 +54,7 @@ injectInitiateHandshake: {
     messenger.on('command:inject', (respond, tab) => {
         console.log('injecting')
         injectScripts(tab.id, ...scripts)
-        return 
+        respond("injected") 
     })
 }
 

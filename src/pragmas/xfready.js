@@ -7,7 +7,8 @@ export class Xfready extends Pragma {
         console.log("created new xfready", this)
         this.as('html')
         // this.setElement('body')
-
-        this.popup = _popup().appendTo(this)
+        // pragmaSpace.onDocLoad(() => {
+        _popup().appendTo(this)
+        // })
     }
 }
