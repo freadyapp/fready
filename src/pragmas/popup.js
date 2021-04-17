@@ -20,7 +20,10 @@ let element = html`
             <div class='hyperbutton dashboard'>Dashboard</div>
         </div>
         <div class='xfready-footer'>
-            ${SVG('chemistry')}
+            ${SVG('logo-gray')}
+            <div class='hyperbutton visibility'>
+                [] Show on websites
+            </div>
         </div>
         
     </div>

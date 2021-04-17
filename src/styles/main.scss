@@ -136,9 +136,24 @@ div[xfready]{
         }
     }
 
+    .xfready-footer {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: stretch;
+        margin-top: 10px;
+
+        > svg {
+            width: 80px;
+        }
+
+    }
+
     .hyperbutton {
         font-family: 'IBM Plex Sans', sans-serif;
-        font-size: 16px;
+        font-size: 17px;
         font-weight: 700;
         padding: 5px;
         color: #bababa;
@@ -148,11 +163,13 @@ div[xfready]{
         @extend .no-select;
 
         background-color: #303030;
-        border-radius: 2px;
-        padding: 6px 20px;
+        border-radius: 3px;
+        padding: 5px 20px;
         color :whitesmoke;
         cursor: pointer;
         display: inline-block;
+        font-size: 16px;
+        font-weight: 700;
 
         &:hover {
             background-color: #464646;
