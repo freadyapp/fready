@@ -40,3 +40,4 @@ class Bridge extends Pragma {
 }
 
 bridge = new Bridge()
+window.bridge = bridge 

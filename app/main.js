@@ -51,10 +51,18 @@ injectInitiateHandshake: {
     scripts.push("user")
 
     console.log('listentign to injecting')
-    messenger.on('command:inject', (respond, tab) => {
-        console.log('injecting')
+
+    messenger.on('command:inject', (data, tab, respond) => {
+        console.log(data, tab, respond)
+        console.log('injecting', tab)
         injectScripts(tab.id, ...scripts)
         respond("injected") 
     })
 }
+
+messenger.onObj('parse', (data, tab, respond) => {
+    console.log(data, tab, respond)
+    console.log('parsing', tab)
+    respond("<html> eyet </html>") 
+})
 

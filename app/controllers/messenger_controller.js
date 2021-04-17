@@ -15,11 +15,7 @@ class Messenger extends Pragma {
 
         chrome.runtime.onMessage.addListener((request, sender, respond) => {
             console.log(request, sender)
-            this.triggerEvent(request, respond, sender.tab, request)
-            //  if (request === "inject"){
-                // injectScripts(sender.tab.id, "libs/xfready2.umd", "libs/helpers", "libs/bridge", "user")
-                // sendResponse({ tab: sender.tab.id })
-            // }
+            this.triggerEvent(typeof request === 'object' ? Object.keys(request)[0] : request, request, sender.tab, respond)
         })
     }
 
@@ -55,7 +51,21 @@ class Messenger extends Pragma {
 
     receive(port, msg){
         this.triggerEvent('receive', msg, port)
+
         this.log('recieved', msg, 'from', port)
+    }
+
+    onObj(cmd, ...cbs) {
+        if (!this._events.has(`receive:${cmd}`)) {
+            this.on("receive", (msg, port) => {
+                if (typeof msg !== 'object' && !(cmd in msg)) return
+                this.triggerEvent(`receive:${cmd}`, msg[cmd], port.sender.tab, (data) => port.postMessage({ data, key: msg.key }))
+            })
+        }
+
+        this.on(`receive:${cmd}`, ...cbs)
+
+        return this
     }
 
     log() {
@@ -63,7 +73,6 @@ class Messenger extends Pragma {
     }
 
 }
-
 
 let messenger = new Messenger
 

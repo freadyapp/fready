@@ -1,5 +1,7 @@
 import { Pragma, html, _e } from "pragmajs"
 import { Readability } from '@mozilla/readability'
+import hljs from 'highlight.js';
+
 
 console.log('readabilitys')
 console.log(Readability)
@@ -30,10 +32,19 @@ export class Lector extends Pragma {
         console.log(article)
         this.element.find("#reader").html(article.content)
 
+
     }
 
     render() {
+        console.log('RENDERING')
         this.element.show()
+
+        console.log("PARSE REQUEST")
+        window.bridge.request({ parse: this.element.html() }).then(html => {
+            console.log('html', html)
+        })
+            // hljs.highlightAll()
+
         _e('body').addClass(`xfready-lector-open`)
         return this
     }

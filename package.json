@@ -50,6 +50,7 @@
     },
     "dependencies": {
         "@mozilla/readability": "^0.4.1",
+        "highlight.js": "^10.7.2",
         "pragmajs": "^0.8.2"
     },
     "bugs": {
