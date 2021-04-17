@@ -18,6 +18,7 @@ import("pragmajs").then(pragmajs => {
 
 console.log('READY STATE', document.readyState)
 console.log('injecting styles...')
+injectStyle("reset")
 injectStyle("main")
 window.xfready = new Xfready()
 

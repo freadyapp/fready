@@ -1,4 +1,5 @@
 import { Pragma, html } from "pragmajs"
+import { SVG } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
 
 let element = html`
@@ -17,6 +18,9 @@ let element = html`
         <div class='upload-dash'>
             <div class='hyperbutton upload'>Upload PDF</div>
             <div class='hyperbutton dashboard'>Dashboard</div>
+        </div>
+        <div class='xfready-footer'>
+            ${SVG('chemistry')}
         </div>
         
     </div>

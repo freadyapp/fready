@@ -7,10 +7,10 @@ body.xfready-lector-open {
 div[xfready]{
 
     //css reset 
-    all: initial;
-    * {
-        all: initial;
-    }
+    // all: initial;
+    // * {
+        // all: initial;
+    // }
 
     font-family: 'IBM Plex Sans', sans-serif;
 
@@ -122,8 +122,26 @@ div[xfready]{
         justify-content: space-around;
         align-items: center;
         align-content: stretch;
+        padding: 10px 0px;
+        margin-top: 10px;
+        position: relative;
 
-        
+        &::after {
+            content: '';
+            width: 80%;
+            position: absolute;
+            height: 1px;
+            background-color: #6b6b6b;
+            bottom: 0px;
+        }
+    }
+
+    .hyperbutton {
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 5px;
+        color: #bababa;
     }
 
     .button {
@@ -208,4 +226,12 @@ div[xfready]{
             to   { opacity: 1; }
         }
     }
+    // svg {
+        // width: 32px;
+        // height:32px;
+    // }
+
+    // svg:not(:root) {
+        // overflow: hidden !important;
+    //   }
 }
