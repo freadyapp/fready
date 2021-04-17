@@ -166,6 +166,19 @@ div[xfready]{
         font-weight: 700;
         padding: 5px;
         color: #bababa;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        min-width: 114px;
+        line-height: 32px;
+
+        > svg {
+            width: auto;
+            height: 16px;
+        }
     }
 
     .button {
