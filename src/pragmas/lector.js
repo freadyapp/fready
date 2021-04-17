@@ -1,13 +1,17 @@
 import { Pragma, html, _e } from "pragmajs"
+import { Readability } from '@mozilla/readability'
 
+console.log('readabilitys')
+console.log(Readability)
 let template = () => html`
 <div xfready id=lector class='fade-onload'>
-    <div class='reader'> 
-        <h1> Super intense article </h1>
-        <p> Yeet commit while your feet shit </p>
-        <div class='button'> Read </div>
-        <div id='exit' class='button'> Exit </div>
+    <div id='reader-rapper'> 
+        <div id='reader' class='article'> 
+            <h1> Super intense article </h1>
+            <p> Yeet commit while your feet shit </p>
+        </div>
     </div>
+    <div id='exit' class='button'> Exit </div>
 </div>
 `.hide()
 
@@ -21,6 +25,10 @@ export class Lector extends Pragma {
         this.element.find('#exit').listenTo('click', () => {
             this.exit()
         })
+
+        var article = new Readability(document.cloneNode(true)).parse();
+        console.log(article)
+        this.element.find("#reader").html(article.content)
 
     }
 
@@ -37,6 +45,12 @@ export class Lector extends Pragma {
     }
 }
 
+let injected = false
 export function _lector() {
+    if (!injected) {
+        injectStyle("sanitized_elements")
+        injected = true
+    }
+
     return new Lector
 }

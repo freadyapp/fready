@@ -1067,6 +1067,11 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@mozilla/readability@^0.4.1":
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/@mozilla/readability/-/readability-0.4.1.tgz#e112a625b25ac47659d33b37e080748a6d85218b"
+  integrity sha512-yar/f0w0fRUVM895s6yd5Z2oIxjG/6c3ROB/uQboSOBaDlri/nqI4aKtdqrldWciTLcdpjB2Z6MiVF2Bl9b8LA==
+
 "@rollup/plugin-commonjs@^17.0.0":
   version "17.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-17.1.0.tgz#757ec88737dffa8aa913eb392fade2e45aef2a2d"

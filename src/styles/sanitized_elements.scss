@@ -1,0 +1,211 @@
+.article{
+  position: relative;
+  background-color: #eeeeee;
+  border-radius: 8px;
+  //padding: 70px;
+  //padding-left: 10vw;
+  //padding-right: 10vw;
+  min-height: 100vh;
+  max-width: 100%;
+  width: 60ch !important;
+
+  text-align: left;
+  overflow: hidden;
+  text-align: left;
+  // word-break: normal;
+  // word-break: break-all;
+  word-break: keep-all;
+  font-size: 22px;
+
+  @extend .sanitized-elements
+
+}
+
+.sanitized-elements{
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 31px;
+  word-break: keep-all;
+  overflow: hidden;
+  h1, h2, h3, h4, h5, h6 {
+    font-family: IBM Plex Mono, monospace ;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 5px;
+    * {
+        font-weight: bold;
+        font-family: IBM Plex Mono, monospace ;
+    }
+
+    display: block;
+  }
+
+  h1, h1 *{
+    font-size: 39px;
+    line-height: 60px;
+  }
+
+  h2, h2 *{
+    font-size: 31px;
+    line-height: 49px;
+  }
+  h3, h4, h5, h6{
+    font-size: 24px;
+    line-height: 39px;
+    * {
+        font-size: 24px;
+        line-height: 39px;
+    }
+  }
+
+  p{
+    font-weight: 400;
+    font-size: 19px !important;
+    line-height: 30px !important;
+  }
+  a {
+    //color: #797979;
+    text-decoration-color: #25227044;
+    display: unset !important;
+    border-bottom: #929292 0.09em dashed;
+
+    &:hover {
+      border-bottom: #2b6cce 0.09em solid;
+
+      transition: all 0.2s ease;
+      
+      w {
+        background-color: transparent !important;
+      }
+      
+    }
+
+    // display: block !important;
+  }
+  ul, ol{
+    // text-decoration: none;
+    // font-style: italic;
+    // list-style: none;
+    // font-weight: 600;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    display: block;
+    // border: 2px solid red;
+  }
+  li{
+    display: list-item;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  nav{
+    display: none;
+  }
+  blockquote{
+    font-style: italic;
+    color: rgb(58, 58, 58);
+    border-left: solid 3px rgb(112, 112, 112);
+    padding-left: 10px;
+    border-radius: 1px;
+  }
+  sup{
+    // display: none;
+    color: rgb(112, 112, 112)
+  }
+  pre{
+    max-width: 100%;
+  }
+
+  img{
+    max-width: 100%;
+    height: auto;
+    display: block;
+    // max-width: 100%;
+    max-height: 500px;
+    border-radius: 2px;
+    margin: 30px 10px ;
+    // box-shadow: 0px 0px 36px -12px rgba(0,0,0,0.04);
+  }
+
+  mark{
+    background-color: #ABFAA9;
+  }
+  figcaption{
+    color: gray;
+    text-align: center;
+    margin: auto;
+    font-size: 16px;
+  }
+  table{
+      display: block;
+      position: relative;
+      //width: fit-content;
+      width: 165%;
+      //max-width: 100vw;
+      left: -32.5%;
+      overflow-x: auto;
+      table-layout: auto;
+      border-collapse: collapse;
+
+      font-size: 100% !important;
+      text-align: center;
+      word-wrap: break-word;
+      border-collapse: collapse;
+
+      * {
+        font-size: .95em !important;
+      } 
+
+      @media screen and (max-width: 780px){
+        left: 0;
+      }
+     tbody{
+        background: #f9f9f9;
+        text-align: left;
+        display: block;
+        position: relative;
+        width: fit-content;
+        margin: auto;
+        //background: red;
+        //margin-left: 400px;
+     }
+
+    td, tr, th {
+      padding: 1em 1em;
+      border: 1px solid rgb(216, 216, 216);
+      &:hover{
+        background-color: #eeeeee;
+      }
+     }
+     p, div{
+      display: inline-block;
+     }
+     img{
+      display: block;
+     }
+ }
+}
+
+
+// ol{
+//   list-style: none; counter-reset: li;
+//  li::before {content: counter(li); color: black;
+//    font-weight: 200;
+//   display: inline-block; width: 1em;
+//   margin-left: -0em} 
+//   li {counter-increment: li; text-indent: -0.5em;}
+  
+// }
+// ul{
+//   list-style: none;
+//   padding-left: 2.5em;
+//   li{
+//     &:before{
+//       content: "•";
+//       color: gray;
+//       text-indent: -1.5em;
+//       display: inline-block;
+//     }
+//   }
+// } 

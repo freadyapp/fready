@@ -5,6 +5,7 @@ let element = html`
 <div xfready id=popup class='fade-onload'>
     <h1> This is freadys popup </h1>
     <div class='button' id='read'> Read </div>
+    <div class='button' id='exit'> X </div>
 </div>
 `
 
@@ -19,6 +20,10 @@ export class Popup extends Pragma {
         this.element.find("#read").listenTo('click', () => {
             this.lector = _lector().appendTo(_e("html"))
                                     .render()
+        })
+
+        this.element.find("#exit").listenTo('click', () => {
+            this.element.hide()
         })
     }
 }

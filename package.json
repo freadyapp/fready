@@ -49,6 +49,7 @@
         "test:watch": "jest --watchAll"
     },
     "dependencies": {
+        "@mozilla/readability": "^0.4.1",
         "pragmajs": "^0.8.2"
     },
     "bugs": {
