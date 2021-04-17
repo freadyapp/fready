@@ -1,0 +1,105 @@
+.ibm-mono {
+  font-family: "IBM Plex Mono" !important;
+  * {
+    font-family: "IBM Plex Mono" !important;
+  }
+}
+div[xfready] {
+  pre {
+    @extend .ibm-mono;
+    display: block;
+    margin: 20px 10px;
+    padding: 20px 10px;
+    border-radius: 2px;
+    background: #221a0f;
+    color: #abb2bf;
+     white-space:pre-wrap; word-wrap:break-word; 
+    * {
+      color: #abb2bf;
+      white-space:pre-wrap; word-wrap:break-word; 
+      background: transparent !important;
+    }
+  }
+
+  code {
+    @extend .ibm-mono;
+    background: lightblue;
+    border-radius: 2px;
+    padding: 1px 3px;
+  }
+
+  .hljs {
+    color: #abb2bf;
+    background: #282c34;
+  }
+
+  .hljs-comment,
+  .hljs-quote {
+    color: #5c6370;
+    font-style: italic;
+  }
+
+  .hljs-doctag,
+  .hljs-keyword,
+  .hljs-formula {
+    color: #c678dd;
+  }
+
+  .hljs-section,
+  .hljs-name,
+  .hljs-selector-tag,
+  .hljs-deletion,
+  .hljs-subst {
+    color: #e06c75;
+  }
+
+  .hljs-literal {
+    color: #56b6c2;
+  }
+
+  .hljs-string,
+  .hljs-regexp,
+  .hljs-addition,
+  .hljs-attribute,
+  .hljs-meta-string {
+    color: #98c379;
+  }
+
+  .hljs-attr,
+  .hljs-variable,
+  .hljs-template-variable,
+  .hljs-type,
+  .hljs-selector-class,
+  .hljs-selector-attr,
+  .hljs-selector-pseudo,
+  .hljs-number {
+    color: #d19a66;
+  }
+
+  .hljs-symbol,
+  .hljs-bullet,
+  .hljs-link,
+  .hljs-meta,
+  .hljs-selector-id,
+  .hljs-title {
+    color: #61aeee;
+  }
+
+  .hljs-built_in,
+  .hljs-title.hljs-class,
+  .hljs-class .hljs-title {
+    color: #e6c07b;
+  }
+
+  .hljs-emphasis {
+    font-style: italic;
+  }
+
+  .hljs-strong {
+    font-weight: bold;
+  }
+
+  .hljs-link {
+    text-decoration: underline;
+  }
+}

@@ -3,7 +3,7 @@
 
 // self.importScripts("./build/jolene.js")
 // importScripts("libs/xfready2.umd")
-const modules = [ "pragma" ].map(k => `./modules/${k}`)
+const modules = [ "pragma", "hljs.min" ].map(k => `./modules/${k}`)
 const controllers = [ "install", "messenger" ].map(k => `./controllers/${k}_controller`)
 let scripts = (modules.concat(controllers)).map(k => k + ".js")
 scripts.forEach(script => importScripts(script))
@@ -61,8 +61,20 @@ injectInitiateHandshake: {
 }
 
 messenger.onObj('parse', (data, tab, respond) => {
-    console.log(data, tab, respond)
     console.log('parsing', tab)
-    respond("<html> eyet </html>") 
-})
 
+    // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
+    // console.log("parsed", doc)
+
+    // console.log(data, tab, respond)
+    const result = self.hljs.highlightAuto(data);
+    // console.log(result.value)
+    respond(result.value)
+    // let doc = html(data)
+    // doc.querySelectorAll('pre').forEach((block) => {
+        // console.log('block')
+    // })
+
+    // respond(doc)
+    // respond(result) 
+})

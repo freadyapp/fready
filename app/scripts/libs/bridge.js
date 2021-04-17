@@ -6,15 +6,21 @@ class Bridge extends Pragma {
         this.port = port 
         this.createEvents("message", "send")
         this.port.onMessage.addListener(msg => {
+            console.log('received', msg)
             this.triggerEvent('message', msg)
         })
     }
 
     awaitResponse(key) {
-        return new Promise(resolve => this.onNext("message", (msg) => {
+        return new Promise(resolve => this.on("message", (msg) => {
             // console.log(msg.key, key)
-            if (msg.key === key) return resolve(msg)
-            this.awaitResponse(key).then(msg => resolve(msg))
+            if (msg.key === key) {
+                resolve(msg.data)
+                return cb => {
+                    cb.selfDestruct()
+                }
+            }
+            // this.awaitResponse(key).then(msg => resolve(msg.data))
         }))
     }
 

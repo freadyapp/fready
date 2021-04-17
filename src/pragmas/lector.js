@@ -1,4 +1,5 @@
 import { Pragma, html, _e } from "pragmajs"
+import { Xfready } from "./xfready"
 import { Readability } from '@mozilla/readability'
 import hljs from 'highlight.js';
 
@@ -30,19 +31,40 @@ export class Lector extends Pragma {
 
         var article = new Readability(document.cloneNode(true)).parse();
         console.log(article)
-        this.element.find("#reader").html(article.content)
 
-
+        this.reader = this.element.find("#reader")
+        this.reader.html(article.content)
+        // this.element.find("#reader").html(article.content)
     }
+
+
 
     render() {
         console.log('RENDERING')
         this.element.show()
 
-        console.log("PARSE REQUEST")
-        window.bridge.request({ parse: this.element.html() }).then(html => {
-            console.log('html', html)
+        this.reader.findAll('code').forEach(code => {
+            console.log("PARSE:", code.html())
+            window.bridge.request({ parse: code.textContent }).then(_html => {
+                console.log("parsed", code)
+                code.html(Xfready.sanitizeHtml(_html))
+                // console.log("parsed", code)
+                // code.html('ue')
+            })
+            // .appendTo(this.reader)
         })
+
+        // window.bridge.request({ parse: this.element.html() }).then(_html => {
+            // console.log('html', _html)
+            // this.reader.html(' ')
+
+            // Xfready.sanitizeHtml(_html)
+            // html`<div>
+            // <h1> READING </h1> <div>${_html}</div></div>`.prependTo(this.reader)
+
+            // this.element.find("#reader").html()
+            // this.html(html.value)
+        // })
             // hljs.highlightAll()
 
         _e('body').addClass(`xfready-lector-open`)
@@ -60,6 +82,7 @@ let injected = false
 export function _lector() {
     if (!injected) {
         injectStyle("sanitized_elements")
+        injectStyle("syntax_highlight")
         injected = true
     }
 

@@ -48,5 +48,5 @@ log.setLevel(logging.ERROR)
 
 if __name__ == '__main__':
     os.environ['WERKZEUG_RUN_MAIN'] = 'true'
-    run_app(3333)
+    # run_app(3333)
     c.done()
