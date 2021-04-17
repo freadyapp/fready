@@ -1,0 +1,59 @@
+div[xfready] {
+    &#lector {
+        position: fixed;
+        width: 100vw;
+        background-color: gray;
+
+        top: 0;
+        left: 0;
+
+        z-index: 9999999999 !important;
+        height: 100vh;
+
+        // display: flex;
+        // flex-direction: column;
+        // justify-content: flex-start;
+        // align-items: center;
+
+        text-align: center;
+        overflow: scroll;
+
+        #reader-rapper {
+          	overflow: hidden;
+
+            flex-direction: column;
+            display: flex;
+
+            align-items: center;
+            justify-content: flex-start;
+            overflow-y: scroll;
+            
+
+            width: 100%;
+            height: fit-content;
+            margin: auto;
+
+            #reader {
+                width: 80%;
+                padding: 80px 140px;
+                overflow-y: scroll !important;
+                background: whitesmoke;
+            }
+        }
+    }
+
+    .collapsable {
+
+        $animation: .3s;
+        overflow: hidden;
+        transition: all $animation ease;
+        // transition: opacity 0.05s eas;
+
+        min-height: 0 !important;
+        height: auto;
+        flex: 1;
+        &.collapsed{
+            flex: 0;
+        }
+    }   
+}

@@ -1,3 +1,5 @@
+[xfready] {
+
 .article{
   position: relative;
   background-color: #eeeeee;
@@ -68,6 +70,7 @@
     text-decoration-color: #25227044;
     display: unset !important;
     border-bottom: #929292 0.09em dashed;
+    cursor: pointer;
 
     &:hover {
       border-bottom: #2b6cce 0.09em solid;
@@ -137,8 +140,37 @@
     margin: auto;
     font-size: 16px;
   }
+
+    tr {
+        display: table-row;
+        vertical-align: inherit;
+        border-color: inherit;
+    }
+    td {
+        display: table-cell;
+        vertical-align: inherit;
+    }
+    tbody {
+        display: table-row-group;
+        vertical-align: middle;
+        border-color: inherit;
+    }
+    th {
+        display: table-cell;
+        vertical-align: inherit;
+        font-weight: bold;
+        text-align: -internal-center;
+    }
+    table {
+        display: table;
+        border-collapse: separate;
+        box-sizing: border-box;
+        text-indent: initial;
+        border-spacing: 2px;
+        border-color: grey;
+    }
   table{
-      display: block;
+    //   display: block;
       position: relative;
       //width: fit-content;
       width: 165%;
@@ -209,3 +241,5 @@
 //     }
 //   }
 // } 
+
+}
