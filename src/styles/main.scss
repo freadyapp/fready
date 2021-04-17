@@ -113,6 +113,15 @@ div[xfready]{
         #exit {                     //TODO change exit to save
             margin-right: 10px
         }
+
+        .save-read {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            justify-content: flex-start;
+            align-items: center;
+            align-content: center;
+        }
     }
 
     .upload-dash {
@@ -170,6 +179,13 @@ div[xfready]{
         display: inline-block;
         font-size: 16px;
         font-weight: 700;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        width: 60px;
 
         &:hover {
             background-color: #464646;
@@ -185,6 +201,11 @@ div[xfready]{
             @extend .button;
             background-color: #67686F;
             color: #fff;
+
+            > svg {
+                width: auto;
+                height: 15px;
+            }
         }
     }
 

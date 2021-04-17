@@ -11,18 +11,18 @@ let element = html`
             </div>
             <h1 class='title'>Legality of bitcoin by country or territory</h1>
             <div class='save-read'>
-                <div class='button-gray' id='exit'> Save </div>
-                <div class='button-gray' id='read'> Read </div>
+                <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
+                <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
             </div>
         </div>
         <div class='upload-dash'>
-            <div class='hyperbutton upload'>Upload PDF</div>
-            <div class='hyperbutton dashboard'>Dashboard</div>
+            <div class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</div>
+            <div class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</div>
         </div>
         <div class='xfready-footer'>
             ${SVG('logo-gray')}
             <div class='hyperbutton visibility'>
-                [] Show on websites
+                ${SVG('empty-checkbox')} Show on websites
             </div>
         </div>
         
