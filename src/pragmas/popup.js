@@ -1,5 +1,5 @@
 import { Pragma, html } from "pragmajs"
-import { _lector } from "./lector"
+import { _lector } from "./lectorPragma"
 
 let element = html`
 <div xfready id=popup class='fade-onload'>

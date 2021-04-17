@@ -1327,6 +1327,11 @@ ajv@^8.0.1:
     require-from-string "^2.0.2"
     uri-js "^4.2.2"
 
+animejs@^3.2.1:
+  version "3.2.1"
+  resolved "https://registry.yarnpkg.com/animejs/-/animejs-3.2.1.tgz#de9fe2e792f44a777a7fdf6ae160e26604b0cdda"
+  integrity sha512-sWno3ugFryK5nhiDm/2BKeFCpZv7vzerWUcUPyAZLDhMek3+S/p418ldZJbJXo5ZUOpfm2kP2XRO4NJcULMy9A==
+
 ansi-align@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/ansi-align/-/ansi-align-3.0.0.tgz#b536b371cf687caaef236c18d3e21fe3797467cb"
@@ -1918,6 +1923,13 @@ component-emitter@^1.2.1:
   resolved "https://registry.yarnpkg.com/component-emitter/-/component-emitter-1.3.0.tgz#16e4070fba8ae29b679f2215853ee181ab2eabc0"
   integrity sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==
 
+compromise@^13.7.0:
+  version "13.11.0"
+  resolved "https://registry.yarnpkg.com/compromise/-/compromise-13.11.0.tgz#6a6cd4546e8411be92288c013f5ee57074f359f7"
+  integrity sha512-G3zyiU3QHnc5vrSzWvMZjWUTfX4vwBZVVOrQdyood+/k8qJoBiC6KANnU9kZuH0RgB2ZqpM395bccthcJlOw7g==
+  dependencies:
+    efrt-unpack "2.2.0"
+
 concat-map@0.0.1:
   version "0.0.1"
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
@@ -2206,6 +2218,11 @@ ecc-jsbn@~0.1.1:
   dependencies:
     jsbn "~0.1.0"
     safer-buffer "^2.1.0"
+
+efrt-unpack@2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/efrt-unpack/-/efrt-unpack-2.2.0.tgz#b05dbec0fb8cb346a27840e00c969df9c72fee52"
+  integrity sha512-9xUSSj7qcUxz+0r4X3+bwUNttEfGfK5AH+LVa1aTpqdAfrN5VhROYCfcF+up4hp5OL7IUKcZJJrzAGipQRDoiQ==
 
 electron-to-chromium@^1.3.712:
   version "1.3.717"
@@ -3835,6 +3852,16 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
+lectorjs@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.7.0.tgz#86e1d8afca1bad57fc5cf0ebd7cbcc02e109194c"
+  integrity sha512-B0bRdpuT3F+8OgrICFu46671hpoKhTkVlQ/exarsd5bFFL+9XButwp/oiZzHd5Q8O3LOVOOvPOhWyW+lMCRUFA==
+  dependencies:
+    animejs "^3.2.1"
+    compromise "^13.7.0"
+    mousetrap "^1.6.5"
+    pragmajs "^0.8.1"
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -4040,6 +4067,11 @@ module-details-from-path@^1.0.3:
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/module-details-from-path/-/module-details-from-path-1.0.3.tgz#114c949673e2a8a35e9d35788527aa37b679da2b"
   integrity sha1-EUyUlnPiqKNenTV4hSeqN7Z52is=
+
+mousetrap@^1.6.5:
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/mousetrap/-/mousetrap-1.6.5.tgz#8a766d8c272b08393d5f56074e0b5ec183485bf9"
+  integrity sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA==
 
 ms@2.0.0:
   version "2.0.0"
@@ -4455,7 +4487,7 @@ postcss@^8.2.8:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
-pragmajs@^0.8.2:
+pragmajs@^0.8.1, pragmajs@^0.8.2:
   version "0.8.2"
   resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.2.tgz#284763a158c3c08403deb0b3c2e22795d3f23662"
   integrity sha512-VL9V9MznpaOSvglPebken46sVWo/M2+ZK+Mtb3JfmMiGICEN7LeNa5psROySv0Om1bRiS7CBuOxPo2n4CqjoZg==

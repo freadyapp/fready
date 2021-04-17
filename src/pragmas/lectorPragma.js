@@ -1,12 +1,14 @@
 import { Pragma, html, _e } from "pragmajs"
 import { Xfready } from "./xfready"
+import Mousetrap from "mousetrap"
 import { Readability } from '@mozilla/readability'
-import hljs from 'highlight.js';
 import { injectStyle } from "../.build_assets/index";
+import { Lector } from "lectorjs"
 
 
 console.log('readabilitys')
 console.log(Readability)
+
 let template = () => html`
 <div xfready id=lector class='fade-onload'>
     <div id='exit' class='button'> Exit </div>
@@ -17,7 +19,38 @@ let template = () => html`
 </div>
 `.hide()
 
-export class Lector extends Pragma {
+function wfyInner(desc) {
+    if (!desc) return false
+    desc = _e(desc)
+    let txt = desc.textContent
+    if (txt.length === 0) return false
+
+    let inner = ""
+    for (let txt of desc.textContent.split(" ")) {
+        // console.log(txt)
+        let noWhiteSpace = txt.replace(/\s/g, "")
+        inner += noWhiteSpace.length != 0 ? "<w>" + txt.split(" ").join("</w> <w>") + "</w> " : txt
+    }
+
+    desc.html(inner)
+}
+
+export function wfyElement(element) {
+    console.log('wfy element', element)
+    // element = _e(element)
+    // let nodes = element.findAll("*")
+    let nodes = element.childrenArray
+    console.log('children', nodes)
+    if (nodes.length == 0) return wfyInner(element)
+    nodes.forEach(desc => wfyElement(desc))
+}
+
+export function wfy(element) {
+    wfyElement(_e(element))
+}
+
+
+export class LectorPragma extends Pragma {
     constructor() {
         super()
         console.log("creating new lector", this)
@@ -34,6 +67,12 @@ export class Lector extends Pragma {
             console.log(article)
             this.reader.html(article.content)
                        .removeClass('collapsed')
+
+            wfy(this.reader)
+            // this.lec = Lector(this.reader, {
+                // wfy: false,
+            
+            // })
                     //    .addClass('article')
         }, 0)
 
@@ -95,5 +134,5 @@ export function _lector() {
         injected = true
     }
 
-    return new Lector
+    return new LectorPragma
 }
