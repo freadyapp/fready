@@ -196,6 +196,36 @@ div[xfready]{
                 }
             }
         }
+
+        .visibility {
+        
+            &:hover {
+                .checkbox {
+                    opacity: 1;
+                }
+            }
+    
+            .checkbox {
+                position: relative;
+                opacity: 70%;
+                margin-right: 5px;
+    
+                >#empty-checkbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: -98765;
+                }
+
+                @media (prefers-color-scheme: light) {
+                    fill: black;
+    
+                    path, svg {
+                        fill: black;
+                    }
+                } 
+            }
+        }
     }
 
     .hyperbutton {
@@ -224,43 +254,26 @@ div[xfready]{
             opacity: 70%;
             width: auto;
             height: 17px;
+
+            @media (prefers-color-scheme: light) {
+                fill: #414141;
+
+                path, svg { fill:#414141; }
+            } 
         }
 
         &:hover {
             color: #fff;
             
-            > svg {
-                opacity: 1;
-            }
-        }
+            > svg {opacity: 1;}
 
-
-        
-    }
-
-    .visibility {
-        
-        &:hover {
-            .checkbox {
-                opacity: 1;
-            }
-        }
-
-        .checkbox {
-            position: relative;
-            opacity: 70%;
-            margin-right: 5px;
-
-            >#empty-checkbox {
-                position: absolute;
-                top: 0;
-                left: 0;
-                z-index: -98765;
-            }
-
-
+            @media (prefers-color-scheme: light) { 
+                color: #000000;
+            }           
         }
     }
+
+    
 
     .button {
         @extend .no-select;
@@ -282,7 +295,7 @@ div[xfready]{
         width: 60px;
 
         @media (prefers-color-scheme: light) { 
-            background-color: #cecece !important;
+            background-color: #e3e3e3!important;
             color: #383B3E !important;
             fill: #383B3E;
             
