@@ -162,7 +162,6 @@ div[xfready]{
 
     .xfready-footer {
         @extend .flex-h-space-around;
-
         margin-top: 10px;
 
         > svg {
@@ -175,7 +174,6 @@ div[xfready]{
                 opacity: 1;
             }
         }
-
     }
 
     .hyperbutton {
@@ -216,7 +214,6 @@ div[xfready]{
     .button {
         @extend .no-select;
         cursor: pointer;
-
         background-color: #303030;
         border-radius: 3px;
         padding: 5px 20px;

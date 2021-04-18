@@ -5050,10 +5050,10 @@
     <div xfready id=popup class='fade-onload'>
         <div class='article-panel'>
             <div class='time-url'>
-                <h1 class='time blue'>15'</h1>
-                <p class='url'>en.wikipedia.org</p>
+                <h1 class='time blue' id='time'>15'</h1>
+                <p class='url' id='url'>en.wikipedia.org</p>
             </div>
-            <h1 class='title'>Legality of bitcoin by country or territory</h1>
+            <h1 class='title' id='title'>Legality of bitcoin by country or territory</h1>
             <div class='save-read'>
                 <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
                 <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
