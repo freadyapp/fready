@@ -170,54 +170,60 @@
         border-spacing: 2px;
         border-color: grey;
     }
-  table{
-    //   display: block;
-      position: relative;
-      //width: fit-content;
-      width: 165%;
-      //max-width: 100vw;
-      left: -32.5%;
-      overflow-x: auto;
-      table-layout: auto;
-      border-collapse: collapse;
-
-      font-size: 100% !important;
-      text-align: center;
-      word-wrap: break-word;
-      border-collapse: collapse;
-
-      * {
-        font-size: .95em !important;
-      } 
-
-      @media screen and (max-width: 780px){
-        left: 0;
-      }
-     tbody{
-        background: #f9f9f9;
-        text-align: left;
-        display: block;
+    table{
+      //   display: block;
         position: relative;
-        width: fit-content;
-        margin: auto;
-        //background: red;
-        //margin-left: 400px;
-     }
+        //width: fit-content;
+        width: 165%;
+        //max-width: 100vw;
+        left: -32.5%;
+        overflow-x: auto;
+        table-layout: auto;
+        border-collapse: collapse;
+  
+        font-size: 16px !important;
+        text-align: center;
+        word-wrap: break-word;
+        border-collapse: collapse;
+  
+        // * {
+        //   font-size: .95em !important;
+        // } 
+  
+        @media screen and (max-width: 780px){
+          left: 0;
+        }
+       tbody{
+          background: #f9f9f9;
+          text-align: left;
+          display: block;
+          position: relative;
+          width: fit-content;
+          margin: auto;
+          //background: red;
+          //margin-left: 400px;
+       }
 
-    td, tr, th {
-      padding: 1em 1em;
-      border: 1px solid rgb(216, 216, 216);
-      &:hover{
-        background-color: #eeeeee;
-      }
-     }
-     p, div{
-      display: inline-block;
-     }
-     img{
-      display: block;
-     }
- }
+       tbody tr:nth-child(even){
+          background: red !important;
+        }
+
+  
+      td, tr, th {
+        line-height: 1em !important;
+        padding: 12px 15px !important;
+        border: 1px solid rgb(216, 216, 216);
+        &:hover{
+          background-color: #eeeeee;
+        }
+       }
+       p, div{
+        display: inline-block;
+       }
+       img{
+        display: block;
+       }
+   }
 }
 
 
