@@ -24,9 +24,10 @@ function injectStyle(name) {
 
 function SVG(name, fill) {
     if (!name in icons) return console.error(`could not find ${name}.svg in docs/src/icons`)
-    let i = icons[name]
-    if (fill) return pragmajs._e(i).css(`fill ${fill}`).html()
-    return i
+    let i = _e(icons[name]).setId(name)
+    if (fill) return pragmajs._e(i)
+                                .css(`fill ${fill}`).html()
+    return i.outerHTML
 }
 
 

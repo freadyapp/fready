@@ -6,11 +6,11 @@ body.xfready-lector-open {
 
 div[xfready]{
 
-    // css reset 
-    all: initial;
-    * {
-        all: initial;
-    }
+    //css reset 
+    // all: initial;
+    // * {
+        // all: initial;
+    // }
 
     font-family: 'IBM Plex Sans', sans-serif;
 
@@ -19,9 +19,47 @@ div[xfready]{
         font-family: 'IBM Plex Sans', sans-serif;
     }
 
+    h1 {
+        font-size: 17px;
+    }
+
+    p {
+        font-size: 15px;
+    }
+
     h1, h2, h3, h4, h5, h6 {
         font-family: 'IBM Plex Mono', monospace;
         font-weight: bold;
+        color: #fff;
+
+        @media (prefers-color-scheme: light) {
+            h1, h2, h3, h4, h5 {
+                color: black
+            }
+        }
+    }
+
+    .flex-h {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+
+    }
+
+    .flex-h-space-around {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: stretch;
+    }
+
+    .blue {
+        color: #5A90E2 !important;
     }
 
    
@@ -35,7 +73,7 @@ div[xfready]{
         height: 2000px;
 
         // user-select: none;
-        width: 281px;
+        width: 330px;
         height: fit-content;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
         position: fixed;
@@ -44,30 +82,249 @@ div[xfready]{
         // z-index: 2147483647;
         font-size: 17px;
         box-sizing: content-box !important;
-        background: rgb(255, 255, 255);
+        background-color: #35363A;
+
         border-radius: 5px;
-        padding: 10px;
+        padding: 15px;
+
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+
+        
     }
 
+    @media (prefers-color-scheme: light) {
+        &#popup {
+            background: rgb(255, 255, 255);
+
+        }
+    }
+
+    .article-panel {
+        position: relative;
+        background-color: #3F4044;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: stretch;
+        align-content: stretch;
+        width: 100%;
+        padding: 10px 10px 15px 10px;
+        box-sizing: border-box;
+        border-radius: 5px;
+
+        @media (prefers-color-scheme: light) {
+            background-color: #fff;
+        }
+
+        .time-url {
+           @extend .flex-h;
+
+            .time {
+                margin-right: 5px;
+
+                
+            }
+            
+            .url {
+                color: #9F9F9F;
+                line-height: 22px;
+            }
+        }
+
+        .title {
+            margin: 10px 0 16px 0;
+
+            @media (prefers-color-scheme: light) {
+                color: #161616
+            }
+        }
+
+        #exit {                     //TODO change exit to save
+            margin-right: 10px
+        }
+
+        .save-read {
+           @extend .flex-h
+        }
+    }
+
+    .upload-dash {
+        @extend .flex-h-space-around;
+        padding: 10px 0px;
+        margin: 10px 0px;
+        position: relative;
+
+        &::after {
+            content: '';
+            width: 80%;
+            position: absolute;
+            height: 1px;
+            background-color: #6b6b6b;
+            bottom: -5px;
+        }
+    }
+
+    .xfready-footer {
+        @extend .flex-h-space-around;
+        margin-top: 10px;
+
+        > svg {
+            width: 80px;
+            height: auto;
+            opacity: 70%;
+            cursor: pointer;
+
+            &:hover {
+                width: 80px;
+                opacity: 1;
+            }
+        }
+
+        #logo {
+
+            @media (prefers-color-scheme: light) {
+                fill: black;
+
+                path, svg {
+                    fill: black;
+                }
+            }
+        }
+
+        .visibility {
+        
+            &:hover {
+                .checkbox {
+                    opacity: 1;
+                }
+            }
+    
+            .checkbox {
+                position: relative;
+                opacity: 70%;
+                margin-right: 5px;
+    
+                >#empty-checkbox {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    z-index: -98765;
+                }
+
+                @media (prefers-color-scheme: light) {
+                    fill: black;
+    
+                    path, svg {
+                        fill: black;
+                    }
+                } 
+            }
+        }
+    }
+
+    .hyperbutton {
+        @extend .no-select;
+        cursor: pointer;
+        font-family: 'IBM Plex Sans', sans-serif;
+        font-size: 17px;
+        font-weight: 700;
+        padding: 5px;
+        color: #bababa;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        min-width: 114px;
+        line-height: 32px;
+        transition: all ease 0.1s;
+
+        @media (prefers-color-scheme: light) { 
+            color: #606367;
+        }
+
+        > svg {
+            opacity: 70%;
+            width: auto;
+            height: 17px;
+
+            @media (prefers-color-scheme: light) {
+                fill: #414141;
+
+                path, svg { fill:#414141; }
+            } 
+        }
+
+        &:hover {
+            color: #fff;
+            
+            > svg {opacity: 1;}
+
+            @media (prefers-color-scheme: light) { 
+                color: #000000;
+            }           
+        }
+    }
+
+    
 
     .button {
         @extend .no-select;
-
+        cursor: pointer;
         background-color: #303030;
-        border-radius: 2px;
-        padding: 5px 8px;
+        border-radius: 3px;
+        padding: 5px 20px;
         color :whitesmoke;
         cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 700;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        width: 60px;
+
+        @media (prefers-color-scheme: light) { 
+            background-color: #e3e3e3!important;
+            color: #383B3E !important;
+            fill: #383B3E;
+            
+            path, svg {
+                fill: #383B3E;
+            }
+        }
 
         &:hover {
-            background-color: #464646;
+            background-color:rgb(113, 113, 113);
+
         }
 
         &:active {
             background-color: #2b6cce;
         }
 
-        transition: all ease .2s;
+        transition: all ease .1s;
+
+        &-gray {
+            @extend .button;
+            background-color: #67686F;
+            color: #fff;
+
+            > svg {
+                width: auto;
+                height: 15px;
+            }
+        }
     }
 
         
@@ -124,5 +381,22 @@ div[xfready]{
             from { opacity: 0; }
             to   { opacity: 1; }
         }
+    }
+    // svg {
+        // width: 32px;
+        // height:32px;
+    // }
+
+    // svg:not(:root) {
+        // overflow: hidden !important;
+    //   }
+
+    .displayN {
+        display: none !important;
+    }
+
+    .fade-out {
+        opacity: 0 !important;
+
     }
 }
