@@ -22,7 +22,7 @@ let element = html`
         <div class='xfready-footer'>
             ${SVG('logo')}
             <div class='hyperbutton visibility'>
-                ${SVG('empty-checkbox')} Show on websites
+                ${SVG('checked-checkbox')} Show on websites
             </div>
         </div>
         
