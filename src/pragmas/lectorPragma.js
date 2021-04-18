@@ -55,12 +55,12 @@ const unesc = (str) => {
 
 function wegex(str) {
     // return str
-    return str.replaceAll(wregex, (match, re) => esc("<w>") + escapeHtml(re) + esc("</w>"))
+    return str.replaceAll(wregex, (match, re) => esc("<w>") + escapeHtml(re) + esc("</w> "))
 }
 
 function wfyInner(desc) {
     if (desc == undefined) return desc
-
+    if (desc.tagName == "CODE" || desc.tagName == "PRE") return desc
     if (desc.tagName == undefined) {
         // if text, wfy it and return node
         desc.textContent = wegex(desc.textContent)

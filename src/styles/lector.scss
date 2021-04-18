@@ -40,7 +40,6 @@ div[xfready] {
                 overflow-y: scroll !important;
                 background: whitesmoke;
 
-                transition: all .2 ease;
                 
 
                 &.loading {
@@ -52,6 +51,8 @@ div[xfready] {
                     *:not(table) {
                         > :not(table){
                             filter: contrast(0);
+                            opacity: .3;
+                            transition: all .2 ease;
                             // all: unset;
                         }
                     }
@@ -59,6 +60,9 @@ div[xfready] {
                     table {
                         color: transparent;
                     }
+
+                    transition: all .2 ease;
+                    opacity: .3;
 
                     color: gray !important;
 
