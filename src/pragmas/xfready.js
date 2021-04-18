@@ -14,7 +14,6 @@ export class Xfready extends Pragma {
 
     static sanitizeHtml(input){
         var doc = new DOMParser().parseFromString(input.toString(), "text/html");
-        console.log("SANITIZED", doc.body)
         return _e(doc.body).html()
     }
 }

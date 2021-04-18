@@ -19,6 +19,7 @@ div[xfready] {
         overflow: scroll;
 
         #reader-rapper {
+            font-size: 19px;
           	overflow: hidden;
 
             flex-direction: column;
@@ -38,8 +39,35 @@ div[xfready] {
                 padding: 80px 140px;
                 overflow-y: scroll !important;
                 background: whitesmoke;
+
+                transition: all .2 ease;
+                
+
+                &.loading {
+
+                    // *:not(table) {
+                        // filter: blur(2px) contrast(0.4);
+                    // }
+
+                    *:not(table) {
+                        > :not(table){
+                            filter: contrast(0);
+                            // all: unset;
+                        }
+                    }
+
+                    table {
+                        color: transparent;
+                    }
+
+                    color: gray !important;
+
+                    // filter: grayscale(1);
+                }
             }
         }
+
+        
     }
 
     .collapsable {

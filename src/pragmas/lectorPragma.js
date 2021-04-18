@@ -61,32 +61,18 @@ function wegex(str) {
 function wfyInner(desc) {
     if (desc == undefined) return desc
 
-    // console.log(desc.tagName)
-    if (desc.tagName == undefined) { // if text
-        // console.log(element.tagName)
-        // desc.textContent = desc.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
-        // element.textContent = wegex(element.textContent)
+    if (desc.tagName == undefined) {
+        // if text, wfy it and return node
         desc.textContent = wegex(desc.textContent)
         return desc
-        // return
-        return _e("span").html(desc.textContent)
     }
-    // console.log(desc.childrenArray)
-    // if (desc.childrenArray.length === 0){
-        // console.log(desc.textContent)
-        // desc.textContent = desc.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
-        // return desc
-    // }
-    // console.group()
     let og = desc
-    // let og = _e(desc)
     let childMap = new Map()
     desc = og.cloneNode(true)
 
     let childTag = (key) => `{{{{@XFREADY:${key}:}}}}`
 
     desc.childNodes.forEach((element, i) => {
-        
         let key = i.toString()
         childMap.set(key, element.cloneNode(true))
         element.replaceWith(childTag(key))
@@ -103,7 +89,8 @@ function wfyInner(desc) {
         // console.log(inner.innerHTML)
         // inner.innerHTML = inner.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
         // console.log(inner.innerHTML)
-        if (inner.outerHTML) return inner.outerHTML
+        let outer = inner.outerHTML
+        if (outer) return outer 
         return parser.parseFromString(unesc(inner.textContent), "text/html").documentElement.innerHTML 
     }
     
@@ -128,9 +115,10 @@ export function wfyElement(element) {
 export function wfy(element) {
     setTimeout(() => {
         console.time('wfying...')
-        wfyElement(_e(element))
+        wfyElement(element)
+        element.removeClass('loading')
         console.timeEnd('wfying...')
-    }, 500)
+    }, 200)
 }
 
 
@@ -146,6 +134,8 @@ export class LectorPragma extends Pragma {
         })
 
         this.reader = this.element.find("#reader")
+                       .addClass("loading")
+
         setTimeout(() => {
             var article = new Readability(document.cloneNode(true)).parse()
             console.log(article)
