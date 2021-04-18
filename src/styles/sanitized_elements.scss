@@ -179,7 +179,7 @@
         left: -32.5%;
         overflow-x: auto;
         table-layout: auto;
-        border-collapse: collapse;
+        border-collapse: collapse !important;
   
         font-size: 16px !important;
         text-align: center;
@@ -212,13 +212,17 @@
       td, tr, th {
         line-height: 1em !important;
         padding: 12px 15px !important;
-        border: 1px solid rgb(216, 216, 216);
+        transition: all ease 0.2s;
         &:hover{
-          background-color: #eeeeee;
+          background-color: #dedede;
         }
 
+      th {
+        font-weight: 700 !important;
+      }
+
         >li, i {
-          line-height: 1em im !important;
+          line-height: 1.5em !important;
         }
        }
        p, div{
