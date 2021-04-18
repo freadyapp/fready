@@ -24,7 +24,7 @@ div[xfready]{
     }
 
     p {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     h1, h2, h3, h4, h5, h6 {
@@ -100,14 +100,18 @@ div[xfready]{
         border-radius: 5px;
 
         .time-url {
-
+            .time {
+                margin-right: 5px;
+            }
+            
             .url {
                 color: #9F9F9F;
+                line-height: 22px;
             }
         }
 
         .title {
-            margin: 10px 0px;
+            margin: 10px 0 16px 0;
         }
 
         #exit {                     //TODO change exit to save
@@ -156,11 +160,20 @@ div[xfready]{
 
         > svg {
             width: 80px;
+            height: auto;
+            opacity: 70%;
+
+            &:hover {
+                width: 80px;
+                opacity: 1;
+            }
         }
 
     }
 
     .hyperbutton {
+        @extend .no-select;
+        cursor: pointer;
         font-family: 'IBM Plex Sans', sans-serif;
         font-size: 17px;
         font-weight: 700;
@@ -174,15 +187,28 @@ div[xfready]{
         align-content: center;
         min-width: 114px;
         line-height: 32px;
+        transition: all ease 0.1s;
 
         > svg {
+            opacity: 70%;
             width: auto;
-            height: 16px;
+            height: 17px;
         }
+
+        &:hover {
+            color: #fff;
+            
+            > svg {
+                opacity: 1;
+            }
+        }
+
+        
     }
 
     .button {
         @extend .no-select;
+        cursor: pointer;
 
         background-color: #303030;
         border-radius: 3px;
@@ -201,14 +227,15 @@ div[xfready]{
         width: 60px;
 
         &:hover {
-            background-color: #464646;
+            background-color:rgb(58, 58, 58);
+
         }
 
         &:active {
             background-color: #2b6cce;
         }
 
-        transition: all ease .2s;
+        transition: all ease .1s;
 
         &-gray {
             @extend .button;

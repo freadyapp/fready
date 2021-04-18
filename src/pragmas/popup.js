@@ -7,7 +7,7 @@ let element = html`
         <div class='article-panel'>
             <div class='time-url'>
                 <h1 class='time blue'>15'</h1>
-                <p class='url'>www.en.wikipedia.org</p>
+                <p class='url'>en.wikipedia.org</p>
             </div>
             <h1 class='title'>Legality of bitcoin by country or territory</h1>
             <div class='save-read'>
@@ -20,7 +20,7 @@ let element = html`
             <div class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</div>
         </div>
         <div class='xfready-footer'>
-            ${SVG('logo-gray')}
+            ${SVG('logo')}
             <div class='hyperbutton visibility'>
                 ${SVG('empty-checkbox')} Show on websites
             </div>
