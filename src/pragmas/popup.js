@@ -22,7 +22,11 @@ let element = html`
         <div class='xfready-footer'>
             ${SVG('logo')}
             <div class='hyperbutton visibility'>
-                ${SVG('checked-checkbox')} Show on websites
+                <div class="checkbox">
+                    ${SVG('checked-checkbox')} 
+                    ${SVG('empty-checkbox')}
+                </div>
+                Show on websites
             </div>
         </div>
         
@@ -44,6 +48,12 @@ export class Popup extends Pragma {
 
         this.element.find("#exit").listenTo('click', () => {
             this.element.hide()
+        })
+
+
+        this.element.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
+            this.element.find('#checked-checkbox').toggleClass('fade-out')
+            console.log('CLICKED')
         })
     }
 }

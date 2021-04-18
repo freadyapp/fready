@@ -214,14 +214,26 @@ div[xfready]{
     }
 
     .visibility {
-
-        >svg {
-            margin-right: 5px;
-            opacity: 70%;
-
-            &:hover {
+        
+        &:hover {
+            .checkbox {
                 opacity: 1;
             }
+        }
+
+        .checkbox {
+            position: relative;
+            opacity: 70%;
+            margin-right: 5px;
+
+            >#empty-checkbox {
+                position: absolute;
+                top: 0;
+                left: 0;
+                z-index: -98765;
+            }
+
+
         }
     }
 
@@ -330,4 +342,13 @@ div[xfready]{
     // svg:not(:root) {
         // overflow: hidden !important;
     //   }
+
+    .displayN {
+        display: none !important;
+    }
+
+    .fade-out {
+        opacity: 0 !important;
+
+    }
 }
