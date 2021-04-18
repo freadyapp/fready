@@ -59,7 +59,7 @@ div[xfready]{
     }
 
     .blue {
-        color: #2b6cce !important;
+        color: #5A90E2 !important;
     }
 
    
@@ -118,11 +118,17 @@ div[xfready]{
         box-sizing: border-box;
         border-radius: 5px;
 
+        @media (prefers-color-scheme: light) {
+            background-color: #fff;
+        }
+
         .time-url {
            @extend .flex-h;
 
             .time {
                 margin-right: 5px;
+
+                
             }
             
             .url {
@@ -133,6 +139,10 @@ div[xfready]{
 
         .title {
             margin: 10px 0 16px 0;
+
+            @media (prefers-color-scheme: light) {
+                color: #161616
+            }
         }
 
         #exit {                     //TODO change exit to save
@@ -175,6 +185,17 @@ div[xfready]{
                 opacity: 1;
             }
         }
+
+        #logo {
+
+            @media (prefers-color-scheme: light) {
+                fill: black;
+
+                path, svg {
+                    fill: black;
+                }
+            }
+        }
     }
 
     .hyperbutton {
@@ -194,6 +215,10 @@ div[xfready]{
         min-width: 114px;
         line-height: 32px;
         transition: all ease 0.1s;
+
+        @media (prefers-color-scheme: light) { 
+            color: #606367;
+        }
 
         > svg {
             opacity: 70%;
@@ -255,6 +280,16 @@ div[xfready]{
         align-items: center;
         align-content: center;
         width: 60px;
+
+        @media (prefers-color-scheme: light) { 
+            background-color: #cecece !important;
+            color: #383B3E !important;
+            fill: #383B3E;
+            
+            path, svg {
+                fill: #383B3E;
+            }
+        }
 
         &:hover {
             background-color:rgb(113, 113, 113);
