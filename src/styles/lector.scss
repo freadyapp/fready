@@ -1,8 +1,12 @@
+.billion-z-index {
+    z-index: 999999999999 !important;
+}
+
 div[xfready] {
     &#lector {
         position: fixed;
         width: 100vw;
-        background-color: gray;
+        background-color: #303030;
 
         top: 0;
         left: 0;
@@ -21,7 +25,6 @@ div[xfready] {
         #reader-rapper {
             font-size: 19px;
           	overflow: hidden;
-
             flex-direction: column;
             display: flex;
 

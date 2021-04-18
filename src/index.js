@@ -22,6 +22,15 @@ injectStyle("reset")
 injectStyle("main")
 window.xfready = new Xfready()
 
+xfready.on('lector:create', lector => {
+    console.group('constructing lector')
+    console.time("CONSTRUCT LECTOR from DOCUMENT...")
+    lector.on('load', () => {
+        console.log(lector.reader)
+        console.timeEnd("CONSTRUCT LECTOR from DOCUMENT...")
+        console.groupEnd('constructing lector')
+    })
+})
 // window.pragmajs = await import('pragmajs')
 // window.pragmajs.globalify()
 

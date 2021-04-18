@@ -51,7 +51,7 @@
     "dependencies": {
         "@mozilla/readability": "^0.4.1",
         "highlight.js": "^10.7.2",
-        "lectorjs": "^0.7.0",
+        "lectorjs": "^0.7.2",
         "mousetrap": "^1.6.5",
         "pragmajs": "^0.8.2"
     },
