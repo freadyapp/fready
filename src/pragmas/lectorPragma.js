@@ -1,4 +1,4 @@
-import { Pragma, html, _e } from "pragmajs"
+import { Pragma, html, _e, util } from "pragmajs"
 import { Xfready } from "./xfready"
 import Mousetrap from "mousetrap"
 import { Readability } from '@mozilla/readability'
@@ -19,34 +19,109 @@ let template = () => html`
 </div>
 `.hide()
 
+let parser = new DOMParser()
+
+function escapeHtml(unsafe) {
+return unsafe
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+const wregex = /(\w+)/gm
+
+
+const obsKey = util.rk(5)
+const obs = {
+    "<": `;;#${obsKey}0;`,
+    ">": `;;#${obsKey}1;`
+}
+
+let obsegex = {}
+for (let [key, value] of Object.entries(obs)) {
+    obsegex[key] = new RegExp(value, "gm")
+}
+
+const esc = (str) => str.replace(/</g, obs["<"])
+                            .replace(/>/g, obs[">"])
+
+const unesc = (str) => {
+    const r = (key) => obsegex[key]
+    return str.replaceAll(r("<"), "<")
+              .replaceAll(r(">"), ">")
+}
+
+function wegex(str) {
+    return str.replaceAll(wregex, (match, re) => esc("<w>") + escapeHtml(re) + esc("</w>"))
+}
+
 function wfyInner(desc) {
-    if (!desc) return false
-    desc = _e(desc)
-    let txt = desc.textContent
-    if (txt.length === 0) return false
+    if (!desc) return desc
 
-    let inner = ""
-    for (let txt of desc.textContent.split(" ")) {
-        // console.log(txt)
-        let noWhiteSpace = txt.replace(/\s/g, "")
-        inner += noWhiteSpace.length != 0 ? "<w>" + txt.split(" ").join("</w> <w>") + "</w> " : txt
+    // console.log(desc.childrenArray)
+    // if (desc.childrenArray.length === 0){
+        // console.log(desc.textContent)
+        // desc.textContent = desc.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
+        // return desc
+    // }
+    // console.group()
+    let og = desc
+    // let og = _e(desc)
+    let childMap = new Map()
+    desc = og.cloneNode(true)
+
+    let childTag = (key) => `{{{{@XFREADY:${key}:}}}}`
+
+    desc.childNodes.forEach((element, i) => {
+        if (element.innerHTML == undefined) { // if text
+            // element.textContent = element.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
+            element.textContent = wegex(element.textContent)
+            return
+        }
+        let key = i.toString()
+        childMap.set(key, element.cloneNode(true))
+        element.replaceWith(childTag(key))
+    })
+
+
+    let txt = desc.innerHTML
+    const regex = /\{{4}@XFREADY:(.+?(?=\:)).+?(?=\}{4})\}{4}/gm
+    function replaceElement(match, key){
+        let child = childMap.get(key)
+        let inner = wfyInner(child)
+
+        // console.log(inner.innerHTML)
+        // inner.innerHTML = inner.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
+        // console.log(inner.innerHTML)
+        if (inner) return inner.outerHTML
+        return match 
     }
-
-    desc.html(inner)
+    
+    const parse = txt.replaceAll(regex, replaceElement)
+    // console.log(parser.parseFromString(parse, "text/html").documentElement.innerHTML)
+    og.innerHTML = parser.parseFromString(unesc(parse), "text/html").documentElement.innerHTML
+    return og 
 }
 
 export function wfyElement(element) {
     console.log('wfy element', element)
     // element = _e(element)
     // let nodes = element.findAll("*")
-    let nodes = element.childrenArray
-    console.log('children', nodes)
-    if (nodes.length == 0) return wfyInner(element)
-    nodes.forEach(desc => wfyElement(desc))
+    // let nodes = element.childrenArray
+    // console.log('children', nodes)
+    // if (nodes.length != 0) nodes.forEach(desc => wfyElement(desc))
+
+    return wfyInner(element)
 }
 
 export function wfy(element) {
-    wfyElement(_e(element))
+    setTimeout(() => {
+        console.time('wfying...')
+        wfyElement(_e(element))
+        console.timeEnd('wfying...')
+    }, 0)
 }
 
 

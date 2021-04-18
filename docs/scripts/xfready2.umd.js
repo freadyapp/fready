@@ -27,32 +27,32 @@
         __proto__: null
     });
 
+    var sanitized_elements = "@charset \"utf-8\";[xfready] .article{position:relative;background-color:#eee;border-radius:8px;min-height:100vh;max-width:100%;width:60ch !important;text-align:left;overflow:hidden;text-align:left;word-break:keep-all;font-size:22px}[xfready] .sanitized-elements,[xfready] .article{font-weight:400;font-size:19px;line-height:31px;word-break:keep-all;overflow:hidden}[xfready] .sanitized-elements h1,[xfready] .article h1,[xfready] .sanitized-elements h2,[xfready] .article h2,[xfready] .sanitized-elements h3,[xfready] .article h3,[xfready] .sanitized-elements h4,[xfready] .article h4,[xfready] .sanitized-elements h5,[xfready] .article h5,[xfready] .sanitized-elements h6,[xfready] .article h6{font-family:IBM Plex Mono,monospace;font-weight:bold;margin-top:20px;margin-bottom:5px;display:block}[xfready] .sanitized-elements h1 *,[xfready] .article h1 *,[xfready] .sanitized-elements h2 *,[xfready] .article h2 *,[xfready] .sanitized-elements h3 *,[xfready] .article h3 *,[xfready] .sanitized-elements h4 *,[xfready] .article h4 *,[xfready] .sanitized-elements h5 *,[xfready] .article h5 *,[xfready] .sanitized-elements h6 *,[xfready] .article h6 *{font-weight:bold;font-family:IBM Plex Mono,monospace}[xfready] .sanitized-elements h1,[xfready] .article h1,[xfready] .sanitized-elements h1 *,[xfready] .article h1 *{font-size:39px;line-height:60px}[xfready] .sanitized-elements h2,[xfready] .article h2,[xfready] .sanitized-elements h2 *,[xfready] .article h2 *{font-size:31px;line-height:49px}[xfready] .sanitized-elements h3,[xfready] .article h3,[xfready] .sanitized-elements h4,[xfready] .article h4,[xfready] .sanitized-elements h5,[xfready] .article h5,[xfready] .sanitized-elements h6,[xfready] .article h6{font-size:24px;line-height:39px}[xfready] .sanitized-elements h3 *,[xfready] .article h3 *,[xfready] .sanitized-elements h4 *,[xfready] .article h4 *,[xfready] .sanitized-elements h5 *,[xfready] .article h5 *,[xfready] .sanitized-elements h6 *,[xfready] .article h6 *{font-size:24px;line-height:39px}[xfready] .sanitized-elements p,[xfready] .article p{font-weight:400;font-size:19px !important;line-height:30px !important}[xfready] .sanitized-elements a,[xfready] .article a{text-decoration-color:#25227044;display:unset !important;border-bottom:#929292 .09em dashed;cursor:pointer}[xfready] .sanitized-elements a:hover,[xfready] .article a:hover{border-bottom:#2b6cce .09em solid;transition:all .2s ease}[xfready] .sanitized-elements a:hover w,[xfready] .article a:hover w{background-color:transparent !important}[xfready] .sanitized-elements ul,[xfready] .article ul,[xfready] .sanitized-elements ol,[xfready] .article ol{padding-top:10px;padding-bottom:10px;border-radius:5px;display:block}[xfready] .sanitized-elements li,[xfready] .article li{display:list-item;padding:5px;padding-left:10px;padding-right:10px}[xfready] .sanitized-elements nav,[xfready] .article nav{display:none}[xfready] .sanitized-elements blockquote,[xfready] .article blockquote{font-style:italic;color:#3a3a3a;border-left:solid 3px #707070;padding-left:10px;border-radius:1px}[xfready] .sanitized-elements sup,[xfready] .article sup{color:#707070}[xfready] .sanitized-elements pre,[xfready] .article pre{max-width:100%}[xfready] .sanitized-elements img,[xfready] .article img{max-width:100%;height:auto;display:block;max-height:500px;border-radius:2px;margin:30px 10px}[xfready] .sanitized-elements mark,[xfready] .article mark{background-color:#ABFAA9}[xfready] .sanitized-elements figcaption,[xfready] .article figcaption{color:gray;text-align:center;margin:auto;font-size:16px}[xfready] .sanitized-elements tr,[xfready] .article tr{display:table-row;vertical-align:inherit;border-color:inherit}[xfready] .sanitized-elements td,[xfready] .article td{display:table-cell;vertical-align:inherit}[xfready] .sanitized-elements tbody,[xfready] .article tbody{display:table-row-group;vertical-align:middle;border-color:inherit}[xfready] .sanitized-elements th,[xfready] .article th{display:table-cell;vertical-align:inherit;font-weight:bold;text-align:-internal-center}[xfready] .sanitized-elements table,[xfready] .article table{display:table;border-collapse:separate;box-sizing:border-box;text-indent:initial;border-spacing:2px;border-color:grey}[xfready] .sanitized-elements table,[xfready] .article table{position:relative;width:165%;left:-32.5%;overflow-x:auto;table-layout:auto;border-collapse:collapse;font-size:100% !important;text-align:center;word-wrap:break-word;border-collapse:collapse}[xfready] .sanitized-elements table *,[xfready] .article table *{font-size:.95em !important}@media screen and (max-width:780px){[xfready] .sanitized-elements table,[xfready] .article table{left:0}}[xfready] .sanitized-elements table tbody,[xfready] .article table tbody{background:#f9f9f9;text-align:left;display:block;position:relative;width:fit-content;margin:auto}[xfready] .sanitized-elements table td,[xfready] .article table td,[xfready] .sanitized-elements table tr,[xfready] .article table tr,[xfready] .sanitized-elements table th,[xfready] .article table th{padding:1em 1em;border:1px solid #d8d8d8}[xfready] .sanitized-elements table td:hover,[xfready] .article table td:hover,[xfready] .sanitized-elements table tr:hover,[xfready] .article table tr:hover,[xfready] .sanitized-elements table th:hover,[xfready] .article table th:hover{background-color:#eee}[xfready] .sanitized-elements table p,[xfready] .article table p,[xfready] .sanitized-elements table div,[xfready] .article table div{display:inline-block}[xfready] .sanitized-elements table img,[xfready] .article table img{display:block}";
+    var lector = "@charset \"utf-8\";div#lector[xfready]{position:fixed;width:100vw;background-color:gray;top:0;left:0;z-index:9999999999 !important;height:100vh;text-align:center;overflow:scroll}div#lector[xfready] #reader-rapper{overflow:hidden;flex-direction:column;display:flex;align-items:center;justify-content:flex-start;overflow-y:scroll;width:100%;height:fit-content;margin:auto}div#lector[xfready] #reader-rapper #reader{width:80%;padding:80px 140px;overflow-y:scroll !important;background:whitesmoke}div[xfready] .collapsable{overflow:hidden;transition:all .3s ease;min-height:0 !important;height:auto;flex:1}div[xfready] .collapsable.collapsed{flex:0}";
     var syntax_highlight = "@charset \"utf-8\";.ibm-mono,div[xfready] code,div[xfready] pre{font-family:\"IBM Plex Mono\" !important}.ibm-mono *,div[xfready] code *,div[xfready] pre *{font-family:\"IBM Plex Mono\" !important}div[xfready] pre{display:block;margin:20px 10px;padding:20px 10px;border-radius:2px;background:#221a0f;color:#abb2bf;white-space:pre-wrap;word-wrap:break-word}div[xfready] pre *{color:#abb2bf;white-space:pre-wrap;word-wrap:break-word;background:transparent !important}div[xfready] code{background:lightblue;border-radius:2px;padding:1px 3px}div[xfready] .hljs{color:#abb2bf;background:#282c34}div[xfready] .hljs-comment,div[xfready] .hljs-quote{color:#5c6370;font-style:italic}div[xfready] .hljs-doctag,div[xfready] .hljs-keyword,div[xfready] .hljs-formula{color:#c678dd}div[xfready] .hljs-section,div[xfready] .hljs-name,div[xfready] .hljs-selector-tag,div[xfready] .hljs-deletion,div[xfready] .hljs-subst{color:#e06c75}div[xfready] .hljs-literal{color:#56b6c2}div[xfready] .hljs-string,div[xfready] .hljs-regexp,div[xfready] .hljs-addition,div[xfready] .hljs-attribute,div[xfready] .hljs-meta-string{color:#98c379}div[xfready] .hljs-attr,div[xfready] .hljs-variable,div[xfready] .hljs-template-variable,div[xfready] .hljs-type,div[xfready] .hljs-selector-class,div[xfready] .hljs-selector-attr,div[xfready] .hljs-selector-pseudo,div[xfready] .hljs-number{color:#d19a66}div[xfready] .hljs-symbol,div[xfready] .hljs-bullet,div[xfready] .hljs-link,div[xfready] .hljs-meta,div[xfready] .hljs-selector-id,div[xfready] .hljs-title{color:#61aeee}div[xfready] .hljs-built_in,div[xfready] .hljs-title.hljs-class,div[xfready] .hljs-class .hljs-title{color:#e6c07b}div[xfready] .hljs-emphasis{font-style:italic}div[xfready] .hljs-strong{font-weight:bold}div[xfready] .hljs-link{text-decoration:underline}";
     var main = "@charset \"utf-8\";@import url(https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap);body.xfready-lector-open{overflow:hidden}div[xfready]{all:initial;font-family:'IBM Plex Sans',sans-serif}div[xfready] *{all:initial}div[xfready] *{font-family:'IBM Plex Sans',sans-serif}div[xfready] h1,div[xfready] h2,div[xfready] h3,div[xfready] h4,div[xfready] h5,div[xfready] h6{font-family:'IBM Plex Mono',monospace;font-weight:bold}div#popup[xfready]{z-index:9999999999 !important;position:fixed;width:2000px;height:2000px;width:281px;height:fit-content;box-shadow:rgba(0,0,0,0.1) 0 0 10px;position:fixed;top:10px;right:5px;font-size:17px;box-sizing:content-box !important;background:white;border-radius:5px;padding:10px}div[xfready] .button{background-color:#303030;border-radius:2px;padding:5px 8px;color:whitesmoke;cursor:pointer;transition:all ease .2s}div[xfready] .button:hover{background-color:#464646}div[xfready] .button:active{background-color:#2b6cce}div[xfready] .no-select,div[xfready] .button{user-select:none !important}div[xfready] .page-container{height:100vh}div[xfready] .flex-center{display:flex;align-items:center;justify-content:center;flex-direction:column}div.fade-onload[xfready]{-webkit-animation:fadein .2s;-moz-animation:fadein .2s;-ms-animation:fadein .2s;-o-animation:fadein .2s;animation:fadein .2s}@keyframes fadein{from{opacity:0}to{opacity:1}}@-moz-keyframes fadein{from{opacity:0}to{opacity:1}}@-webkit-keyframes fadein{from{opacity:0}to{opacity:1}}@-ms-keyframes fadein{div.fade-onload[xfready] from{opacity:0}div.fade-onload[xfready] to{opacity:1}}@-o-keyframes fadein{from{opacity:0}to{opacity:1}}";
-    var lector = "@charset \"utf-8\";div#lector[xfready]{position:fixed;width:100vw;background-color:gray;top:0;left:0;z-index:9999999999 !important;height:100vh;text-align:center;overflow:scroll}div#lector[xfready] #reader-rapper{overflow:hidden;flex-direction:column;display:flex;align-items:center;justify-content:flex-start;overflow-y:scroll;width:100%;height:fit-content;margin:auto}div#lector[xfready] #reader-rapper #reader{width:80%;padding:80px 140px;overflow-y:scroll !important;background:whitesmoke}div[xfready] .collapsable{overflow:hidden;transition:all .3s ease;min-height:0 !important;height:auto;flex:1}div[xfready] .collapsable.collapsed{flex:0}";
-    var sanitized_elements = "@charset \"utf-8\";[xfready] .article{position:relative;background-color:#eee;border-radius:8px;min-height:100vh;max-width:100%;width:60ch !important;text-align:left;overflow:hidden;text-align:left;word-break:keep-all;font-size:22px}[xfready] .sanitized-elements,[xfready] .article{font-weight:400;font-size:19px;line-height:31px;word-break:keep-all;overflow:hidden}[xfready] .sanitized-elements h1,[xfready] .article h1,[xfready] .sanitized-elements h2,[xfready] .article h2,[xfready] .sanitized-elements h3,[xfready] .article h3,[xfready] .sanitized-elements h4,[xfready] .article h4,[xfready] .sanitized-elements h5,[xfready] .article h5,[xfready] .sanitized-elements h6,[xfready] .article h6{font-family:IBM Plex Mono,monospace;font-weight:bold;margin-top:20px;margin-bottom:5px;display:block}[xfready] .sanitized-elements h1 *,[xfready] .article h1 *,[xfready] .sanitized-elements h2 *,[xfready] .article h2 *,[xfready] .sanitized-elements h3 *,[xfready] .article h3 *,[xfready] .sanitized-elements h4 *,[xfready] .article h4 *,[xfready] .sanitized-elements h5 *,[xfready] .article h5 *,[xfready] .sanitized-elements h6 *,[xfready] .article h6 *{font-weight:bold;font-family:IBM Plex Mono,monospace}[xfready] .sanitized-elements h1,[xfready] .article h1,[xfready] .sanitized-elements h1 *,[xfready] .article h1 *{font-size:39px;line-height:60px}[xfready] .sanitized-elements h2,[xfready] .article h2,[xfready] .sanitized-elements h2 *,[xfready] .article h2 *{font-size:31px;line-height:49px}[xfready] .sanitized-elements h3,[xfready] .article h3,[xfready] .sanitized-elements h4,[xfready] .article h4,[xfready] .sanitized-elements h5,[xfready] .article h5,[xfready] .sanitized-elements h6,[xfready] .article h6{font-size:24px;line-height:39px}[xfready] .sanitized-elements h3 *,[xfready] .article h3 *,[xfready] .sanitized-elements h4 *,[xfready] .article h4 *,[xfready] .sanitized-elements h5 *,[xfready] .article h5 *,[xfready] .sanitized-elements h6 *,[xfready] .article h6 *{font-size:24px;line-height:39px}[xfready] .sanitized-elements p,[xfready] .article p{font-weight:400;font-size:19px !important;line-height:30px !important}[xfready] .sanitized-elements a,[xfready] .article a{text-decoration-color:#25227044;display:unset !important;border-bottom:#929292 .09em dashed;cursor:pointer}[xfready] .sanitized-elements a:hover,[xfready] .article a:hover{border-bottom:#2b6cce .09em solid;transition:all .2s ease}[xfready] .sanitized-elements a:hover w,[xfready] .article a:hover w{background-color:transparent !important}[xfready] .sanitized-elements ul,[xfready] .article ul,[xfready] .sanitized-elements ol,[xfready] .article ol{padding-top:10px;padding-bottom:10px;border-radius:5px;display:block}[xfready] .sanitized-elements li,[xfready] .article li{display:list-item;padding:5px;padding-left:10px;padding-right:10px}[xfready] .sanitized-elements nav,[xfready] .article nav{display:none}[xfready] .sanitized-elements blockquote,[xfready] .article blockquote{font-style:italic;color:#3a3a3a;border-left:solid 3px #707070;padding-left:10px;border-radius:1px}[xfready] .sanitized-elements sup,[xfready] .article sup{color:#707070}[xfready] .sanitized-elements pre,[xfready] .article pre{max-width:100%}[xfready] .sanitized-elements img,[xfready] .article img{max-width:100%;height:auto;display:block;max-height:500px;border-radius:2px;margin:30px 10px}[xfready] .sanitized-elements mark,[xfready] .article mark{background-color:#ABFAA9}[xfready] .sanitized-elements figcaption,[xfready] .article figcaption{color:gray;text-align:center;margin:auto;font-size:16px}[xfready] .sanitized-elements tr,[xfready] .article tr{display:table-row;vertical-align:inherit;border-color:inherit}[xfready] .sanitized-elements td,[xfready] .article td{display:table-cell;vertical-align:inherit}[xfready] .sanitized-elements tbody,[xfready] .article tbody{display:table-row-group;vertical-align:middle;border-color:inherit}[xfready] .sanitized-elements th,[xfready] .article th{display:table-cell;vertical-align:inherit;font-weight:bold;text-align:-internal-center}[xfready] .sanitized-elements table,[xfready] .article table{display:table;border-collapse:separate;box-sizing:border-box;text-indent:initial;border-spacing:2px;border-color:grey}[xfready] .sanitized-elements table,[xfready] .article table{position:relative;width:165%;left:-32.5%;overflow-x:auto;table-layout:auto;border-collapse:collapse;font-size:100% !important;text-align:center;word-wrap:break-word;border-collapse:collapse}[xfready] .sanitized-elements table *,[xfready] .article table *{font-size:.95em !important}@media screen and (max-width:780px){[xfready] .sanitized-elements table,[xfready] .article table{left:0}}[xfready] .sanitized-elements table tbody,[xfready] .article table tbody{background:#f9f9f9;text-align:left;display:block;position:relative;width:fit-content;margin:auto}[xfready] .sanitized-elements table td,[xfready] .article table td,[xfready] .sanitized-elements table tr,[xfready] .article table tr,[xfready] .sanitized-elements table th,[xfready] .article table th{padding:1em 1em;border:1px solid #d8d8d8}[xfready] .sanitized-elements table td:hover,[xfready] .article table td:hover,[xfready] .sanitized-elements table tr:hover,[xfready] .article table tr:hover,[xfready] .sanitized-elements table th:hover,[xfready] .article table th:hover{background-color:#eee}[xfready] .sanitized-elements table p,[xfready] .article table p,[xfready] .sanitized-elements table div,[xfready] .article table div{display:inline-block}[xfready] .sanitized-elements table img,[xfready] .article table img{display:block}";
     var styles = {
-    	syntax_highlight: syntax_highlight,
-    	main: main,
+    	sanitized_elements: sanitized_elements,
     	lector: lector,
-    	sanitized_elements: sanitized_elements
+    	syntax_highlight: syntax_highlight,
+    	main: main
     };
 
-    var model = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>model</title><path d=\"M23.5,4H8.5L1.7158,13.0454,16,29.5269,30.2842,13.0454ZM27,12H21.5543l-3.75-6H22.5ZM10.3021,14l3.7536,10.23L5.19,14Zm2.13,0H19.568l-3.569,9.7212Zm.3725-2L16,6.8867,19.1957,12Zm8.8935,2H26.81L17.9427,24.2314ZM9.5,6h4.6957l-3.75,6H5Z\" transform=\"translate(0 0)\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
     var umbrella = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n  <defs>\n    <style>\n      .cls-1 {\n        fill: none;\n      }\n    </style>\n  </defs>\n  <title>umbrella</title>\n  <path d=\"M29.9854,15.83A14.3808,14.3808,0,0,0,17,4.0464V2H15V4.0464A14.3808,14.3808,0,0,0,2.0146,15.83,1,1,0,0,0,3.51,16.86,4.8551,4.8551,0,0,1,6,16a4.8653,4.8653,0,0,1,4.1406,2.5107,1.0393,1.0393,0,0,0,1.7188,0A5.02,5.02,0,0,1,15,16.1255V25.5a2.5,2.5,0,0,1-5,0V25H8v.5a4.5,4.5,0,0,0,9,0V16.1255a5.02,5.02,0,0,1,3.1406,2.3852.9994.9994,0,0,0,1.7188,0A4.8653,4.8653,0,0,1,26,16a4.8551,4.8551,0,0,1,2.49.86,1,1,0,0,0,1.4957-1.03ZM6,14a5.4079,5.4079,0,0,0-1.5034.2134,12.4411,12.4411,0,0,1,8.488-7.8145A14.5157,14.5157,0,0,0,9.939,15.333,6.5439,6.5439,0,0,0,6,14Zm10,0a6.5528,6.5528,0,0,0-4.0564,1.4307c.0378-2.22.6089-6.49,4.0563-9.1763,3.4308,2.6768,4.0091,6.9487,4.0525,9.1728A6.553,6.553,0,0,0,16,14Zm10,0a6.5439,6.5439,0,0,0-3.939,1.333,14.5164,14.5164,0,0,0-3.0456-8.9341,12.4411,12.4411,0,0,1,8.488,7.8145A5.4079,5.4079,0,0,0,26,14Z\"/>\n  <rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/>\n</svg>\n";
+    var gamification = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>gamification</title><path d=\"M23,23h-.1315l.9635-1.4453A1.0008,1.0008,0,0,0,24,21V12.0005c0-9.8858-7.92-10-8-10A1,1,0,0,0,15,3l-.0005,2H14a.9956.9956,0,0,0-.581.1865l-7,5a1,1,0,0,0-.3676,1.13l1,3a.9976.9976,0,0,0,1.09.6733l4.87-.6958L9.1519,20.47a1,1,0,0,0,.0161,1.085L10.1315,23H10a3.0033,3.0033,0,0,0-3,3v4H26V26A3.0033,3.0033,0,0,0,23,23Zm-7.1519-9.47a1,1,0,0,0-.99-1.52l-6.1738.8819-.5025-1.5078L14.32,7.0005H15.999a1,1,0,0,0,1-.9995L17,4.1289C18.5013,4.4636,21.2167,5.67,21.86,10H19v2h3v2H19v2h3v2H19v2h3v.6973L20.4648,23h-7.93L11.19,20.9824ZM24,28H9V26a1.0009,1.0009,0,0,1,1-1H23a1.0006,1.0006,0,0,1,1,1Z\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
     var chemistry = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>chemistry</title><path d=\"M27.2314,23.6182,20,13.6748V4h2V2H10V4h2v9.6748L4.7686,23.6182A4.0183,4.0183,0,0,0,8.0186,30H23.9814a4.0183,4.0183,0,0,0,3.25-6.3818ZM14,14.3252V4h4V14.3252L20.6728,18H11.3272ZM23.9814,28H8.0186a2.0192,2.0192,0,0,1-1.6329-3.2061L9.8726,20H22.1274l3.4869,4.7939A2.0192,2.0192,0,0,1,23.9814,28Z\" transform=\"translate(0 0)\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
     var dna = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>dna</title><path d=\"M22,2V1H20V2a7.04,7.04,0,0,1-.08,1H12.08A7.04,7.04,0,0,1,12,2V1H10V2c0,3.7549,1.9707,5.6035,4.1008,7C11.9707,10.3965,10,12.2451,10,16s1.9707,5.6035,4.1008,7C11.9707,24.3965,10,26.2451,10,30v1h2V30a7.04,7.04,0,0,1,.08-1H19.92A7.04,7.04,0,0,1,20,30v1h2V30c0-3.7549-1.9707-5.6035-4.1008-7C20.0293,21.6035,22,19.7549,22,16s-1.9707-5.6035-4.1008-7C20.0293,7.6035,22,5.7549,22,2ZM20,16a7.04,7.04,0,0,1-.08,1H12.08a6.3212,6.3212,0,0,1,0-2H19.92A7.04,7.04,0,0,1,20,16Zm-.7559,11H12.7559A8.9078,8.9078,0,0,1,16,24.17,8.9078,8.9078,0,0,1,19.2441,27ZM16,21.83A8.9078,8.9078,0,0,1,12.7559,19h6.4882A8.9078,8.9078,0,0,1,16,21.83ZM19.2441,13H12.7559A8.9078,8.9078,0,0,1,16,10.17,8.9078,8.9078,0,0,1,19.2441,13ZM16,7.83A8.9078,8.9078,0,0,1,12.7559,5h6.4882A8.9078,8.9078,0,0,1,16,7.83Z\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
     var microscope = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>microscope</title><path d=\"M25.3943,24a7.8772,7.8772,0,0,0-1.6707-8.5684,3.918,3.918,0,0,0-1.0844-4.414l2.7759-2.7759a2.0025,2.0025,0,0,0,0-2.8286L22.5869,2.5849a2.0021,2.0021,0,0,0-2.8286,0L6.5859,15.7573a2.0027,2.0027,0,0,0,0,2.8286l2.8282,2.8282a2.0024,2.0024,0,0,0,2.8286,0l4.7749-4.7754a3.9329,3.9329,0,0,0,5.5139.4326A5.9442,5.9442,0,0,1,23.1775,24H16v4H4v2H28V24ZM10.8281,20,8,17.1714,9.8787,15.293l2.8283,2.8281ZM16,14a3.9811,3.9811,0,0,0,.0762.7524L14.1211,16.707l-2.8284-2.8281,9.88-9.88L24.001,6.8271l-3.2488,3.2491A3.9771,3.9771,0,0,0,16,14Zm4,2a2,2,0,1,1,2-2A2.0023,2.0023,0,0,1,20,16Zm6,12H18V26h8Z\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
-    var gamification = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>gamification</title><path d=\"M23,23h-.1315l.9635-1.4453A1.0008,1.0008,0,0,0,24,21V12.0005c0-9.8858-7.92-10-8-10A1,1,0,0,0,15,3l-.0005,2H14a.9956.9956,0,0,0-.581.1865l-7,5a1,1,0,0,0-.3676,1.13l1,3a.9976.9976,0,0,0,1.09.6733l4.87-.6958L9.1519,20.47a1,1,0,0,0,.0161,1.085L10.1315,23H10a3.0033,3.0033,0,0,0-3,3v4H26V26A3.0033,3.0033,0,0,0,23,23Zm-7.1519-9.47a1,1,0,0,0-.99-1.52l-6.1738.8819-.5025-1.5078L14.32,7.0005H15.999a1,1,0,0,0,1-.9995L17,4.1289C18.5013,4.4636,21.2167,5.67,21.86,10H19v2h3v2H19v2h3v2H19v2h3v.6973L20.4648,23h-7.93L11.19,20.9824ZM24,28H9V26a1.0009,1.0009,0,0,1,1-1H23a1.0006,1.0006,0,0,1,1,1Z\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
+    var model = "<svg id=\"icon\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\"><defs><style>.cls-1{fill:none;}</style></defs><title>model</title><path d=\"M23.5,4H8.5L1.7158,13.0454,16,29.5269,30.2842,13.0454ZM27,12H21.5543l-3.75-6H22.5ZM10.3021,14l3.7536,10.23L5.19,14Zm2.13,0H19.568l-3.569,9.7212Zm.3725-2L16,6.8867,19.1957,12Zm8.8935,2H26.81L17.9427,24.2314ZM9.5,6h4.6957l-3.75,6H5Z\" transform=\"translate(0 0)\"/><rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/></svg>";
     var icons = {
-    	model: model,
     	umbrella: umbrella,
+    	"linux--alt": "<svg id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n  <defs>\n    <style>\n      .cls-1 {\n        fill: none;\n      }\n    </style>\n  </defs>\n  <path d=\"M22.6121,20.5215A6.1582,6.1582,0,0,0,24,16.5254C24,13.4785,21.9812,11,19.5,11A4.2435,4.2435,0,0,0,16,13.06,4.2435,4.2435,0,0,0,12.5,11C10.0188,11,8,13.4785,8,16.5254a6.1593,6.1593,0,0,0,1.3879,3.9961c-.5688.3686-.9389.6416-.988.6787a1,1,0,0,0-.1807,1.4248C8.6592,23.1748,12.6169,28,16,28s7.3408-4.8252,7.7808-5.375A1,1,0,0,0,23.6,21.2C23.551,21.1631,23.1812,20.89,22.6121,20.5215ZM12.5,13c1.3552,0,2.5,1.6143,2.5,3.5254v1.5664a9.1005,9.1005,0,0,0-1.0244.2314A2.6411,2.6411,0,0,0,14,18c0-1.1045-.6716-2-1.5-2s-1.5.8955-1.5,2a2.38,2.38,0,0,0,.4072,1.3623c-.0813.0415-.1687.0806-.248.1221A4.0291,4.0291,0,0,1,10,16.5254C10,14.6143,11.1448,13,12.5,13ZM16,26c-1.5691,0-3.9648-2.084-5.52-3.8057C11.9,21.2788,14.2656,20,16,20s4.1,1.2788,5.52,2.1943C19.9648,23.916,17.5691,26,16,26Zm4.8408-6.5156c-.0793-.0415-.1667-.0806-.248-.1221A2.38,2.38,0,0,0,21,18c0-1.1045-.6716-2-1.5-2s-1.5.8955-1.5,2a2.6411,2.6411,0,0,0,.0244.3232A9.1005,9.1005,0,0,0,17,18.0918V16.5254C17,14.6143,18.1448,13,19.5,13S22,14.6143,22,16.5254A4.0291,4.0291,0,0,1,20.8408,19.4844Z\" transform=\"translate(0 0)\"/>\n  <path d=\"M30,30a3.8876,3.8876,0,0,1-4-4V14A10,10,0,0,0,6,14V26a3.8876,3.8876,0,0,1-4,4V28a1.8793,1.8793,0,0,0,2-2V14a12,12,0,0,1,24,0V26a1.8825,1.8825,0,0,0,2,2Z\" transform=\"translate(0 0)\"/>\n  <rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/>\n</svg>\n",
+    	gamification: gamification,
+    	"palm-tree": "<svg id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n  <defs>\n    <style>\n      .cls-1 {\n        fill: none;\n      }\n    </style>\n  </defs>\n  <path d=\"M18.57,28C17.897,26.7251,16,22.2261,16,12v-.1313l1.1172.7446A6.4613,6.4613,0,0,1,20,18h2a8.457,8.457,0,0,0-3.7734-7.0508L16.8027,10h1.5308a7.04,7.04,0,0,1,4.2,1.4L24.4,12.8l1.2-1.6L23.7334,9.8a9.06,9.06,0,0,0-5.4-1.8H17.1172A7.0306,7.0306,0,0,1,22,6h2V4H22a9.035,9.035,0,0,0-7,3.3643A9.035,9.035,0,0,0,8,4H6V6H8a7.0306,7.0306,0,0,1,4.8828,2H11.6665a9.06,9.06,0,0,0-5.4,1.8L4.4,11.2l1.2,1.6L7.4668,11.4a7.04,7.04,0,0,1,4.2-1.4h1.5308l-1.4239.9492A8.457,8.457,0,0,0,8,18h2a6.4613,6.4613,0,0,1,2.8828-5.3867L14,11.8687V12c0,8.9438,1.4116,13.7646,2.3611,16H2v2H30V28Z\" transform=\"translate(0 0)\"/>\n  <rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/>\n</svg>\n",
     	chemistry: chemistry,
     	dna: dna,
-    	"linux--alt": "<svg id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n  <defs>\n    <style>\n      .cls-1 {\n        fill: none;\n      }\n    </style>\n  </defs>\n  <path d=\"M22.6121,20.5215A6.1582,6.1582,0,0,0,24,16.5254C24,13.4785,21.9812,11,19.5,11A4.2435,4.2435,0,0,0,16,13.06,4.2435,4.2435,0,0,0,12.5,11C10.0188,11,8,13.4785,8,16.5254a6.1593,6.1593,0,0,0,1.3879,3.9961c-.5688.3686-.9389.6416-.988.6787a1,1,0,0,0-.1807,1.4248C8.6592,23.1748,12.6169,28,16,28s7.3408-4.8252,7.7808-5.375A1,1,0,0,0,23.6,21.2C23.551,21.1631,23.1812,20.89,22.6121,20.5215ZM12.5,13c1.3552,0,2.5,1.6143,2.5,3.5254v1.5664a9.1005,9.1005,0,0,0-1.0244.2314A2.6411,2.6411,0,0,0,14,18c0-1.1045-.6716-2-1.5-2s-1.5.8955-1.5,2a2.38,2.38,0,0,0,.4072,1.3623c-.0813.0415-.1687.0806-.248.1221A4.0291,4.0291,0,0,1,10,16.5254C10,14.6143,11.1448,13,12.5,13ZM16,26c-1.5691,0-3.9648-2.084-5.52-3.8057C11.9,21.2788,14.2656,20,16,20s4.1,1.2788,5.52,2.1943C19.9648,23.916,17.5691,26,16,26Zm4.8408-6.5156c-.0793-.0415-.1667-.0806-.248-.1221A2.38,2.38,0,0,0,21,18c0-1.1045-.6716-2-1.5-2s-1.5.8955-1.5,2a2.6411,2.6411,0,0,0,.0244.3232A9.1005,9.1005,0,0,0,17,18.0918V16.5254C17,14.6143,18.1448,13,19.5,13S22,14.6143,22,16.5254A4.0291,4.0291,0,0,1,20.8408,19.4844Z\" transform=\"translate(0 0)\"/>\n  <path d=\"M30,30a3.8876,3.8876,0,0,1-4-4V14A10,10,0,0,0,6,14V26a3.8876,3.8876,0,0,1-4,4V28a1.8793,1.8793,0,0,0,2-2V14a12,12,0,0,1,24,0V26a1.8825,1.8825,0,0,0,2,2Z\" transform=\"translate(0 0)\"/>\n  <rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/>\n</svg>\n",
     	microscope: microscope,
-    	gamification: gamification,
-    	"palm-tree": "<svg id=\"Layer_1\" data-name=\"Layer 1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"32\" height=\"32\" viewBox=\"0 0 32 32\">\n  <defs>\n    <style>\n      .cls-1 {\n        fill: none;\n      }\n    </style>\n  </defs>\n  <path d=\"M18.57,28C17.897,26.7251,16,22.2261,16,12v-.1313l1.1172.7446A6.4613,6.4613,0,0,1,20,18h2a8.457,8.457,0,0,0-3.7734-7.0508L16.8027,10h1.5308a7.04,7.04,0,0,1,4.2,1.4L24.4,12.8l1.2-1.6L23.7334,9.8a9.06,9.06,0,0,0-5.4-1.8H17.1172A7.0306,7.0306,0,0,1,22,6h2V4H22a9.035,9.035,0,0,0-7,3.3643A9.035,9.035,0,0,0,8,4H6V6H8a7.0306,7.0306,0,0,1,4.8828,2H11.6665a9.06,9.06,0,0,0-5.4,1.8L4.4,11.2l1.2,1.6L7.4668,11.4a7.04,7.04,0,0,1,4.2-1.4h1.5308l-1.4239.9492A8.457,8.457,0,0,0,8,18h2a6.4613,6.4613,0,0,1,2.8828-5.3867L14,11.8687V12c0,8.9438,1.4116,13.7646,2.3611,16H2v2H30V28Z\" transform=\"translate(0 0)\"/>\n  <rect id=\"_Transparent_Rectangle_\" data-name=\"&lt;Transparent Rectangle&gt;\" class=\"cls-1\" width=\"32\" height=\"32\"/>\n</svg>\n"
+    	model: model
     };
 
     const global = {
@@ -4919,34 +4919,109 @@
 </div>
 `.hide();
 
+    let parser = new DOMParser();
+
+    function escapeHtml(unsafe) {
+    return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    const wregex = /(\w+)/gm;
+
+
+    const obsKey = O$2.rk(5);
+    const obs = {
+        "<": `;;#${obsKey}0;`,
+        ">": `;;#${obsKey}1;`
+    };
+
+    let obsegex = {};
+    for (let [key, value] of Object.entries(obs)) {
+        obsegex[key] = new RegExp(value, "gm");
+    }
+
+    const esc = (str) => str.replace(/</g, obs["<"])
+                                .replace(/>/g, obs[">"]);
+
+    const unesc = (str) => {
+        const r = (key) => obsegex[key];
+        return str.replaceAll(r("<"), "<")
+                  .replaceAll(r(">"), ">")
+    };
+
+    function wegex(str) {
+        return str.replaceAll(wregex, (match, re) => esc("<w>") + escapeHtml(re) + esc("</w>"))
+    }
+
     function wfyInner(desc) {
-        if (!desc) return false
-        desc = j$2(desc);
-        let txt = desc.textContent;
-        if (txt.length === 0) return false
+        if (!desc) return desc
 
-        let inner = "";
-        for (let txt of desc.textContent.split(" ")) {
-            // console.log(txt)
-            let noWhiteSpace = txt.replace(/\s/g, "");
-            inner += noWhiteSpace.length != 0 ? "<w>" + txt.split(" ").join("</w> <w>") + "</w> " : txt;
+        // console.log(desc.childrenArray)
+        // if (desc.childrenArray.length === 0){
+            // console.log(desc.textContent)
+            // desc.textContent = desc.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
+            // return desc
+        // }
+        // console.group()
+        let og = desc;
+        // let og = _e(desc)
+        let childMap = new Map();
+        desc = og.cloneNode(true);
+
+        let childTag = (key) => `{{{{@XFREADY:${key}:}}}}`;
+
+        desc.childNodes.forEach((element, i) => {
+            if (element.innerHTML == undefined) { // if text
+                // element.textContent = element.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
+                element.textContent = wegex(element.textContent);
+                return
+            }
+            let key = i.toString();
+            childMap.set(key, element.cloneNode(true));
+            element.replaceWith(childTag(key));
+        });
+
+
+        let txt = desc.innerHTML;
+        const regex = /\{{4}@XFREADY:(.+?(?=\:)).+?(?=\}{4})\}{4}/gm;
+        function replaceElement(match, key){
+            let child = childMap.get(key);
+            let inner = wfyInner(child);
+
+            // console.log(inner.innerHTML)
+            // inner.innerHTML = inner.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
+            // console.log(inner.innerHTML)
+            if (inner) return inner.outerHTML
+            return match 
         }
-
-        desc.html(inner);
+        
+        const parse = txt.replaceAll(regex, replaceElement);
+        // console.log(parser.parseFromString(parse, "text/html").documentElement.innerHTML)
+        og.innerHTML = parser.parseFromString(unesc(parse), "text/html").documentElement.innerHTML;
+        return og 
     }
 
     function wfyElement(element) {
         console.log('wfy element', element);
         // element = _e(element)
         // let nodes = element.findAll("*")
-        let nodes = element.childrenArray;
-        console.log('children', nodes);
-        if (nodes.length == 0) return wfyInner(element)
-        nodes.forEach(desc => wfyElement(desc));
+        // let nodes = element.childrenArray
+        // console.log('children', nodes)
+        // if (nodes.length != 0) nodes.forEach(desc => wfyElement(desc))
+
+        return wfyInner(element)
     }
 
     function wfy(element) {
-        wfyElement(j$2(element));
+        setTimeout(() => {
+            console.time('wfying...');
+            wfyElement(j$2(element));
+            console.timeEnd('wfying...');
+        }, 0);
     }
 
 
