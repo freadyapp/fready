@@ -205,7 +205,7 @@
        }
 
        tbody tr:nth-child(even){
-          background: red !important;
+          background: #eee !important;
         }
 
   
@@ -215,6 +215,10 @@
         border: 1px solid rgb(216, 216, 216);
         &:hover{
           background-color: #eeeeee;
+        }
+
+        >li, i {
+          line-height: 1em im !important;
         }
        }
        p, div{

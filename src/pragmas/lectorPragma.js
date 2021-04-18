@@ -5,9 +5,9 @@ import { Readability } from '@mozilla/readability'
 import { injectStyle } from "../.build_assets/index";
 import { Lector } from "lectorjs"
 
-
-console.log('readabilitys')
-console.log(Readability)
+// window.Mousetrap = Mousetrap
+// console.log('readabilitys')
+// console.log(Readability)
 
 let template = () => html`
 <div xfready id=lector class='fade-onload'>
@@ -113,19 +113,27 @@ export function wfyElement(element) {
 }
 
 export function wfy(element) {
-    setTimeout(() => {
-        console.time('wfying...')
-        wfyElement(element)
-        element.removeClass('loading')
-        console.timeEnd('wfying...')
-    }, 200)
+    return new Promise(resolve => {
+        setTimeout(() => {
+            console.time('wfying...')
+            wfyElement(element)
+            element.removeClass('loading')
+            resolve()
+            console.timeEnd('wfying...')
+        }, 200)
+    })
 }
 
 
 export class LectorPragma extends Pragma {
     constructor() {
         super()
-        console.log("creating new lector", this)
+        globalThis.pragmaSpace.integrateMousetrap(Mousetrap)
+        window.Mousetrap = Mousetrap
+        console.log(Mousetrap)
+        console.time('creating lec....')
+        this.createEvents('load', 'render', 'destroy')
+
         // document.body.appendChild(element)
         this.as(template())
 
@@ -133,21 +141,39 @@ export class LectorPragma extends Pragma {
             this.exit()
         })
 
+        this.ogBody = _e('body').cloneNode(true)
         this.reader = this.element.find("#reader")
                        .addClass("loading")
 
-        setTimeout(() => {
+        setTimeout(async () => {
             var article = new Readability(document.cloneNode(true)).parse()
             console.log(article)
             this.reader.html(article.content)
                        .removeClass('collapsed')
 
-            wfy(this.reader)
-            // this.lec = Lector(this.reader, {
-                // wfy: false,
-            
-            // })
-                    //    .addClass('article')
+            await wfy(this.reader)
+
+            this.lec = Lector(this.reader, {
+                wfy: false,
+                onboarding: true,
+                scaler: true,
+
+                fullStyles: true,
+                defaultStyles: true,
+                settings: true,
+            }).run(function() {
+                this.mark.addClass('billion-z-index')
+                _e('body').destroy()
+            })
+
+            // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
+            // this.lec.mark.element.destroy()
+            // this.lec.mark.element.replaceWith(clone)
+            // clone.replaceWith(this.lec.mark.element)
+
+            console.log("lec: ", this.lec)
+            this.triggerEvent('load')
+            console.timeEnd('creating lec....')
         }, 0)
 
         // this.element.find("#reader").html(article.content)
@@ -171,6 +197,8 @@ export class LectorPragma extends Pragma {
                 })
                 // .appendTo(this.reader)
             })
+            this.triggerEvent('render')
+
         }, 0)
         // window.bridge.request({ parse: this.element.html() }).then(_html => {
             // console.log('html', _html)
@@ -189,8 +217,14 @@ export class LectorPragma extends Pragma {
     }
 
     exit() {
-        this.element.hide()
-        _e('body').removeClass(`xfready-lector-open`)
+        // this.lec.destroy()
+        this.element.destroy()
+        
+        console.log('og body is', this.ogBody)
+        _e('html').append(this.ogBody)
+        // this.ogBody.appendTo(_e('html'))
+                    // .removeClass(`xfready-lector-open`)
+        this.triggerEvent('destroy')
         return this
     }
 }
