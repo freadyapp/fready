@@ -39,6 +39,25 @@ div[xfready]{
         }
     }
 
+    .flex-h {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+
+    }
+
+    .flex-h-space-around {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-around;
+        align-items: center;
+        align-content: stretch;
+    }
+
     .blue {
         color: #2b6cce !important;
     }
@@ -100,6 +119,8 @@ div[xfready]{
         border-radius: 5px;
 
         .time-url {
+           @extend .flex-h;
+
             .time {
                 margin-right: 5px;
             }
@@ -119,22 +140,12 @@ div[xfready]{
         }
 
         .save-read {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: flex-start;
-            align-items: center;
-            align-content: center;
+           @extend .flex-h
         }
     }
 
     .upload-dash {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-around;
-        align-items: center;
-        align-content: stretch;
+        @extend .flex-h-space-around;
         padding: 10px 0px;
         margin-top: 10px;
         position: relative;
@@ -150,12 +161,8 @@ div[xfready]{
     }
 
     .xfready-footer {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-around;
-        align-items: center;
-        align-content: stretch;
+        @extend .flex-h-space-around;
+
         margin-top: 10px;
 
         > svg {
