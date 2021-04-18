@@ -209,12 +209,18 @@ div[xfready]{
                 position: relative;
                 opacity: 70%;
                 margin-right: 5px;
+                width: 15px;
+                height: 15px;
     
                 >#empty-checkbox {
                     position: absolute;
                     top: 0;
                     left: 0;
                     z-index: -98765;
+                }
+
+                >#checked-checkbox {
+                    position: absolute;
                 }
 
                 @media (prefers-color-scheme: light) {
