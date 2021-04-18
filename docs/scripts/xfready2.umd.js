@@ -4933,21 +4933,25 @@
     const wregex = /(\w+)/gm;
 
 
-    O$2.rk(5);
-    // const obs = {
-        // "<": `;;#${obsKey}0;`,
-        // ">": `;;#${obsKey}1;`
-    // }
-
+    const obsKey = O$2.rk(5);
     const obs = {
-        "<": `{`,
-        ">": `}`
+        "<": `;;#${obsKey}0;`,
+        ">": `;;#${obsKey}1;`
     };
+
+    let obsegex = {};
     for (let [key, value] of Object.entries(obs)) {
+        obsegex[key] = new RegExp(value, "gm");
     }
 
     const esc = (str) => str.replace(/</g, obs["<"])
                                 .replace(/>/g, obs[">"]);
+
+    const unesc = (str) => {
+        const r = (key) => obsegex[key];
+        return str.replaceAll(r("<"), "<")
+                  .replaceAll(r(">"), ">")
+    };
 
     function wegex(str) {
         // return str
@@ -4962,9 +4966,8 @@
             // console.log(element.tagName)
             // desc.textContent = desc.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
             // element.textContent = wegex(element.textContent)
-            element.textContent = wegex(element.textContent);
-            // return
-            return j$2("span").html(desc.textContent)
+            desc.textContent = wegex(desc.textContent);
+            return desc
         }
         // console.log(desc.childrenArray)
         // if (desc.childrenArray.length === 0){
@@ -4990,17 +4993,16 @@
 
         let txt = desc.innerHTML;
         const regex = /\{{4}@XFREADY:(.+?(?=\:)).+?(?=\}{4})\}{4}/gm;
+
         function replaceElement(match, key){
             let child = childMap.get(key);
-            
-
             let inner = wfyInner(child);
 
             // console.log(inner.innerHTML)
             // inner.innerHTML = inner.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
             // console.log(inner.innerHTML)
             if (inner.outerHTML) return inner.outerHTML
-            return parser.parseFromString(inner.textContent, "text/html").documentElement.innerHTML 
+            return parser.parseFromString(unesc(inner.textContent), "text/html").documentElement.innerHTML 
         }
         
         const parse = txt.replaceAll(regex, replaceElement);
@@ -5117,7 +5119,7 @@
         return new LectorPragma
     }
 
-    let element$1 = X$1`
+    let element = X$1`
 <div xfready id=popup class='fade-onload'>
     <h1> This is freadys popup </h1>
     <div class='button' id='read'> Read </div>
@@ -5130,7 +5132,7 @@
             super();
             console.log("created new popup", this);
             // document.body.appendChild(element)
-            this.as(element$1);
+            this.as(element);
 
             this.lector = null;
             this.element.find("#read").listenTo('click', () => {

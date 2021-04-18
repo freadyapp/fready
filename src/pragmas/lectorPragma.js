@@ -34,14 +34,9 @@ const wregex = /(\w+)/gm
 
 
 const obsKey = util.rk(5)
-// const obs = {
-    // "<": `;;#${obsKey}0;`,
-    // ">": `;;#${obsKey}1;`
-// }
-
 const obs = {
-    "<": `{`,
-    ">": `}`
+    "<": `;;#${obsKey}0;`,
+    ">": `;;#${obsKey}1;`
 }
 
 let obsegex = {}
@@ -71,7 +66,8 @@ function wfyInner(desc) {
         // console.log(element.tagName)
         // desc.textContent = desc.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
         // element.textContent = wegex(element.textContent)
-        element.textContent = wegex(element.textContent)
+        desc.textContent = wegex(desc.textContent)
+        return desc
         // return
         return _e("span").html(desc.textContent)
     }
@@ -99,17 +95,16 @@ function wfyInner(desc) {
 
     let txt = desc.innerHTML
     const regex = /\{{4}@XFREADY:(.+?(?=\:)).+?(?=\}{4})\}{4}/gm
+
     function replaceElement(match, key){
         let child = childMap.get(key)
-        
-
         let inner = wfyInner(child)
 
         // console.log(inner.innerHTML)
         // inner.innerHTML = inner.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
         // console.log(inner.innerHTML)
         if (inner.outerHTML) return inner.outerHTML
-        return parser.parseFromString(inner.textContent, "text/html").documentElement.innerHTML 
+        return parser.parseFromString(unesc(inner.textContent), "text/html").documentElement.innerHTML 
     }
     
     const parse = txt.replaceAll(regex, replaceElement)
