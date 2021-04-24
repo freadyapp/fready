@@ -61,7 +61,21 @@ injectInitiateHandshake: {
     })
 
     messenger.on('command:request', (data, tab, respond) => {
-        API.request()
+
+        let link = {
+            "link": {
+                "url": "https://growandconvert.com/content-marketing/going-viral-medium/",
+                "body": "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
+                "saved": true,
+                "meta": {
+                    "title": "xss attack",
+                    "words": 420,
+                    "pages": 69
+                }
+            }
+        }
+
+        API.post('/links', link)
     })
 }
 
