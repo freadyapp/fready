@@ -1,5 +1,5 @@
-import { Pragma, html } from "pragmajs"
-import { SVG } from "../.build_assets/index"
+import { Pragma, html, _e } from "pragmajs"
+import { SVG, styles } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
 import { Xfready } from "./xfready"
 
@@ -37,26 +37,46 @@ let element = html`
     </div>
 `
 
+function shadow(e) {
+
+    e = _e(e)
+    let clone = e.cloneNode(true)
+    e.html(' ')
+
+    e.attachShadow({ mode: 'open' })
+    e.shadowRoot.appendChild(clone)
+
+    e.shadowRoot.appendChild(
+        _e(`<style>${styles['popup']}</style>`)
+    )
+    
+    console.log(e, e.shadowRoot)
+    return e
+}
+
 export class Popup extends Pragma {
     constructor() {
         super()
         console.log("created new popup", this)
         // document.body.appendChild(element)
-        this.as(element)
+        this.as(shadow(element))
 
         this.lector = null
-        this.element.find("#read").listenTo('click', () => {
-            xfready.lector = _lector().render()
 
+        this.shadow = this.element.shadowRoot
+        console.log('this shadows first child', this.shadow.firstChild)
+        this.shadow.find = query => _e(this.shadow.firstChild).find(query)
+
+        this.shadow.find("#read").listenTo('click', () => {
+            xfready.lector = _lector().render()
         })
 
-        this.element.find("#exit").listenTo('click', () => {
+        this.shadow.find("#exit").listenTo('click', () => {
             this.element.hide()
         })
 
-
-        this.element.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
-            this.element.find('#checked-checkbox').toggleClass('fade-out')
+        this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
+            this.shadow.find('#checked-checkbox').toggleClass('fade-out')
             console.log('CLICKED')
         })
     }
