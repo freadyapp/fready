@@ -4,6 +4,7 @@ import Mousetrap from "mousetrap"
 import { Readability } from '@mozilla/readability'
 import { injectStyle } from "../.build_assets/index";
 import { Lector } from "lectorjs"
+import { ShadowPragma } from "../misc/shadowPragma"
 
 // window.Mousetrap = Mousetrap
 // console.log('readabilitys')
@@ -125,7 +126,7 @@ export function wfy(element) {
 }
 
 
-export class LectorPragma extends Pragma {
+export class LectorPragma extends ShadowPragma {
     constructor() {
         super()
         globalThis.pragmaSpace.integrateMousetrap(Mousetrap)
@@ -137,23 +138,27 @@ export class LectorPragma extends Pragma {
         // document.body.appendChild(element)
         this.as(template())
 
-        this.element.find('#exit').listenTo('click', () => {
+        this.injectStyles(...[ "sanitized_elements", "syntax_highlight", "lector"])
+        this.shadow.find('#exit').listenTo('click', () => {
             this.exit()
         })
 
         this.ogBody = _e('body').cloneNode(true)
-        this.reader = this.element.find("#reader")
+        this.reader = this.shadow.find("#reader")
                        .addClass("loading")
 
+        var article = new Readability(document.cloneNode(true)).parse()
+
         setTimeout(async () => {
-            var article = new Readability(document.cloneNode(true)).parse()
+            console.log('document is', document)
             console.log(article)
             this.reader.html(article.content)
                        .removeClass('collapsed')
 
             await wfy(this.reader)
 
-            this.lec = Lector(this.reader, {
+            this.lec = await (Lector(this.reader, {
+                // wfy: true,
                 wfy: false,
                 onboarding: true,
                 scaler: true,
@@ -161,16 +166,19 @@ export class LectorPragma extends Pragma {
 
                 fullStyles: true,
                 defaultStyles: true,
+                shadow: this.shadow,
+
                 settings: true,
-            }).run(function() {
-                this.mark.addClass('billion-z-index')
-            })
 
-            // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
-            // this.lec.mark.element.destroy()
-            // this.lec.mark.element.replaceWith(clone)
-            // clone.replaceWith(this.lec.mark.element)
+            }))
 
+            // this.lec.run(function() {
+                let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.shadow)
+                this.lec.mark.element.destroy()
+                this.lec.mark.as(clone)
+                // clone.replaceWith(this.lec.mark.element)
+
+            // })
             console.log("lec: ", this.lec)
             this.triggerEvent('load')
             console.timeEnd('creating lec....')
@@ -185,17 +193,16 @@ export class LectorPragma extends Pragma {
         console.log('RENDERING')
 
         _e('body').addClass(`xfready-lector-open`)
-                    // .html(' ')
+                    .html(' ')
                     .append(this)
 
-
         this.element.show()
+        this.shadow.show()
 
         setTimeout(() => {
             this.reader.findAll('code').forEach(code => {
                 console.log("PARSE:", code.html())
                 window.bridge.request({ parse: code.textContent }).then(_html => {
-                    console.log("parsed", code)
                     code.html(Xfready.sanitizeHtml(_html))
                     // console.log("parsed", code)
                     // code.html('ue')
@@ -237,9 +244,9 @@ export class LectorPragma extends Pragma {
 let injected = false
 export function _lector() {
     if (!injected) {
-        let styles = [ "sanitized_elements", "syntax_highlight", "lector"]
+        let styles = [ 'main', "sanitized_elements", "syntax_highlight", "lector"]
         console.log('injecting', styles)
-        styles.forEach(s => injectStyle(s))
+        // styles.forEach(s => injectStyle(s))
         // console.log("injecting", styles)
         // injectStyle("sanitized_elements")
         // injectStyle("syntax_highlight")

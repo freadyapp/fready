@@ -57,6 +57,7 @@ export class Popup extends ShadowPragma {
             this.shadow.find('#checked-checkbox').toggleClass('fade-out')
             console.log('CLICKED')
         })
+
     }
 }
 

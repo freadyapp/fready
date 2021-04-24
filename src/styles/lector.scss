@@ -5,95 +5,95 @@
 marker {
     z-index: 99999999999999999 !important;
 }
-div[xfready] {
-    
-    &#lector {
-        position: fixed;
-        width: 100vw;
-        background-color: #303030;
 
-        top: 0;
-        left: 0;
+// div[xfready] {
 
-        z-index: 9999999999 !important;
-        height: 100vh;
+#lector {
+    position: fixed;
+    width: 100vw;
+    background-color: #303030;
 
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: flex-start;
-        // align-items: center;
+    top: 0;
+    left: 0;
 
-        text-align: center;
-        overflow: scroll;
+    z-index: 9999999999 !important;
+    height: 100vh;
 
-        #reader-rapper {
-            font-size: 19px;
-          	overflow: hidden;
-            flex-direction: column;
-            display: flex;
+    // display: flex;
+    // flex-direction: column;
+    // justify-content: flex-start;
+    // align-items: center;
 
-            align-items: center;
-            justify-content: flex-start;
-            overflow-y: scroll;
+    text-align: center;
+    overflow: scroll;
+
+    #reader-rapper {
+        font-size: 19px;
+        overflow: hidden;
+        flex-direction: column;
+        display: flex;
+
+        align-items: center;
+        justify-content: flex-start;
+        overflow-y: scroll;
+        
+
+        width: 100%;
+        height: fit-content;
+        margin: auto;
+
+        #reader {
+            width: 80%;
+            padding: 80px 140px;
+            overflow-y: scroll !important;
+            background: whitesmoke;
+
             
 
-            width: 100%;
-            height: fit-content;
-            margin: auto;
+            &.loading {
 
-            #reader {
-                width: 80%;
-                padding: 80px 140px;
-                overflow-y: scroll !important;
-                background: whitesmoke;
+                // *:not(table) {
+                    // filter: blur(2px) contrast(0.4);
+                // }
 
-                
-
-                &.loading {
-
-                    // *:not(table) {
-                        // filter: blur(2px) contrast(0.4);
-                    // }
-
-                    *:not(table) {
-                        > :not(table){
-                            filter: contrast(0);
-                            opacity: .3;
-                            transition: all .2 ease;
-                            // all: unset;
-                        }
+                *:not(table) {
+                    > :not(table){
+                        filter: contrast(0);
+                        opacity: .3;
+                        transition: all .2 ease;
+                        // all: unset;
                     }
-
-                    table {
-                        color: transparent;
-                    }
-
-                    transition: all .2 ease;
-                    opacity: .3;
-
-                    color: gray !important;
-
-                    // filter: grayscale(1);
                 }
+
+                table {
+                    color: transparent;
+                }
+
+                transition: all .2 ease;
+                opacity: .3;
+
+                color: gray !important;
+
+                // filter: grayscale(1);
             }
         }
-
-        
     }
 
-    .collapsable {
-
-        $animation: .3s;
-        overflow: hidden;
-        transition: all $animation ease;
-        // transition: opacity 0.05s eas;
-
-        // min-height: 0 !important;
-        height: auto;
-        flex: 1;
-
-        &.collapsed{
-            flex: 0;
-        }
-    }   
+    
 }
+
+.collapsable {
+
+    $animation: .3s;
+    overflow: hidden;
+    transition: all $animation ease;
+    // transition: opacity 0.05s eas;
+
+    // min-height: 0 !important;
+    height: auto;
+    flex: 1;
+
+    &.collapsed{
+        flex: 0;
+    }
+}   
