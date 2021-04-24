@@ -4,7 +4,7 @@
 // self.importScripts("./build/jolene.js")
 // importScripts("libs/xfready2.umd")
 const modules = [ "pragma", "hljs.min" ].map(k => `./modules/${k}`)
-const controllers = [ "install", "messenger" ].map(k => `./controllers/${k}_controller`)
+const controllers = [ "install", "API", "messenger" ].map(k => `./controllers/${k}_controller`)
 let scripts = (modules.concat(controllers)).map(k => k + ".js")
 scripts.forEach(script => importScripts(script))
 console.log(`🎬 imported scripts\n\t $${scripts.join("\n\t $")}`)
@@ -45,6 +45,7 @@ chrome.action.onClicked.addListener((tab) => {
 //     }
 // })
 
+console.log('api is,', API)
 injectInitiateHandshake: {
     let libraries = ["xfready2.umd", "helpers", "bridge"]
     let scripts = libraries.map(k => `libs/${k}`)
@@ -57,6 +58,10 @@ injectInitiateHandshake: {
         console.log('injecting', tab)
         injectScripts(tab.id, ...scripts)
         respond("injected") 
+    })
+
+    messenger.on('command:request', (data, tab, respond) => {
+        API.request()
     })
 }
 
@@ -78,3 +83,6 @@ messenger.onObj('parse', (data, tab, respond) => {
     // respond(doc)
     // respond(result) 
 })
+
+
+
