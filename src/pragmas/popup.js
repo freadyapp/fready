@@ -2,18 +2,19 @@ import { Pragma, html, _e } from "pragmajs"
 import { SVG, styles } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
 import { Xfready } from "./xfready"
+import { ShadowPragma } from "../misc/shadowPragma"
 
 let element = html`
     <div xfready id=popup class='fade-onload'>
         <div class='article-panel'>
             <div class='time-url'>
-                <h1 class='time blue no-select' id='time'>15'</h1>
+                <h3 class='time blue no-select' id='time'>15'</h3>
                 <p class='url' id='url'>en.wikipedia.org</p>
             </div>
-            <h1 class='title' id='title'>
+            <h3 class='title' id='title'>
                 Legality of bitcoin by country or territory
-                and the legality of marijuana by country and yeyeters
-            </h1>
+                and the legality of marijuana by country and yeeters
+            </h3>
             <div class='save-read'>
                 <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
                 <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
@@ -33,39 +34,16 @@ let element = html`
                 Show on websites
             </div>
         </div>
-        
     </div>
 `
 
-function shadow(e) {
+export class Popup extends ShadowPragma {
 
-    e = _e(e)
-    let clone = e.cloneNode(true)
-    e.html(' ')
-
-    e.attachShadow({ mode: 'open' })
-    e.shadowRoot.appendChild(clone)
-
-    e.shadowRoot.appendChild(
-        _e(`<style>${styles['popup']}</style>`)
-    )
-    
-    console.log(e, e.shadowRoot)
-    return e
-}
-
-export class Popup extends Pragma {
     constructor() {
         super()
-        console.log("created new popup", this)
-        // document.body.appendChild(element)
-        this.as(shadow(element))
 
-        this.lector = null
-
-        this.shadow = this.element.shadowRoot
-        console.log('this shadows first child', this.shadow.firstChild)
-        this.shadow.find = query => _e(this.shadow.firstChild).find(query)
+        this.as(element)
+        this.injectStyles('main', 'popup')
 
         this.shadow.find("#read").listenTo('click', () => {
             xfready.lector = _lector().render()
