@@ -46,8 +46,7 @@ export class Popup extends Pragma {
 
         this.lector = null
         this.element.find("#read").listenTo('click', () => {
-            xfready.lector = _lector().appendTo(_e("html"))
-                                    .render()
+            xfready.lector = _lector().render()
 
         })
 

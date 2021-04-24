@@ -2,7 +2,11 @@
     z-index: 999999999999 !important;
 }
 
+marker {
+    z-index: 99999999999999999 !important;
+}
 div[xfready] {
+    
     &#lector {
         position: fixed;
         width: 100vw;

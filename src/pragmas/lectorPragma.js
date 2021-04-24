@@ -157,13 +157,13 @@ export class LectorPragma extends Pragma {
                 wfy: false,
                 onboarding: true,
                 scaler: true,
+                experimental: true,
 
                 fullStyles: true,
                 defaultStyles: true,
                 settings: true,
             }).run(function() {
                 this.mark.addClass('billion-z-index')
-                _e('body').destroy()
             })
 
             // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
@@ -183,9 +183,14 @@ export class LectorPragma extends Pragma {
 
     render() {
         console.log('RENDERING')
-        this.element.show()
 
         _e('body').addClass(`xfready-lector-open`)
+                    // .html(' ')
+                    .append(this)
+
+
+        this.element.show()
+
         setTimeout(() => {
             this.reader.findAll('code').forEach(code => {
                 console.log("PARSE:", code.html())

@@ -1924,9 +1924,9 @@ component-emitter@^1.2.1:
   integrity sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==
 
 compromise@^13.7.0:
-  version "13.11.0"
-  resolved "https://registry.yarnpkg.com/compromise/-/compromise-13.11.0.tgz#6a6cd4546e8411be92288c013f5ee57074f359f7"
-  integrity sha512-G3zyiU3QHnc5vrSzWvMZjWUTfX4vwBZVVOrQdyood+/k8qJoBiC6KANnU9kZuH0RgB2ZqpM395bccthcJlOw7g==
+  version "13.11.1"
+  resolved "https://registry.yarnpkg.com/compromise/-/compromise-13.11.1.tgz#a0c087f1979130f29b75f23060e5117a3f8217cd"
+  integrity sha512-Mpr9GuugHQ/IcbNAKN+p2Cvmf3/nxqkmKZ+6CM5DwSJmuQQ4WSuTHshVwKYfvrt5FveMsx0pijSyt7WofiJ/3g==
   dependencies:
     efrt-unpack "2.2.0"
 
@@ -3851,15 +3851,15 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lectorjs@^0.7.2:
-  version "0.7.2"
-  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.7.2.tgz#86b4d9b133c97b4a1d972d4540e9ab201b981689"
-  integrity sha512-oVpODgkfdIoM24pVRX8anmOKtMf7owC85m/2sullHiamLG6MA7J+7SxlkYHz2LfKPi0L63F8bc5egBIzCPhuMg==
+lectorjs@^0.8.0-b:
+  version "0.8.0-b"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.8.0-b.tgz#76350ed8c2d768a8cef1f849b9e9a86a79fbe45e"
+  integrity sha512-x+J5erXPxIEqQGVcShLh+gWqFQmLG6ljZVJjo2VvMRj3rAjcauRpb+w7HmnhfFA8blQAbh78AtM0eBi57EskLw==
   dependencies:
     animejs "^3.2.1"
     compromise "^13.7.0"
     mousetrap "^1.6.5"
-    pragmajs "^0.8.1"
+    pragmajs "^0.8.4"
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4486,10 +4486,10 @@ postcss@^8.2.10:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
-pragmajs@^0.8.1, pragmajs@^0.8.2:
-  version "0.8.2"
-  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.2.tgz#284763a158c3c08403deb0b3c2e22795d3f23662"
-  integrity sha512-VL9V9MznpaOSvglPebken46sVWo/M2+ZK+Mtb3JfmMiGICEN7LeNa5psROySv0Om1bRiS7CBuOxPo2n4CqjoZg==
+pragmajs@^0.8.4:
+  version "0.8.4"
+  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.4.tgz#9d2e1823af7d1b992794eeeee43661e16a707742"
+  integrity sha512-fcnFcOssMnWL7i8VhetJUkuRp536iUxwMLasVS+bcKUCZaBY+0HufhI2odgei3LvLy34TMu1U65/DxSIbgqj/w==
 
 prelude-ls@^1.2.1:
   version "1.2.1"
