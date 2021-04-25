@@ -9,6 +9,10 @@ let scripts = (modules.concat(controllers)).map(k => k + ".js")
 scripts.forEach(script => importScripts(script))
 console.log(`🎬 imported scripts\n\t $${scripts.join("\n\t $")}`)
 
+const SYNC = new Object
+let methods = [ 'get', 'set' ]
+methods.forEach(meth => SYNC[meth] = (...params) => { return chrome.storage.sync[meth](...params) })
+
 // put in a pragmactic controller
 function injectScript(tab, file) {
     chrome.scripting.executeScript({
@@ -46,7 +50,7 @@ chrome.action.onClicked.addListener((tab) => {
 // })
 
 function linksApiConfiguration() {
-    this.on('links:create', (data, tab, respond) =>{
+    this.onMsg('links:create', (data, tab, respond) =>{
         console.log('creating', data)
         API.post('/links', data)
     })
@@ -59,7 +63,45 @@ function linksApiConfiguration() {
     console.log('messenget is', this)
 }
 
-console.log('api is,', API)
+API.define({
+    async syncLinks() {
+        let links = await this.get('/links')
+
+        let linkMap = {} 
+        links.forEach(link => linkMap[link.loc] = {
+            id: link.id,
+            saved: link.saved,
+            meta: link.meta
+        })
+
+        return SYNC.set({ links: linkMap })
+    },
+
+    async createLink(link) {
+        // let link = {
+        //     link: {
+        //         url: "https://growandconvert.com/content-marketing/going-viral-medium/",
+        //         body: "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
+        //         saved: true,
+        //         meta: {
+        //             title: "xss attack",
+        //             words: 420,
+        //             pages: 69
+        //         }
+        //     }
+        // }
+
+        return API.post('/links', link)
+    }
+})
+
+SYNC.get('links', ({links}) => {
+    console.log('synced links are', links)
+    // SYNC.set({ links: "yeeta" })
+})
+
+API.syncLinks()
+
 injectInitiateHandshake: {
     let libraries = ["xfready2.umd", "helpers", "bridge"]
     let scripts = libraries.map(k => `libs/${k}`)

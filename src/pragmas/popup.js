@@ -46,6 +46,9 @@ export class Popup extends ShadowPragma {
         this.injectStyles('main', 'popup')
 
         this.shadow.find("#read").listenTo('click', () => {
+            window.bridge.request("links:create", {
+                url: 'yeet'
+            })
             xfready.lector = _lector().render()
         })
 

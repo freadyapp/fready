@@ -35,7 +35,8 @@ class Bridge extends Pragma {
         return key
     }
     
-    request(message) {
+    request(message, data=null) {
+        if (data) message = { [message]: data }
         return new Promise((resolve, reject) => {
             let key = this.send(message)
 

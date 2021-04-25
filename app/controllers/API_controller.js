@@ -54,11 +54,11 @@ class APIController extends Pragma {
         })
 
         console.log("done " + method+"ing to", this.url+suburl, data)
-        let text = response.text()
+        // let text = response.text()
         try {
-            return JSON.parse(text)
+            return response.json() 
         } catch {
-            return text 
+            return response.text() 
         }
         // return response.json(); // parses JSON response into native JavaScript objects
     }
