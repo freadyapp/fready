@@ -50,9 +50,9 @@ chrome.action.onClicked.addListener((tab) => {
 // })
 
 function linksApiConfiguration() {
-    this.onMsg('links:create', (data, tab, respond) =>{
+    this.onMsg('links:create', async (data, tab, respond) =>{
         console.log('creating', data)
-        API.post('/links', data)
+        respond(await API.post('/links', data))
     })
 
     this.onMsg('links:index', async (data, tab, respond) =>{
