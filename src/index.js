@@ -9,19 +9,22 @@ export function xfready2Test(){
     console.log("hello from _xfready2")
 }
 
+
 import("pragmajs").then(pragmajs => {
     for (let [key, value] of Object.entries(pragmajs)) {
         window[key] = value
         
     }
+    
 })
 
 console.log('READY STATE', document.readyState)
 console.log('injecting styles...')
+
 injectStyle("reset")
 injectStyle("main")
-window.xfready = new Xfready()
 
+window.xfready = new Xfready()
 xfready.on('lector:create', lector => {
     console.group('constructing lector')
     console.time("CONSTRUCT LECTOR from DOCUMENT...")
@@ -31,6 +34,7 @@ xfready.on('lector:create', lector => {
         console.groupEnd('constructing lector')
     })
 })
+
 // window.pragmajs = await import('pragmajs')
 // window.pragmajs.globalify()
 

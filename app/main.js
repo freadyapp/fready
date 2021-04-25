@@ -45,6 +45,20 @@ chrome.action.onClicked.addListener((tab) => {
 //     }
 // })
 
+function linksApiConfiguration() {
+    this.on('links:create', (data, tab, respond) =>{
+        console.log('creating', data)
+        API.post('/links', data)
+    })
+
+    this.onMsg('links:index', async (data, tab, respond) =>{
+        console.log('indexing', data)
+        respond(await API.get('/links'))
+    })
+
+    console.log('messenget is', this)
+}
+
 console.log('api is,', API)
 injectInitiateHandshake: {
     let libraries = ["xfready2.umd", "helpers", "bridge"]
@@ -60,26 +74,29 @@ injectInitiateHandshake: {
         respond("injected") 
     })
 
+    messenger.run(linksApiConfiguration)
     messenger.on('command:request', (data, tab, respond) => {
 
-        let link = {
-            "link": {
-                "url": "https://growandconvert.com/content-marketing/going-viral-medium/",
-                "body": "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
-                "saved": true,
-                "meta": {
-                    "title": "xss attack",
-                    "words": 420,
-                    "pages": 69
-                }
-            }
-        }
+        // let link = {
+        //     "link": {
+        //         "url": "https://growandconvert.com/content-marketing/going-viral-medium/",
+        //         "body": "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
+        //         "saved": true,
+        //         "meta": {
+        //             "title": "xss attack",
+        //             "words": 420,
+        //             "pages": 69
+        //         }
+        //     }
+        // }
 
-        API.post('/links', link)
+        // API.post('/links', link)
     })
+
+
 }
 
-messenger.onObj('parse', (data, tab, respond) => {
+messenger.onMsg('parse', (data, tab, respond) => {
     console.log('parsing', tab)
 
     // var doc = new DOMParser().parseFromString(data.toString(), "text/html");

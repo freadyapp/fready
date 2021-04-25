@@ -55,12 +55,18 @@ class Messenger extends Pragma {
         this.log('recieved', msg, 'from', port)
     }
 
-    onObj(cmd, ...cbs) {
+    onMsg(cmd, ...cbs) {
         if (!this._events.has(`receive:${cmd}`)) {
             this.on("receive", (msg, port) => {
-                if (typeof msg.message !== 'object' && !(cmd in msg.message)) return
+                let data;
+                if (typeof msg.message === 'string' && msg.message === cmd){
+                    data = msg.message
+                } else if (typeof msg.message !== 'object' || !(cmd in msg.message)) return
+                else  {
+                    data = msg.message[cmd]
+                }
                 console.log("OBJECT IS", msg.message)
-                this.triggerEvent(`receive:${cmd}`, msg.message[cmd], port.sender.tab, (data) => port.postMessage({ data, key: msg.key }))
+                this.triggerEvent(`receive:${cmd}`, data, port.sender.tab, (data) => port.postMessage({ data, key: msg.key }))
             })
         }
 

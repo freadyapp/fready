@@ -3,6 +3,9 @@ async function digCredential(key){
         chrome.storage.sync.get('user', data => resolve(key ? data.user[key] : data))
     })
 }
+function toURLParams(obj){
+    return new URLSearchParams(obj).toString()
+}
 
 class APIController extends Pragma {
     constructor() {
@@ -32,7 +35,10 @@ class APIController extends Pragma {
 
         console.log('api key is', api_key)
 
-        const response = await fetch((this.url+suburl), {
+        let params = method === 'GET' ? toURLParams(data) : {}
+
+        console.log('params are', params)
+        const response = await fetch((this.url+suburl+`?${params}`), {
             method, // *GET, POST, PUT, DELETE, etc.
             mode: 'cors', // no-cors, *cors, same-origin
             // cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached

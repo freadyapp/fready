@@ -47,3 +47,9 @@ class Bridge extends Pragma {
 
 bridge = new Bridge()
 window.bridge = bridge 
+
+window.bridge.request("links:index").then(data => {
+    console.log("parsed", data)
+    // console.log("parsed", code)
+    // code.html('ue')
+})
