@@ -5052,7 +5052,7 @@
             window.Mousetrap = mousetrap;
             console.log(mousetrap);
             console.time('creating lec....');
-            this.createEvents('load', 'render', 'destroy');
+            this.createEvents('load', 'load article', 'parse article', 'render', 'destroy');
 
             // document.body.appendChild(element)
             this.as(template());
@@ -5065,15 +5065,27 @@
             this.reader = this.element.find("#reader")
                            .addClass("loading");
 
+            // this.element.find("#reader").html(article.content)
+        }
+
+        load() {
             setTimeout(async () => {
                 var article = new readability.Readability(document.cloneNode(true)).parse();
-                console.log(article);
+                this.article = article;
+                this.triggerEvent('load article', article);
+
+
+                // console.log(article)
                 this.reader.html(article.content)
                            .removeClass('collapsed');
 
                 await wfy(this.reader);
 
-                this.lec = Jt(this.reader, {
+                this.article.content = this.reader.html();
+                console.log('triggering event with', this.article);
+                this.triggerEvent('parse article', this.article);
+
+                this.lec = (await Jt(this.reader, {
                     wfy: false,
                     onboarding: true,
                     scaler: true,
@@ -5082,8 +5094,12 @@
                     fullStyles: true,
                     defaultStyles: true,
                     settings: true,
-                }).run(function() {
+                })).run(function() {
                     this.mark.addClass('billion-z-index');
+                }).run(() => {
+                    console.log("lec: ", this.lec);
+                    this.triggerEvent('load', this.lec);
+                    console.timeEnd('creating lec....');
                 });
 
                 // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
@@ -5091,15 +5107,11 @@
                 // this.lec.mark.element.replaceWith(clone)
                 // clone.replaceWith(this.lec.mark.element)
 
-                console.log("lec: ", this.lec);
-                this.triggerEvent('load');
-                console.timeEnd('creating lec....');
+                
+
             }, 0);
-
-            // this.element.find("#reader").html(article.content)
+            return this
         }
-
-
 
         render() {
             console.log('RENDERING');
@@ -5245,10 +5257,11 @@
             this.injectStyles('main', 'popup');
 
             this.shadow.find("#read").listenTo('click', () => {
-                window.bridge.request("links:create", {
-                    url: 'yeet'
-                });
-                xfready.lector = _lector().render();
+
+                xfready.lector = _lector()
+                                    .on('parse article', createArticle)
+                                    .load()
+                                    .render();
             });
 
             this.shadow.find("#exit").listenTo('click', () => {
@@ -5262,6 +5275,23 @@
         }
     }
 
+    function createArticle(article, saved=true) {
+        console.log('creating new article');
+        
+        let link = {
+            url: HOST.getURL(),
+            body: article.content,
+            saved,
+            meta: {
+                title: article.title,
+                by: article.byline || article.siteName || HOST.get(),
+                words: article.length/5,
+                pages: 1
+            }
+        };
+
+        window.bridge.request("links:create", { link });
+    }
     function _popup(){
         return new Popup
     }

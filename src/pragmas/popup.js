@@ -46,10 +46,11 @@ export class Popup extends ShadowPragma {
         this.injectStyles('main', 'popup')
 
         this.shadow.find("#read").listenTo('click', () => {
-            window.bridge.request("links:create", {
-                url: 'yeet'
-            })
-            xfready.lector = _lector().render()
+
+            xfready.lector = _lector()
+                                .on('parse article', createArticle)
+                                .load()
+                                .render()
         })
 
         this.shadow.find("#exit").listenTo('click', () => {
@@ -63,6 +64,23 @@ export class Popup extends ShadowPragma {
     }
 }
 
+function createArticle(article, saved=true) {
+    console.log('creating new article')
+    
+    let link = {
+        url: HOST.getURL(),
+        body: article.content,
+        saved,
+        meta: {
+            title: article.title,
+            by: article.byline || article.siteName || HOST.get(),
+            words: article.length/5,
+            pages: 1
+        }
+    }
+
+    window.bridge.request("links:create", { link })
+}
 export function _popup(){
     return new Popup
 }

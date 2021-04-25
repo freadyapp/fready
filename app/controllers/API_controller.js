@@ -1,6 +1,9 @@
 async function digCredential(key){
-    return new Promise(resolve => {
-        chrome.storage.sync.get('user', data => resolve(key ? data.user[key] : data))
+    return new Promise((resolve, reject) => {
+        chrome.storage.sync.get('user', data => {
+            if (!data.user) return reject('nobody logged in') 
+            resolve(key ? data.user[key] : data)
+        })
     })
 }
 function toURLParams(obj){
