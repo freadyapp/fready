@@ -148,15 +148,19 @@ export class LectorPragma extends Pragma {
         // this.element.find("#reader").html(article.content)
     }
 
+    loadArticle() {
+        var article = new Readability(document.cloneNode(true)).parse()
+        this.article = article
+        this.triggerEvent('load article', article)
+        return this
+    }
+
     load() {
         setTimeout(async () => {
-            var article = new Readability(document.cloneNode(true)).parse()
-            this.article = article
-            this.triggerEvent('load article', article)
-
-
+            this.loadArticle()
+            
             // console.log(article)
-            this.reader.html(article.content)
+            this.reader.html(this.article.content)
                        .removeClass('collapsed')
 
             await wfy(this.reader)

@@ -5071,15 +5071,19 @@
             // this.element.find("#reader").html(article.content)
         }
 
+        loadArticle() {
+            var article = new readability.Readability(document.cloneNode(true)).parse();
+            this.article = article;
+            this.triggerEvent('load article', article);
+            return this
+        }
+
         load() {
             setTimeout(async () => {
-                var article = new readability.Readability(document.cloneNode(true)).parse();
-                this.article = article;
-                this.triggerEvent('load article', article);
-
-
+                this.loadArticle();
+                
                 // console.log(article)
-                this.reader.html(article.content)
+                this.reader.html(this.article.content)
                            .removeClass('collapsed');
 
                 await wfy(this.reader);
@@ -5234,8 +5238,11 @@
         </div>
     </div>
 `.define({
-        title: "#title"
+        title: "#title",
+        url: "#url",
+        eta: "#time"
     });
+
     let template = X$3`
         <div xfready id=popup class='fade-onload'>
             <div class='article-panel'>
@@ -5263,18 +5270,23 @@
             super();
 
             this.as(template);
-            this.injectStyles('main', 'popup');
-
             this.shadow.find(".article-panel").replaceWith(panel.element);
 
-            
-            panel.title.listenTo('click', () => alert('karkino pathis '));
+            this.injectStyles('main', 'popup');
+
+            pragmaSpace.onDocLoad(() => {
+                this.lector = _lector()
+                                .on('load article', slurpArticle)
+                                .on('parse article', createArticle)
+                                .loadArticle();
+            });
+
+            // panel.title.listenTo('click', () => )
 
             this.shadow.find("#read").listenTo('click', () => {
-                xfready.lector = _lector()
-                                    .on('parse article', createArticle)
-                                    .load()
-                                    .render();
+                this.lector
+                        .load()
+                        .render();
             });
 
             this.shadow.find("#exit").listenTo('click', () => {
@@ -5288,6 +5300,23 @@
         }
     }
 
+    function slurpArticle(article) {
+        panel.title.html(article.title);
+        panel.url.html(authoredBy(article));
+        panel.eta.html(article.length/5);
+
+        // return {
+        //     url: HOST.getURL(),
+        //     body: article.content,
+        //     saved,
+        //     meta: {
+        //         title: article.title,
+        //         by: authoredBy(article),
+        //         words: article.length/5,
+        //         pages: 1
+        //     }
+        // }
+    }
     function createArticle(article, saved=true) {
         console.log('creating new article');
         
@@ -5297,7 +5326,7 @@
             saved,
             meta: {
                 title: article.title,
-                by: article.byline || article.siteName || HOST.get(),
+                by: authoredBy(article),
                 words: article.length/5,
                 pages: 1
             }
@@ -5305,6 +5334,11 @@
 
         window.bridge.request("links:create", { link });
     }
+
+    function authoredBy(article) {
+        return article.byline ? "by " + article.byline : article.siteName || HOST.get()
+    }
+
     function _popup(){
         return new Popup
     }

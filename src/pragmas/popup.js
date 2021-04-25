@@ -20,8 +20,11 @@ let panel = block`
         </div>
     </div>
 `.define({
-    title: "#title"
+    title: "#title",
+    url: "#url",
+    eta: "#time"
 })
+
 let template = html`
         <div xfready id=popup class='fade-onload'>
             <div class='article-panel'>
@@ -53,14 +56,19 @@ export class Popup extends ShadowPragma {
 
         this.injectStyles('main', 'popup')
 
+        pragmaSpace.onDocLoad(() => {
+            this.lector = _lector()
+                            .on('load article', slurpArticle)
+                            .on('parse article', createArticle)
+                            .loadArticle()
+        })
 
         // panel.title.listenTo('click', () => )
 
         this.shadow.find("#read").listenTo('click', () => {
-            xfready.lector = _lector()
-                                .on('parse article', createArticle)
-                                .load()
-                                .render()
+            this.lector
+                    .load()
+                    .render()
         })
 
         this.shadow.find("#exit").listenTo('click', () => {
@@ -74,6 +82,23 @@ export class Popup extends ShadowPragma {
     }
 }
 
+function slurpArticle(article) {
+    panel.title.html(article.title)
+    panel.url.html(authoredBy(article))
+    panel.eta.html(article.length/5)
+
+    // return {
+    //     url: HOST.getURL(),
+    //     body: article.content,
+    //     saved,
+    //     meta: {
+    //         title: article.title,
+    //         by: authoredBy(article),
+    //         words: article.length/5,
+    //         pages: 1
+    //     }
+    // }
+}
 function createArticle(article, saved=true) {
     console.log('creating new article')
     
@@ -83,7 +108,7 @@ function createArticle(article, saved=true) {
         saved,
         meta: {
             title: article.title,
-            by: article.byline || article.siteName || HOST.get(),
+            by: authoredBy(article),
             words: article.length/5,
             pages: 1
         }
@@ -91,6 +116,11 @@ function createArticle(article, saved=true) {
 
     window.bridge.request("links:create", { link })
 }
+
+function authoredBy(article) {
+    return article.byline ? "by " + article.byline : article.siteName || HOST.get()
+}
+
 export function _popup(){
     return new Popup
 }
