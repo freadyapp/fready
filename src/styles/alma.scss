@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
+// font-family: 'IBM Plex Mono', monospace;
+
+.alma {
+    z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
+    min-width: 233px;
+    height: 45px;   
+    position: fixed;
+    top: 10px;
+    right: 5px;
+    background-color: #35363A;
+    user-select: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 15px 2px;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    border-radius: 3px;
+
+    >svg {
+        height: 28px;
+        width: auto;
+        margin: 0px 5px;
+    }
+    
+    >svg#space2read-black {
+        display: none;
+    }
+
+
+    @media (prefers-color-scheme: light) {
+        background: rgb(255, 255, 255);
+
+        >svg#space2read-black {
+            display: block;
+        }
+
+        >svg#space2read-white {
+            display: none;
+        }
+    }
+
+    .time {
+        color: #5A90E2 !important;
+    }
+
+
+}
