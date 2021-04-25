@@ -3,9 +3,11 @@ import { SVG, styles } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
 import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
+import { HOST } from "../misc/helpers"
 
 let panel = block`
     <div class='article-panel'>
+        <div class='button-gray' id='exit'> x </div>
         <div class='time-url'>
             <h3 class='time blue no-select' id='time'>15'</h3>
             <p class='url' id='url'>en.wikipedia.org</p>
@@ -15,14 +17,15 @@ let panel = block`
             and the legality of marijuana by country and yeeters
         </h3>
         <div class='save-read'>
-            <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
+            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} Save </div>
             <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
         </div>
     </div>
 `.define({
     title: "#title",
     url: "#url",
-    eta: "#time"
+    eta: "#time",
+    saved: "#save"
 })
 
 let template = html`
@@ -82,10 +85,16 @@ export class Popup extends ShadowPragma {
     }
 }
 
-function slurpArticle(article) {
+async function slurpArticle(article) {
+
     panel.title.html(article.title)
     panel.url.html(authoredBy(article))
     panel.eta.html(article.length/5)
+
+    let existingArticle = await window.bridge.request("links:get", HOST.getURL())
+    if (existingArticle && existingArticle.saved) panel.saved.css("background-color red")
+
+    console.log('existing article is', existingArticle)
 
     // return {
     //     url: HOST.getURL(),
@@ -109,7 +118,7 @@ function createArticle(article, saved=true) {
         meta: {
             title: article.title,
             by: authoredBy(article),
-            words: article.length/5,
+            words: Math.round(article.length/4.7),
             pages: 1
         }
     }

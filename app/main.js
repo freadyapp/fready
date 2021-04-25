@@ -61,8 +61,16 @@ function linksApiConfiguration() {
         respond(await API.get('/links'))
     })
 
+    this.onMsg('links:get', async (data, tab, respond) => {
+        console.log('getting link by', data)
+        respond(await new Promise(resolve => SYNC.get('links', ({links}) => {
+            resolve(data ? links[data] : links)
+        })))
+    })
+
     console.log('messenget is', this)
 }
+
 
 API.define({
     async syncLinks() {
@@ -92,28 +100,29 @@ API.define({
         //     }
         // }
 
-        return API.post('/links', link)
-    }
-})
+        let promise = API.post('/links', link)
 
-SYNC.get('links', ({links}) => {
-    console.log('synced links are', links)
-    // SYNC.set({ links: "yeeta" })
+        setTimeout(() => {
+            API.syncLinks()
+        }, 420)
+
+        return promise
+    }
 })
 
 API.syncLinks()
 
 injectInitiateHandshake: {
-    let libraries = ["xfready2.umd", "helpers", "bridge"]
-    let scripts = libraries.map(k => `libs/${k}`)
-    scripts.push("user")
+    // let libraries = ["xfready2.umd"]
+    // let scripts = libraries.map(k => `libs/${k}`)
+    // scripts.push("user")
 
     console.log('listentign to injecting')
 
     messenger.on('command:inject', (data, tab, respond) => {
         console.log(data, tab, respond)
         console.log('injecting', tab)
-        injectScripts(tab.id, ...scripts)
+        injectScripts(tab.id, "libs/xfready2.umd")
         respond("injected") 
     })
 

@@ -1,5 +1,6 @@
+import { Pragma } from "pragmajs"
 
-class Bridge extends Pragma {
+export class Bridge extends Pragma {
     constructor(port=chrome.runtime.connect()){
         super()
 
@@ -46,11 +47,12 @@ class Bridge extends Pragma {
     }
 }
 
-bridge = new Bridge()
-window.bridge = bridge 
+export function _bridge() {
+    return new Bridge(...arguments)
+}
 
-window.bridge.request("links:index").then(data => {
-    console.log("parsed", data)
-    // console.log("parsed", code)
-    // code.html('ue')
-})
+// window.bridge.request("links:index").then(data => {
+//     console.log("parsed", data)
+//     // console.log("parsed", code)
+//     // code.html('ue')
+// })

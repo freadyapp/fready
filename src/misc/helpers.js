@@ -1,4 +1,4 @@
-class HOST {
+export class HOST {
     static is(...hosts){
         return hosts.includes(window.location.host)
     }

@@ -5222,6 +5222,20 @@
         }
     }
 
+    class HOST {
+        static is(...hosts){
+            return hosts.includes(window.location.host)
+        }
+
+        static get() {
+            return window.location.host
+        }
+
+        static getURL() {
+            return window.location.href
+        }
+    }
+
     let panel = Z$2`
     <div class='article-panel'>
         <div class='time-url'>
@@ -5305,6 +5319,9 @@
         panel.url.html(authoredBy(article));
         panel.eta.html(article.length/5);
 
+        window.bridge.request("links:get", HOST.getURL());
+        console.log('existing article is');
+
         // return {
         //     url: HOST.getURL(),
         //     body: article.content,
@@ -5327,7 +5344,7 @@
             meta: {
                 title: article.title,
                 by: authoredBy(article),
-                words: article.length/5,
+                words: Math.round(article.length/4.7),
                 pages: 1
             }
         };
@@ -5378,21 +5395,73 @@
 
     }
 
-    function xfready2Test(){
-        console.log("hello from _xfready2");
+    class Bridge extends q$3 {
+        constructor(port=chrome.runtime.connect()){
+            super();
+
+            this.port = port; 
+            this.createEvents("message", "send");
+            this.port.onMessage.addListener(msg => {
+                console.log('received', msg);
+                this.triggerEvent('message', msg);
+            });
+        }
+
+        awaitResponse(key) {
+            return new Promise(resolve => this.on("message", (msg) => {
+                // console.log(msg.key, key)
+                if (msg.key === key) {
+                    resolve(msg.data);
+                    return cb => {
+                        cb.selfDestruct();
+                    }
+                }
+                // this.awaitResponse(key).then(msg => resolve(msg.data))
+            }))
+        }
+
+        send(message, key=util.rk8()) {
+            this.port.postMessage({
+                message,
+                key
+            });
+
+            this.triggerEvent("send", key, message);
+
+            return key
+        }
+        
+        request(message, data=null) {
+            if (data) message = { [message]: data };
+            return new Promise((resolve, reject) => {
+                let key = this.send(message);
+
+                this.triggerEvent("send", key, message);
+                this.awaitResponse(key).then(data => resolve(data));
+            })
+        }
     }
 
+    function _bridge() {
+        return new Bridge(...arguments)
+    }
+
+    // window.bridge.request("links:index").then(data => {
+    //     console.log("parsed", data)
+    //     // console.log("parsed", code)
+    //     // code.html('ue')
+    // })
 
     Promise.resolve().then(function () { return pragmajs; }).then(pragmajs => {
         for (let [key, value] of Object.entries(pragmajs)) {
             window[key] = value;
-            
         }
         
     });
 
-    console.log('READY STATE', document.readyState);
     console.log('injecting styles...');
+
+    window.bridge = _bridge();
 
     injectStyle("reset");
     injectStyle("main");
@@ -5420,7 +5489,6 @@
     exports.pragmajs = pragmajs;
     exports.pragmas = pragmas;
     exports.styles = styles;
-    exports.xfready2Test = xfready2Test;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 

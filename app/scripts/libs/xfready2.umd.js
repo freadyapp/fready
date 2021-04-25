@@ -5222,8 +5222,23 @@
         }
     }
 
+    class HOST {
+        static is(...hosts){
+            return hosts.includes(window.location.host)
+        }
+
+        static get() {
+            return window.location.host
+        }
+
+        static getURL() {
+            return window.location.href
+        }
+    }
+
     let panel = Z$2`
     <div class='article-panel'>
+        <div class='button-gray' id='exit'> x </div>
         <div class='time-url'>
             <h3 class='time blue no-select' id='time'>15'</h3>
             <p class='url' id='url'>en.wikipedia.org</p>
@@ -5233,14 +5248,15 @@
             and the legality of marijuana by country and yeeters
         </h3>
         <div class='save-read'>
-            <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
+            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} Save </div>
             <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
         </div>
     </div>
 `.define({
         title: "#title",
         url: "#url",
-        eta: "#time"
+        eta: "#time",
+        saved: "#save"
     });
 
     let template = X$3`
@@ -5300,10 +5316,16 @@
         }
     }
 
-    function slurpArticle(article) {
+    async function slurpArticle(article) {
+
         panel.title.html(article.title);
         panel.url.html(authoredBy(article));
         panel.eta.html(article.length/5);
+
+        let existingArticle = await window.bridge.request("links:get", HOST.getURL());
+        if (existingArticle && existingArticle.saved) panel.saved.css("background-color red");
+
+        console.log('existing article is', existingArticle);
 
         // return {
         //     url: HOST.getURL(),
@@ -5327,7 +5349,7 @@
             meta: {
                 title: article.title,
                 by: authoredBy(article),
-                words: article.length/5,
+                words: Math.round(article.length/4.7),
                 pages: 1
             }
         };
@@ -5378,21 +5400,152 @@
 
     }
 
-    function xfready2Test(){
-        console.log("hello from _xfready2");
+    class Bridge extends q$3 {
+        constructor(port=chrome.runtime.connect()){
+            super();
+
+            this.port = port; 
+            this.createEvents("message", "send");
+            this.port.onMessage.addListener(msg => {
+                console.log('received', msg);
+                this.triggerEvent('message', msg);
+            });
+        }
+
+        awaitResponse(key) {
+            return new Promise(resolve => this.on("message", (msg) => {
+                // console.log(msg.key, key)
+                if (msg.key === key) {
+                    resolve(msg.data);
+                    return cb => {
+                        cb.selfDestruct();
+                    }
+                }
+                // this.awaitResponse(key).then(msg => resolve(msg.data))
+            }))
+        }
+
+        send(message, key=util.rk8()) {
+            this.port.postMessage({
+                message,
+                key
+            });
+
+            this.triggerEvent("send", key, message);
+
+            return key
+        }
+        
+        request(message, data=null) {
+            if (data) message = { [message]: data };
+            return new Promise((resolve, reject) => {
+                let key = this.send(message);
+
+                this.triggerEvent("send", key, message);
+                this.awaitResponse(key).then(data => resolve(data));
+            })
+        }
     }
 
+    function _bridge() {
+        return new Bridge(...arguments)
+    }
+
+    // window.bridge.request("links:index").then(data => {
+    //     console.log("parsed", data)
+    //     // console.log("parsed", code)
+    //     // code.html('ue')
+    // })
+
+    // alert(document.querySelector("embed[name='application/x-google-chrome-pdf']"))
+
+    function grabUserFromJolene() {
+        let jolene = JSON.parse(_e("head").find("meta[name='jolene']").attr('content'));
+        console.log('jolene is', jolene);
+
+        let creds = {
+            name: jolene.name,
+            permissions: jolene.permissions,
+            misc: jolene.misc
+        };
+
+        return new Promise(resolve => resolve(creds))
+    }
+
+
+    class User {
+        static data = {}
+
+        static setData(data){
+            for (let [key, value] of Object.entries(data)) {
+                User.data[key] = value;
+            }
+        }
+
+        static sync(data=null){
+            if (data) {
+                // sync to local storage
+                return new Promise(resolve => chrome.storage.sync.set({ user: data }, function () {
+                    User.setData(data);
+                    resolve(data);
+                }))
+            }
+
+            // else set users params to whatever they are in this instance
+            return new Promise(resolve => chrome.storage.sync.get('user', function (data) {
+                User.setData(data);
+                resolve(data);
+            }))
+        }
+
+        static get(key=null, maxTries=3) {
+            return new Promise(resolve => {
+                if (maxTries<=0 || key in User.data) return resolve(User.data[key])
+
+                User.sync();
+                return User.get(key, maxTries-1).then((data) => resolve(data))
+            })
+        }
+    }
+
+    User.sync();
+
+    if (HOST.is("fready", "localhost:3000")) {
+        console.log('[xfready] grabbing user from jolene');
+        grabUserFromJolene().then(async data => {
+            await User.sync(data);
+            console.log("DATA", data);
+            
+        });
+    }
+
+    (async () => {
+        await User.get('api_key');
+        console.log("USER DATA", User.data);
+        let name = await User.get('name');
+        console.log(`* ${name} in XFREADY *`);
+    })();
+
+
+    // if (HOST.is("fready", "localhost:3000")) {
+    //     grabUserFromJolene().then(async data => {
+    //         console.log("DATA", data)
+    //         await User.sync(data)
+
+    //         let api_key = await User.get('api_key')
+    //     })
+    // }
 
     Promise.resolve().then(function () { return pragmajs; }).then(pragmajs => {
         for (let [key, value] of Object.entries(pragmajs)) {
             window[key] = value;
-            
         }
         
     });
 
-    console.log('READY STATE', document.readyState);
     console.log('injecting styles...');
+
+    window.bridge = _bridge();
 
     injectStyle("reset");
     injectStyle("main");
@@ -5420,7 +5573,6 @@
     exports.pragmajs = pragmajs;
     exports.pragmas = pragmas;
     exports.styles = styles;
-    exports.xfready2Test = xfready2Test;
 
     Object.defineProperty(exports, '__esModule', { value: true });
 
