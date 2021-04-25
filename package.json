@@ -53,7 +53,7 @@
         "highlight.js": "^10.7.2",
         "lectorjs": "^0.8.0-b",
         "mousetrap": "^1.6.5",
-        "pragmajs": "^0.8.4"
+        "pragmajs": "^0.8.6"
     },
     "bugs": {
         "url": "https://github.com/robo-monk/xfready2/issues"

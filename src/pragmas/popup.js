@@ -1,52 +1,62 @@
-import { Pragma, html, _e } from "pragmajs"
+import { Pragma, html, _e, block } from "pragmajs"
 import { SVG, styles } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
 import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
 
-let element = html`
-    <div xfready id=popup class='fade-onload'>
-        <div class='article-panel'>
-            <div class='time-url'>
-                <h3 class='time blue no-select' id='time'>15'</h3>
-                <p class='url' id='url'>en.wikipedia.org</p>
-            </div>
-            <h3 class='title' id='title'>
-                Legality of bitcoin by country or territory
-                and the legality of marijuana by country and yeeters
-            </h3>
-            <div class='save-read'>
-                <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
-                <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
-            </div>
+let panel = block`
+    <div class='article-panel'>
+        <div class='time-url'>
+            <h3 class='time blue no-select' id='time'>15'</h3>
+            <p class='url' id='url'>en.wikipedia.org</p>
         </div>
-        <div class='upload-dash'>
-            <div class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</div>
-            <div class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</div>
-        </div>
-        <div class='xfready-footer'>
-            ${SVG('logo')}
-            <div class='hyperbutton visibility'>
-                <div class="checkbox">
-                    ${SVG('checked-checkbox')} 
-                    ${SVG('empty-checkbox')}
-                </div>
-                Show on websites
-            </div>
+        <h3 class='title' id='title'>
+            Legality of bitcoin by country or territory
+            and the legality of marijuana by country and yeeters
+        </h3>
+        <div class='save-read'>
+            <div class='button-gray' id='exit'>${SVG('empty-heart-icon')} Save </div>
+            <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
         </div>
     </div>
-`
+`.define({
+    title: "#title"
+})
+let template = html`
+        <div xfready id=popup class='fade-onload'>
+            <div class='article-panel'>
+            </div>
+            <div class='upload-dash'>
+                <div class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</div>
+                <div class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</div>
+            </div>
+            <div class='xfready-footer'>
+                ${SVG('logo')}
+                <div class='hyperbutton visibility'>
+                    <div class="checkbox">
+                        ${SVG('checked-checkbox')} 
+                        ${SVG('empty-checkbox')}
+                    </div>
+                    Show on websites
+                </div>
+            </div>
+        </div>
+    `
 
 export class Popup extends ShadowPragma {
 
     constructor() {
         super()
 
-        this.as(element)
+        this.as(template)
+        this.shadow.find(".article-panel").replaceWith(panel.element)
+
         this.injectStyles('main', 'popup')
 
-        this.shadow.find("#read").listenTo('click', () => {
 
+        // panel.title.listenTo('click', () => )
+
+        this.shadow.find("#read").listenTo('click', () => {
             xfready.lector = _lector()
                                 .on('parse article', createArticle)
                                 .load()

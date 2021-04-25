@@ -4491,6 +4491,11 @@ pragmajs@^0.8.4:
   resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.4.tgz#9d2e1823af7d1b992794eeeee43661e16a707742"
   integrity sha512-fcnFcOssMnWL7i8VhetJUkuRp536iUxwMLasVS+bcKUCZaBY+0HufhI2odgei3LvLy34TMu1U65/DxSIbgqj/w==
 
+pragmajs@^0.8.6:
+  version "0.8.6"
+  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.6.tgz#a8c5c516ee884f7b3c359467d985237b70d1a24d"
+  integrity sha512-sa/q0ytPu8YRn8SiskMAJzgJfaWL9rApMnpa91ZORBFxxop1fh+WHZfR5vSpXBVi4BZEokp6yfsRh26kD+//jA==
+
 prelude-ls@^1.2.1:
   version "1.2.1"
   resolved "https://registry.yarnpkg.com/prelude-ls/-/prelude-ls-1.2.1.tgz#debc6489d7a6e6b0e7611888cec880337d316396"
