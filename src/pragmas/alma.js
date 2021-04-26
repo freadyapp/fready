@@ -10,6 +10,8 @@ let element = html`
         <div class='time'>51'</div>
         ${SVG('space2read-white')}
         ${SVG('space2read-black')}
+        ${SVG('empty-heart-icon')}
+        ${SVG('arrow-down')}
     </div>
 
 `
