@@ -263,5 +263,5 @@ export function _lector() {
         injected = true
     }
 
-    return new LectorPragma
+    return new LectorPragma()
 }

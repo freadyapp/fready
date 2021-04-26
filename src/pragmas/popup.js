@@ -25,7 +25,14 @@ let panel = block`
     title: "#title",
     url: "#url",
     eta: "#time",
-    saved: "#save"
+    saved: "#save",
+
+    save() {
+        this.saved.html('Saved')
+    },
+    unsave() {
+        this.saved.html('Unsaved')
+    }
 })
 
 let template = html`
@@ -51,27 +58,40 @@ let template = html`
 
 export class Popup extends ShadowPragma {
 
-    constructor() {
+    constructor(xfready) {
         super()
+
+        this.xfready = xfready
+        this.xfready.on('lector:create', lector => { 
+            lector.on('load article', slurpArticle)
+        })
 
         this.as(template)
         this.shadow.find(".article-panel").replaceWith(panel.element)
 
         this.injectStyles('main', 'popup')
 
-        pragmaSpace.onDocLoad(() => {
-            this.lector = _lector()
-                            .on('load article', slurpArticle)
-                            .on('parse article', createArticle)
-                            .loadArticle()
-        })
+        
+        // pragmaSpace.onDocLoad(() => {
+            // this.lector = _lector()
+                            // .on('load article', slurpArticle)
+                            // .on('parse article', createArticle)
+                            // .loadArticle()
+        // })
 
         // panel.title.listenTo('click', () => )
+        panel.saved.listenTo('click', () => {
+            panel.save()
+            this.xfready.save()
+            // saveArticle(this.lector.article)
+        })
+
 
         this.shadow.find("#read").listenTo('click', () => {
-            this.lector
-                    .load()
-                    .render()
+            this.xfready.read()
+            // this.lector
+                    // .load()
+                    // .render()
         })
 
         this.shadow.find("#exit").listenTo('click', () => {
@@ -95,7 +115,7 @@ async function slurpArticle(article) {
     })
 
     let existingArticle = await window.bridge.request("links:get", HOST.getURL())
-    if (existingArticle && existingArticle.saved) panel.saved.css("background-color red")
+    if (existingArticle && existingArticle.saved) panel.save()
 
     console.log('existing article is', existingArticle)
 
@@ -111,28 +131,11 @@ async function slurpArticle(article) {
     //     }
     // }
 }
-function createArticle(article, saved=true) {
-    console.log('creating new article')
-    
-    let link = {
-        url: HOST.getURL(),
-        body: article.content,
-        saved,
-        meta: {
-            title: article.title,
-            by: authoredBy(article),
-            words: Math.round((article.length/4.7)),
-            pages: 1
-        }
-    }
 
-    window.bridge.request("links:create", { link })
+export function _popup(){
+    return new Popup(...arguments)
 }
 
 function authoredBy(article) {
     return HOST.get()
-}
-
-export function _popup(){
-    return new Popup
 }

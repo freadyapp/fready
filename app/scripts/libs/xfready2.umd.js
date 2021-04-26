@@ -5186,7 +5186,7 @@
             injected = true;
         }
 
-        return new LectorPragma
+        return new LectorPragma()
     }
 
     class ShadowPragma extends q$3 {
@@ -5260,7 +5260,14 @@
         title: "#title",
         url: "#url",
         eta: "#time",
-        saved: "#save"
+        saved: "#save",
+
+        save() {
+            this.saved.html('Saved');
+        },
+        unsave() {
+            this.saved.html('Unsaved');
+        }
     });
 
     let template = X$3`
@@ -5286,27 +5293,40 @@
 
     class Popup extends ShadowPragma {
 
-        constructor() {
+        constructor(xfready) {
             super();
+
+            this.xfready = xfready;
+            this.xfready.on('lector:create', lector => { 
+                lector.on('load article', slurpArticle);
+            });
 
             this.as(template);
             this.shadow.find(".article-panel").replaceWith(panel.element);
 
             this.injectStyles('main', 'popup');
 
-            pragmaSpace.onDocLoad(() => {
-                this.lector = _lector()
-                                .on('load article', slurpArticle)
-                                .on('parse article', createArticle)
-                                .loadArticle();
-            });
+            
+            // pragmaSpace.onDocLoad(() => {
+                // this.lector = _lector()
+                                // .on('load article', slurpArticle)
+                                // .on('parse article', createArticle)
+                                // .loadArticle()
+            // })
 
             // panel.title.listenTo('click', () => )
+            panel.saved.listenTo('click', () => {
+                panel.save();
+                this.xfready.save();
+                // saveArticle(this.lector.article)
+            });
+
 
             this.shadow.find("#read").listenTo('click', () => {
-                this.lector
-                        .load()
-                        .render();
+                this.xfready.read();
+                // this.lector
+                        // .load()
+                        // .render()
             });
 
             this.shadow.find("#exit").listenTo('click', () => {
@@ -5323,14 +5343,14 @@
     async function slurpArticle(article) {
 
         panel.title.html(article.title);
-        panel.url.html(authoredBy());
+        panel.url.html(authoredBy$1());
 
         SYNC.get('preferences', preferences => {
             panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'");
         });
 
         let existingArticle = await window.bridge.request("links:get", HOST.getURL());
-        if (existingArticle && existingArticle.saved) panel.saved.css("background-color red");
+        if (existingArticle && existingArticle.saved) panel.save();
 
         console.log('existing article is', existingArticle);
 
@@ -5346,41 +5366,44 @@
         //     }
         // }
     }
-    function createArticle(article, saved=true) {
-        console.log('creating new article');
-        
-        let link = {
-            url: HOST.getURL(),
-            body: article.content,
-            saved,
-            meta: {
-                title: article.title,
-                by: authoredBy(),
-                words: Math.round((article.length/4.7)),
-                pages: 1
-            }
-        };
-
-        window.bridge.request("links:create", { link });
-    }
-
-    function authoredBy(article) {
-        return HOST.get()
-    }
 
     function _popup(){
-        return new Popup
+        return new Popup(...arguments)
+    }
+
+    function authoredBy$1(article) {
+        return HOST.get()
     }
 
     class Xfready extends q$3 {
         constructor() {
             super();
+            this.createEvents('lector:create', 'lector:destroy');
             this.as('html');
             // this.setElement('body')
             // pragmaSpace.onDocLoad(() => {
-            _popup().appendTo(this);
-            this.createEvents('lector:create', 'lector:destroy');
+            this.popup = _popup(this)
+                            .appendTo(this);
+
             // })
+
+            // pragmaSpace.onDocLoad(() => {
+            this.lector = _lector()
+                // .on('load article', slurpArticle)
+                .on('parse article', createArticle);
+
+            this.lector.loadArticle();
+            // })
+
+        }
+
+        async read() {
+            await this.lector.load();
+            return this.lector.render()
+        }
+
+        save() {
+            saveArticle(this.lector.article);
         }
 
         // static general helpers, handled by the 'core' of xfready
@@ -5395,6 +5418,10 @@
             this.triggerEvent('lector:create', this._lector);
         }
 
+        get lector() {
+            return this._lector
+        }
+
         getLector() {
             return new Promise((resolve, reject) => {
                 if (this._lector) resolve(this._lector);
@@ -5405,6 +5432,35 @@
             })
         }
 
+    }
+
+    async function saveArticle(article) {
+        console.log(`saving article... as ${HOST.getURL()}`, article);
+        return createArticle(article, true)
+    }
+
+
+
+    async function createArticle(article, saved=false) {
+        console.log('creating new article');
+        
+        let link = {
+            url: HOST.getURL(),
+            body: article.content,
+            saved,
+            meta: {
+                title: article.title,
+                by: authoredBy(),
+                words: Math.round((article.length/4.7)),
+                pages: 1
+            }
+        };
+
+        return window.bridge.request("links:create", { link })
+    }
+
+    function authoredBy(article) {
+        return HOST.get()
     }
 
     class Bridge extends q$3 {

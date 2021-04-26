@@ -68,6 +68,10 @@ function linksApiConfiguration() {
         })))
     })
 
+    this.onMsg('links:save', async (data, tab, respond) => {
+        console.log('saving link as', data)
+        respond(await API.saveLink(data))
+    })
     console.log('messenget is', this)
 }
 
@@ -93,26 +97,22 @@ API.define({
     },
 
     async createLink(link) {
-        // let link = {
-        //     link: {
-        //         url: "https://growandconvert.com/content-marketing/going-viral-medium/",
-        //         body: "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
-        //         saved: true,
-        //         meta: {
-        //             title: "xss attack",
-        //             words: 420,
-        //             pages: 69
-        //         }
-        //     }
-        // }
-
         let promise = API.post('/links', link)
+        await promise
 
-        setTimeout(() => {
-            API.syncLinks()
-        }, 420)
+        return await API.syncLinks()
+    },
 
-        return promise
+    async saveLink(link) {
+        console.log('saving link', link)
+        SYNC.get('links', ({links}) => {
+            console.log('saving link...', links[link])
+            console.log('id is', links[link].id)
+        })
+
+        // let promise = API.post('/links', link)
+        // return promise
+        return 'ok'
     }
 })
 
