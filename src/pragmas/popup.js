@@ -17,8 +17,8 @@ let panel = block`
             and the legality of marijuana by country and yeeters
         </h3>
         <div class='save-read'>
-            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} Save </div>
-            <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
+            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} <span id='save-text'> Save </span></div>
+            <div class='button-gray' id='read'>${SVG('read-icon')} <span id='read-text'> Read </span></div>
         </div>
     </div>
 `.define({
@@ -26,12 +26,16 @@ let panel = block`
     url: "#url",
     eta: "#time",
     saved: "#save",
+    savedText: "#save-text",
+    love: "#empty-heart-icon",
 
     save() {
-        this.saved.html('Saved')
+        this.saved.css('background #FF4136')
+        this.savedText.html('Saved')
     },
     unsave() {
-        this.saved.html('Unsaved')
+        this.saved.css('background #303030')
+        this.savedText.html('Save')
     }
 })
 
@@ -81,8 +85,10 @@ export class Popup extends ShadowPragma {
 
         // panel.title.listenTo('click', () => )
         panel.saved.listenTo('click', () => {
-            panel.save()
-            this.xfready.save()
+            let action = this.xfready.link.saved ? 'unsave' : 'save'
+
+            this.xfready[action]()
+            panel[action]() // panel.save / panel.unsave
             // saveArticle(this.lector.article)
         })
 

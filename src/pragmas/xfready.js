@@ -14,15 +14,46 @@ export class Xfready extends Pragma {
                         .appendTo(this)
 
         // })
+        // if (existingArticle && existingArticle.saved) panel.save()
+
+        
+        // })
+        this.init()
+
+    }
+    async init() {
+        // set existing link if there is one
+        this.link = await window.bridge.request("links:get", HOST.getURL())
+        console.log('existing article is', this.link)
 
         // pragmaSpace.onDocLoad(() => {
         this.lector = _lector()
-            // .on('load article', slurpArticle)
-            .on('parse article', createArticle)
+            .on('load article', article => { this.article = article })
+            .on('parse article', this.createLink)
 
         this.lector.loadArticle()
-        // })
+    }
 
+    async createLink(article, saved=null) {
+
+        if (saved===null && this.link && this.link.saved) saved = true
+        console.log('creating new link')
+        
+        let link = {
+            url: HOST.getURL(),
+            body: article.content,
+            saved,
+            meta: {
+                title: article.title,
+                by: authoredBy(article),
+                words: Math.round((article.length/4.7)),
+                pages: 1
+            }
+        }
+
+        this.link = link
+
+        return window.bridge.request("links:create", { link })
     }
 
     async read() {
@@ -31,7 +62,12 @@ export class Xfready extends Pragma {
     }
 
     save() {
-        saveArticle(this.lector.article)
+        // saveArticle(this.lector.article)
+        return this.createLink(this.article, true)
+    }
+
+    unsave() {
+        return this.createLink(this.article, false)
     }
 
     // static general helpers, handled by the 'core' of xfready
@@ -60,31 +96,6 @@ export class Xfready extends Pragma {
         })
     }
 
-}
-
-async function saveArticle(article) {
-    console.log(`saving article... as ${HOST.getURL()}`, article)
-    return createArticle(article, true)
-}
-
-
-
-async function createArticle(article, saved=false) {
-    console.log('creating new article')
-    
-    let link = {
-        url: HOST.getURL(),
-        body: article.content,
-        saved,
-        meta: {
-            title: article.title,
-            by: authoredBy(article),
-            words: Math.round((article.length/4.7)),
-            pages: 1
-        }
-    }
-
-    return window.bridge.request("links:create", { link })
 }
 
 function authoredBy(article) {

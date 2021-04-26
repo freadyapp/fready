@@ -5252,8 +5252,8 @@
             and the legality of marijuana by country and yeeters
         </h3>
         <div class='save-read'>
-            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} Save </div>
-            <div class='button-gray' id='read'>${SVG('read-icon')} Read </div>
+            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} <span id='save-text'> Save </span></div>
+            <div class='button-gray' id='read'>${SVG('read-icon')} <span id='read-text'> Read </span></div>
         </div>
     </div>
 `.define({
@@ -5261,12 +5261,16 @@
         url: "#url",
         eta: "#time",
         saved: "#save",
+        savedText: "#save-text",
+        love: "#empty-heart-icon",
 
         save() {
-            this.saved.html('Saved');
+            this.saved.css('background #FF4136');
+            this.savedText.html('Saved');
         },
         unsave() {
-            this.saved.html('Unsaved');
+            this.saved.css('background #303030');
+            this.savedText.html('Save');
         }
     });
 
@@ -5316,8 +5320,10 @@
 
             // panel.title.listenTo('click', () => )
             panel.saved.listenTo('click', () => {
-                panel.save();
-                this.xfready.save();
+                let action = this.xfready.link.saved ? 'unsave' : 'save';
+
+                this.xfready[action]();
+                panel[action](); // panel.save / panel.unsave
                 // saveArticle(this.lector.article)
             });
 
@@ -5386,15 +5392,46 @@
                             .appendTo(this);
 
             // })
+            // if (existingArticle && existingArticle.saved) panel.save()
+
+            
+            // })
+            this.init();
+
+        }
+        async init() {
+            // set existing link if there is one
+            this.link = await window.bridge.request("links:get", HOST.getURL());
+            console.log('existing article is', this.link);
 
             // pragmaSpace.onDocLoad(() => {
             this.lector = _lector()
-                // .on('load article', slurpArticle)
-                .on('parse article', createArticle);
+                .on('load article', article => { this.article = article; })
+                .on('parse article', this.createLink);
 
             this.lector.loadArticle();
-            // })
+        }
 
+        async createLink(article, saved=null) {
+
+            if (saved===null && this.link && this.link.saved) saved = true;
+            console.log('creating new link');
+            
+            let link = {
+                url: HOST.getURL(),
+                body: article.content,
+                saved,
+                meta: {
+                    title: article.title,
+                    by: authoredBy(),
+                    words: Math.round((article.length/4.7)),
+                    pages: 1
+                }
+            };
+
+            this.link = link;
+
+            return window.bridge.request("links:create", { link })
         }
 
         async read() {
@@ -5403,7 +5440,12 @@
         }
 
         save() {
-            saveArticle(this.lector.article);
+            // saveArticle(this.lector.article)
+            return this.createLink(this.article, true)
+        }
+
+        unsave() {
+            return this.createLink(this.article, false)
         }
 
         // static general helpers, handled by the 'core' of xfready
@@ -5432,31 +5474,6 @@
             })
         }
 
-    }
-
-    async function saveArticle(article) {
-        console.log(`saving article... as ${HOST.getURL()}`, article);
-        return createArticle(article, true)
-    }
-
-
-
-    async function createArticle(article, saved=false) {
-        console.log('creating new article');
-        
-        let link = {
-            url: HOST.getURL(),
-            body: article.content,
-            saved,
-            meta: {
-                title: article.title,
-                by: authoredBy(),
-                words: Math.round((article.length/4.7)),
-                pages: 1
-            }
-        };
-
-        return window.bridge.request("links:create", { link })
     }
 
     function authoredBy(article) {
