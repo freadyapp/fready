@@ -5332,6 +5332,10 @@
             this.as(element);
 
             this.injectStyles('main', 'alma');
+
+            this.shadow.find('#close-icon').listenTo('click', () => {
+                this.element.hide();
+            });
         }
     }
 

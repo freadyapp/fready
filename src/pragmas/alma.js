@@ -26,6 +26,12 @@ export class Alma extends ShadowPragma {
         this.as(element)
 
         this.injectStyles('main', 'alma')
+
+        let self = this
+
+        this.shadow.find('#close-icon').listenTo('click', () => {
+            this.element.hide()
+        })
     }
 }
 
