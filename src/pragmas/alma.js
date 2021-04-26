@@ -13,7 +13,7 @@ let element = html`
             ${SVG('empty-heart-icon')}
             ${SVG('close-icon')}
 
-            <div class='press-space'>press <b>space</b></div>
+            <div class='press-space'>Press ${SVG('new-space-white')} to read</div>
         </div>
 
 `

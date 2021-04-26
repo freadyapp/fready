@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;700&display=swap');
 // font-family: 'IBM Plex Mono', monospace;
+// font-family: 'IBM Plex Sans', sans-serif;
 
 .alma {
     height: 50px;   
@@ -27,7 +29,7 @@
     &:hover {
 
         .press-space {
-            display: block;
+            display: flex;
         }
     }
 
@@ -55,16 +57,30 @@
     }
 
     .press-space {
-                display: none;
-                position: absolute;
-                background-color: #35363A;
-                border-radius: 3px;
-                color: #cdcdcd;
-                bottom: -26px;
-                left: 70px;
-                font-size: 14px;
-                padding: 3px 7px;
-                transition: all ease 0.2s; 
+        position: absolute;
+        background-color: #35363A;
+        border-radius: 3px;
+        color: #fff;
+        bottom: -40px;
+        left: 40px;
+        font-size: 14px;
+        padding: 5px 15px;
+        transition: all ease 0.2s;
+        font-family: 'IBM Plex Sans', sans-serif;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        display: none;
+
+
+        >svg {
+            height: auto;
+            width: 48px;
+            margin: 0 5px;
+        }
     }
 
 
