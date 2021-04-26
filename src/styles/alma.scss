@@ -4,7 +4,7 @@
 .alma {
     z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
     min-width: 233px;
-    height: 45px;   
+    height: 50px;   
     position: fixed;
     top: 10px;
     right: 5px;
@@ -14,30 +14,43 @@
     display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: center;
+	justify-content: space-between;
 	align-items: center;
 	align-content: center;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 18px;
     border-radius: 3px;
-    padding: 0px 20px;
+    padding: 5px 7px;
+    box-sizing: border-box;
 
-    >svg#space2read-black, >svg#space2read-white {
-        height: 28px;
-        width: auto;
-        margin-left: 10px;
+    .panel {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        background-color: #3F4044;
+        height: 100%;
+        padding: 0 10px;
+        border-radius: 3px;
         margin-right: 20px;
-    }
-    
-    >svg#space2read-black {
-        display: none;
+
+        .time {
+            color: #5A90E2 !important;
+            font-weight: 700;
+            margin-left: 5px;
+            margin-right: 15px;
+            font-size: 20px;
+        }
     }
 
     >svg#empty-heart-icon {
+        @extend .transition;
         width: auto;
         height: 18px;
-        margin-right: 7px;
-        opacity: 80%;
+        margin-right: 10px;
+        opacity: 50%;
         cursor: pointer;
 
         &:hover {
@@ -46,11 +59,13 @@
     }
 
     >svg#arrow-down {
+        @extend .transition;
         width: auto;
         height: 8px;
         margin-left: 7px;
-        opacity: 80%;
+        opacity: 50%;
         cursor: pointer;
+        margin-right: 5px;
 
         &:hover {
             opacity: 1;
@@ -60,19 +75,70 @@
 
     @media (prefers-color-scheme: light) {
         background: rgb(255, 255, 255);
-
-        >svg#space2read-black {
-            display: block;
-        }
-
-        >svg#space2read-white {
-            display: none;
-        }
     }
 
-    .time {
-        color: #5A90E2 !important;
-        font-weight: 700;
+    
+
+   
+
+    .no-select {
+        user-select: none !important;
+    }
+
+    .transition {
+        transition: all ease 0.2 !important;
+    }
+
+    .button {
+        @extend .no-select;
+        cursor: pointer;
+        background-color: #303030;
+        border-radius: 3px;
+        padding: 5px 20px;
+        color :whitesmoke;
+        cursor: pointer;
+        display: inline-block;
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
+        align-content: center;
+        width: 60px;
+
+        @media (prefers-color-scheme: light) { 
+            background-color: #e3e3e3!important;
+            color: #383B3E !important;
+            fill: #383B3E;
+            
+            path, svg {
+                fill: #383B3E;
+            }
+        }
+
+        &:hover {
+            background-color:rgb(113, 113, 113);
+
+        }
+
+        &:active {
+            background-color: #2b6cce;
+        }
+
+        transition: all ease .1s;
+
+        &-gray {
+            @extend .button;
+            background-color: #67686F;
+            color: #fff;
+
+            > svg {
+                width: auto;
+                height: 15px;
+            }
+        }
     }
 
 
