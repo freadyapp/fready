@@ -3,11 +3,19 @@
 
 .alma-wrap {
 
+    @extend .transition;
+    transition: all ease 0.5s;
+
     &:hover {
         .close-button {
             display: flex;
         }
+
+        .press-space {
+            display: block;
+        }
     }
+
 
 
     .close-button {
@@ -27,11 +35,27 @@
         user-select: none;
         cursor: pointer;
         display: none;
+        transition: all ease 0.2s;
 
         >svg {
             width: auto;
             height: 10px;
         }
+    }
+
+    .press-space {
+        display: none;
+        position: absolute;
+        background-color: #35363A;
+        border-radius: 3px;
+        color: #cdcdcd;
+        bottom: -26px;
+        left: 70px;
+        font-size: 14px;
+        padding: 3px 7px;
+        transition: all ease 0.2s; 
+          
+
     }
 
 

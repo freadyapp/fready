@@ -8,7 +8,7 @@ import { ShadowPragma } from "../misc/shadowPragma"
 let element = html`
     <div xfready class='alma-wrap'>
         <div xfready-alma id='alma' class='alma'>
-        <div class='close-button'>${SVG('close-icon')}</div>
+            <div class='close-button'>${SVG('close-icon')}</div>
 
             <div class='panel'>
                 <div class='time'>51'</div>
@@ -20,6 +20,8 @@ let element = html`
         
             ${SVG('empty-heart-icon')}
             ${SVG('arrow-down')}
+
+            <div class='press-space'>press <b>space</b></div>
         </div>
     </div>
 
