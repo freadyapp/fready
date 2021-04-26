@@ -607,4 +607,13 @@ class Pragma extends Node {
         // TODO FIX 
         return this.containAry(childs.reverse(), 'prepend')
     }
+
+    define({ ...defs }) {
+        for (let [key, fn] of Object.entries(defs)) {
+            if (!key) return console.error(`could not define, no name passed`, fn)
+            this[key] = fn
+        }
+        return this
+    }
+
 }

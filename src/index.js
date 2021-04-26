@@ -1,27 +1,27 @@
-import { _e } from "pragmajs"
+import { _e, _p } from "pragmajs"
 // import { pragmajs } from "../app/scripts/libs/xfready2.umd"
 import { injectStyle } from "./.build_assets/index"
 import { Xfready } from "./pragmas/xfready"
+import { _bridge } from "./pragmas/bridge"
+import { User } from "./pragmas/user"
 
 export * from "./.build_assets/index" // globalifies pragmajs, exports packages assets
-
-export function xfready2Test(){
-    console.log("hello from _xfready2")
-}
 
 import("pragmajs").then(pragmajs => {
     for (let [key, value] of Object.entries(pragmajs)) {
         window[key] = value
-        
     }
+    
 })
 
-console.log('READY STATE', document.readyState)
 console.log('injecting styles...')
+
+window.bridge = _bridge()
+
 injectStyle("reset")
 injectStyle("main")
-window.xfready = new Xfready()
 
+window.xfready = new Xfready()
 xfready.on('lector:create', lector => {
     console.group('constructing lector')
     console.time("CONSTRUCT LECTOR from DOCUMENT...")
@@ -31,6 +31,7 @@ xfready.on('lector:create', lector => {
         console.groupEnd('constructing lector')
     })
 })
+
 // window.pragmajs = await import('pragmajs')
 // window.pragmajs.globalify()
 
