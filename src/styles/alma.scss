@@ -1,78 +1,54 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
 // font-family: 'IBM Plex Mono', monospace;
 
-.alma-wrap {
+// .alma-wrap {
 
-    @extend .transition;
-    transition: all ease 0.5s;
-
-    &:hover {
-        .close-button {
-            display: flex;
-        }
-
-        .press-space {
-            display: block;
-        }
-    }
+//     @extend .transition;
+//     transition: all ease 0.5s;
 
 
 
-    .close-button {
-        position: absolute;
-        background-color: #35363A;
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
-        left: -25px;
-        text-align: center;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
-        align-content: stretch;
-        user-select: none;
-        cursor: pointer;
-        display: none;
-        transition: all ease 0.2s;
 
-        >svg {
-            width: auto;
-            height: 10px;
-        }
-    }
+//     .close-button {
+        
+//         background-color: #35363A;
+//         width: 20px;
+//         height: 20px;
+//         border-radius: 50%;
+//         left: -25px;
+//         text-align: center;
+//         display: flex;
+//         flex-direction: row;
+//         flex-wrap: nowrap;
+//         justify-content: center;
+//         align-items: center;
+//         align-content: stretch;
+//         user-select: none;
+//         cursor: pointer;
+//         display: none;
+//         transition: all ease 0.2s;
 
-    .press-space {
-        display: none;
-        position: absolute;
-        background-color: #35363A;
-        border-radius: 3px;
-        color: #cdcdcd;
-        bottom: -26px;
-        left: 70px;
-        font-size: 14px;
-        padding: 3px 7px;
-        transition: all ease 0.2s; 
-          
+//         >svg {
+//             width: auto;
+//             height: 10px;
+//         }
+//     }
 
-    }
+//     
 
 
-}
+// }
 
 .alma {
-    min-width: 233px;
     height: 50px;   
-    position: relative;
-    width: 260px;
+    width: 230px;
     background-color: #35363A;
     user-select: none;
     box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 15px 2px;
     display: flex;
 	flex-direction: row;
 	flex-wrap: nowrap;
-	justify-content: space-between;
+	justify-content: space-around;
 	align-items: center;
 	align-content: center;
     font-family: 'IBM Plex Mono', monospace;
@@ -84,58 +60,55 @@
 
 
 
+    &:hover {
+
+        .press-space {
+            display: block;
+        }
+    }
+
+
+    .press-space {
+                display: none;
+                position: absolute;
+                background-color: #35363A;
+                border-radius: 3px;
+                color: #cdcdcd;
+                bottom: -26px;
+                left: 70px;
+                font-size: 14px;
+                padding: 3px 7px;
+                transition: all ease 0.2s; 
+                  
         
-   
-
-    .panel {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: center;
-        align-items: center;
-        align-content: center;
-        background-color: #3F4044;
-        height: 100%;
-        padding: 0 10px;
-        border-radius: 3px;
-        margin-right: 20px;
-
-        .time {
-            color: #5A90E2 !important;
-            font-weight: 700;
-            margin-left: 5px;
-            margin-right: 15px;
-            font-size: 20px;
-        }
     }
 
-    >svg#empty-heart-icon {
+
+    .time {
+        color: #5A90E2 !important;
+        font-weight: 700;
+        // margin-left: 5px;
+        // margin-right: 15px;
+        font-size: 20px;
+    }
+
+    >svg {
         @extend .transition;
         width: auto;
-        height: 18px;
-        margin-right: 10px;
-        opacity: 50%;
+        height: 22px;
+        // margin-right: 10px;
+        opacity: 80%;
         cursor: pointer;
 
         &:hover {
             opacity: 1;
         }
-    }
 
-    >svg#arrow-down {
-        @extend .transition;
-        width: auto;
-        height: 8px;
-        margin-left: 7px;
-        opacity: 50%;
-        cursor: pointer;
-        margin-right: 5px;
-
-        &:hover {
-            opacity: 1;
+        &#close-icon {
+            height: 15px;
+            opacity: 50%;
         }
     }
-
 
     @media (prefers-color-scheme: light) {
         background: rgb(255, 255, 255);
