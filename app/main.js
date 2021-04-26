@@ -86,6 +86,12 @@ API.define({
         return SYNC.set({ links: linkMap })
     },
 
+    async syncPrefs() {
+        let preferences = await this.get('/preferences')
+        console.log('prefs are', preferences)
+        return SYNC.set({ preferences })
+    },
+
     async createLink(link) {
         // let link = {
         //     link: {
@@ -111,6 +117,7 @@ API.define({
 })
 
 API.syncLinks()
+API.syncPrefs()
 
 injectInitiateHandshake: {
     // let libraries = ["xfready2.umd"]

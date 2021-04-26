@@ -3,7 +3,7 @@ import { SVG, styles } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
 import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
-import { HOST } from "../misc/helpers"
+import { HOST, SYNC } from "../misc/helpers"
 
 let panel = block`
     <div class='article-panel'>
@@ -89,7 +89,10 @@ async function slurpArticle(article) {
 
     panel.title.html(article.title)
     panel.url.html(authoredBy(article))
-    panel.eta.html(article.length/5)
+
+    SYNC.get('preferences', preferences => {
+        panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
+    })
 
     let existingArticle = await window.bridge.request("links:get", HOST.getURL())
     if (existingArticle && existingArticle.saved) panel.saved.css("background-color red")
@@ -118,7 +121,7 @@ function createArticle(article, saved=true) {
         meta: {
             title: article.title,
             by: authoredBy(article),
-            words: Math.round(article.length/4.7),
+            words: Math.round((article.length/4.7)),
             pages: 1
         }
     }
@@ -127,7 +130,7 @@ function createArticle(article, saved=true) {
 }
 
 function authoredBy(article) {
-    return article.byline ? "by " + article.byline : article.siteName || HOST.get()
+    return HOST.get()
 }
 
 export function _popup(){

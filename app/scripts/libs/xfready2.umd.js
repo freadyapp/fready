@@ -5236,6 +5236,10 @@
         }
     }
 
+    const SYNC = new Object;
+    let methods = ['get', 'set'];
+    methods.forEach(meth => SYNC[meth] = (...params) => { return chrome.storage.sync[meth](...params) });
+
     let panel = Z$2`
     <div class='article-panel'>
         <div class='button-gray' id='exit'> x </div>
@@ -5319,8 +5323,11 @@
     async function slurpArticle(article) {
 
         panel.title.html(article.title);
-        panel.url.html(authoredBy(article));
-        panel.eta.html(article.length/5);
+        panel.url.html(authoredBy());
+
+        SYNC.get('preferences', preferences => {
+            panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'");
+        });
 
         let existingArticle = await window.bridge.request("links:get", HOST.getURL());
         if (existingArticle && existingArticle.saved) panel.saved.css("background-color red");
@@ -5348,8 +5355,8 @@
             saved,
             meta: {
                 title: article.title,
-                by: authoredBy(article),
-                words: Math.round(article.length/4.7),
+                by: authoredBy(),
+                words: Math.round((article.length/4.7)),
                 pages: 1
             }
         };
@@ -5358,7 +5365,7 @@
     }
 
     function authoredBy(article) {
-        return article.byline ? "by " + article.byline : article.siteName || HOST.get()
+        return HOST.get()
     }
 
     function _popup(){
