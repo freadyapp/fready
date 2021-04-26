@@ -1,44 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
 // font-family: 'IBM Plex Mono', monospace;
 
-// .alma-wrap {
-
-//     @extend .transition;
-//     transition: all ease 0.5s;
-
-
-
-
-//     .close-button {
-        
-//         background-color: #35363A;
-//         width: 20px;
-//         height: 20px;
-//         border-radius: 50%;
-//         left: -25px;
-//         text-align: center;
-//         display: flex;
-//         flex-direction: row;
-//         flex-wrap: nowrap;
-//         justify-content: center;
-//         align-items: center;
-//         align-content: stretch;
-//         user-select: none;
-//         cursor: pointer;
-//         display: none;
-//         transition: all ease 0.2s;
-
-//         >svg {
-//             width: auto;
-//             height: 10px;
-//         }
-//     }
-
-//     
-
-
-// }
-
 .alma {
     height: 50px;   
     width: 230px;
@@ -58,7 +20,9 @@
     box-sizing: border-box;
     float: right;
 
-
+    @media (prefers-color-scheme: light) {
+        background: rgb(255, 255, 255);
+    }
 
     &:hover {
 
@@ -67,6 +31,17 @@
         }
     }
 
+    &::after {              // BLUE LINE
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 5px;
+        background-color: #2b6cce;
+        z-index: 45678987654356787654567876545678;
+        border-radius: 3px 0px 0px 3px;
+        left: 0;
+
+    }
 
     .press-space {
                 display: none;
@@ -79,8 +54,6 @@
                 font-size: 14px;
                 padding: 3px 7px;
                 transition: all ease 0.2s; 
-                  
-        
     }
 
 
@@ -108,15 +81,11 @@
             height: 15px;
             opacity: 50%;
         }
+
+        &#empty-heart-icon {
+            height: 20px;
+        }
     }
-
-    @media (prefers-color-scheme: light) {
-        background: rgb(255, 255, 255);
-    }
-
-    
-
-   
 
     .no-select {
         user-select: none !important;
