@@ -4,10 +4,14 @@
 // self.importScripts("./build/jolene.js")
 // importScripts("libs/xfready2.umd")
 const modules = [ "pragma", "hljs.min" ].map(k => `./modules/${k}`)
-const controllers = [ "install", "messenger" ].map(k => `./controllers/${k}_controller`)
+const controllers = [ "install", "API", "messenger" ].map(k => `./controllers/${k}_controller`)
 let scripts = (modules.concat(controllers)).map(k => k + ".js")
 scripts.forEach(script => importScripts(script))
 console.log(`🎬 imported scripts\n\t $${scripts.join("\n\t $")}`)
+
+const SYNC = new Object
+let methods = [ 'get', 'set' ]
+methods.forEach(meth => SYNC[meth] = (...params) => { return chrome.storage.sync[meth](...params) })
 
 // put in a pragmactic controller
 function injectScript(tab, file) {
@@ -45,22 +49,113 @@ chrome.action.onClicked.addListener((tab) => {
 //     }
 // })
 
+function linksApiConfiguration() {
+    this.onMsg('links:create', async (data, tab, respond) =>{
+        console.log('creating', data)
+        respond( await API.createLink(data))
+        // respond(await API.post('/links', data))
+    })
+
+    this.onMsg('links:index', async (data, tab, respond) =>{
+        console.log('indexing', data)
+        respond(await API.get('/links'))
+    })
+
+    this.onMsg('links:get', async (data, tab, respond) => {
+        console.log('getting link by', data)
+        respond(await new Promise(resolve => SYNC.get('links', ({links}) => {
+            resolve(data ? links[data] : links)
+        })))
+    })
+
+    this.onMsg('links:save', async (data, tab, respond) => {
+        console.log('saving link as', data)
+        respond(await API.saveLink(data))
+    })
+    console.log('messenget is', this)
+}
+
+
+API.define({
+    async syncLinks() {
+        let links = await this.get('/links')
+
+        let linkMap = {} 
+        links.forEach(link => linkMap[link.loc] = {
+            id: link.id,
+            saved: link.saved,
+            meta: link.meta
+        })
+
+        return SYNC.set({ links: linkMap })
+    },
+
+    async syncPrefs() {
+        let preferences = await this.get('/preferences')
+        console.log('prefs are', preferences)
+        return SYNC.set({ preferences })
+    },
+
+    async createLink(link) {
+        let promise = API.post('/links', link)
+        await promise
+
+        return await API.syncLinks()
+    },
+
+    async saveLink(link) {
+        console.log('saving link', link)
+        SYNC.get('links', ({links}) => {
+            console.log('saving link...', links[link])
+            console.log('id is', links[link].id)
+        })
+
+        // let promise = API.post('/links', link)
+        // return promise
+        return 'ok'
+    }
+})
+
+API.syncLinks()
+API.syncPrefs()
+
 injectInitiateHandshake: {
-    let libraries = ["xfready2.umd", "helpers", "bridge"]
-    let scripts = libraries.map(k => `libs/${k}`)
-    scripts.push("user")
+    // let libraries = ["xfready2.umd"]
+    // let scripts = libraries.map(k => `libs/${k}`)
+    // scripts.push("user")
 
     console.log('listentign to injecting')
 
     messenger.on('command:inject', (data, tab, respond) => {
         console.log(data, tab, respond)
         console.log('injecting', tab)
-        injectScripts(tab.id, ...scripts)
+        injectScripts(tab.id, "libs/xfready2.umd")
         respond("injected") 
     })
+
+    messenger.run(linksApiConfiguration)
+    messenger.on('command:request', (data, tab, respond) => {
+
+        // let link = {
+        //     "link": {
+        //         "url": "https://growandconvert.com/content-marketing/going-viral-medium/",
+        //         "body": "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
+        //         "saved": true,
+        //         "meta": {
+        //             "title": "xss attack",
+        //             "words": 420,
+        //             "pages": 69
+        //         }
+        //     }
+        // }
+
+        // API.post('/links', link)
+    })
+
+
 }
 
-messenger.onObj('parse', (data, tab, respond) => {
+messenger.onMsg('parse', (data, tab, respond) => {
     console.log('parsing', tab)
 
     // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
@@ -78,3 +173,6 @@ messenger.onObj('parse', (data, tab, respond) => {
     // respond(doc)
     // respond(result) 
 })
+
+
+

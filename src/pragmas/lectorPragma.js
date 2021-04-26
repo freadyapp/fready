@@ -132,7 +132,7 @@ export class LectorPragma extends Pragma {
         window.Mousetrap = Mousetrap
         console.log(Mousetrap)
         console.time('creating lec....')
-        this.createEvents('load', 'render', 'destroy')
+        this.createEvents('load', 'load article', 'parse article', 'render', 'destroy')
 
         // document.body.appendChild(element)
         this.as(template())
@@ -145,25 +145,54 @@ export class LectorPragma extends Pragma {
         this.reader = this.element.find("#reader")
                        .addClass("loading")
 
+        // this.element.find("#reader").html(article.content)
+    }
+
+    loadArticle() {
+        var article = new Readability(document.cloneNode(true)).parse()
+        this.article = article
+        this.triggerEvent('load article', article)
+        return this
+    }
+
+    async parseArticle() {
+        if (this._parsed) return true
+        
+        this.reader.html(this.article.content)
+                    .removeClass('collapsed')
+
+        await wfy(this.reader)
+
+        this.article.content = this.reader.html()
+        console.log('triggering event with', this.article)
+        this.triggerEvent('parse article', this.article)
+        this._parsed = true
+    }
+
+    load() {
+        if (this.loaded) return console.warn('lec already loaded')
+
         setTimeout(async () => {
-            var article = new Readability(document.cloneNode(true)).parse()
-            console.log(article)
-            this.reader.html(article.content)
-                       .removeClass('collapsed')
+            this.loadArticle()
+            await this.parseArticle()
+            // console.log(article)
 
-            await wfy(this.reader)
-
-            this.lec = Lector(this.reader, {
+            this.lec = (await Lector(this.reader, {
                 wfy: false,
-                onboarding: true,
+                onboarding: false,
                 scaler: true,
                 experimental: true,
 
                 fullStyles: true,
                 defaultStyles: true,
                 settings: true,
-            }).run(function() {
+            })).run(function() {
                 this.mark.addClass('billion-z-index')
+            }).run(() => {
+                console.log("lec: ", this.lec)
+                this.loaded = true
+                this.triggerEvent('load', this.lec)
+                console.timeEnd('creating lec....')
             })
 
             // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
@@ -171,15 +200,11 @@ export class LectorPragma extends Pragma {
             // this.lec.mark.element.replaceWith(clone)
             // clone.replaceWith(this.lec.mark.element)
 
-            console.log("lec: ", this.lec)
-            this.triggerEvent('load')
-            console.timeEnd('creating lec....')
+            
+
         }, 0)
-
-        // this.element.find("#reader").html(article.content)
+        return this
     }
-
-
 
     render() {
         console.log('RENDERING')
@@ -247,5 +272,5 @@ export function _lector() {
         injected = true
     }
 
-    return new LectorPragma
+    return new LectorPragma()
 }

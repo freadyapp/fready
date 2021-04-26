@@ -14,6 +14,7 @@ const env = process.env["xfready2_ENV"]
 const prod = (env=='production' || env == 'prod')
 
 function ifProd(plug, params){
+  // return plug(params)
   return prod ? plug(params) : null
 }
 
@@ -34,15 +35,17 @@ export default [
   {
     input: 'src/index.js',
     //external: ['tippy', 'mousetrap', 'animejs' ],
-    output: [{
-      name: 'xfready2',
-      file: pkg.browser,
-      format: 'umd'
-    }, {
-      name: 'xfready2',
-      file: "docs/scripts/xfready2.umd.js",
-      format: 'umd'
-    }, {
+    output: [
+    //   {
+    //   name: 'xfready2',
+    //   file: pkg.browser,
+    //   format: 'umd'
+    // }, {
+    //   name: 'xfready2',
+    //   file: "docs/scripts/xfready2.umd.js",
+    //   format: 'umd'
+    // },
+    {
       name: 'xfready2',
       file: "app/scripts/libs/xfready2.umd.js",
       format: 'umd'
@@ -53,16 +56,16 @@ export default [
 
     ].concat(plugs)
   },
-  {
-    input: 'src/index.js',
-    external: [ 'ms' ],
-    output: [
-      { file: pkg.main, format: 'cjs' },
-      { file: pkg.module, format: 'es' }
-    ],
-    plugins: [
-      // terser()
-    ].concat(plugs)
-  }
+  // {
+  //   input: 'src/index.js',
+  //   external: [ 'ms' ],
+  //   output: [
+  //     { file: pkg.main, format: 'cjs' },
+  //     { file: pkg.module, format: 'es' }
+  //   ],
+  //   plugins: [
+  //     // terser()
+  //   ].concat(plugs)
+  // }
 ]
 

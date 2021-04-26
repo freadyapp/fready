@@ -1,4 +1,5 @@
 // alert(document.querySelector("embed[name='application/x-google-chrome-pdf']"))
+import { HOST } from "../misc/helpers"
 
 function grabUserFromJolene() {
     let jolene = JSON.parse(_e("head").find("meta[name='jolene']").attr('content'))
@@ -14,7 +15,7 @@ function grabUserFromJolene() {
 }
 
 
-class User {
+export class User {
     static data = {}
 
     static setData(data){
@@ -51,8 +52,8 @@ class User {
 
 User.sync()
 
-
 if (HOST.is("fready", "localhost:3000")) {
+    console.log('[xfready] grabbing user from jolene')
     grabUserFromJolene().then(async data => {
         await User.sync(data)
         console.log("DATA", data)

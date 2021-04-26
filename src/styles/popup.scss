@@ -37,40 +37,40 @@ h1, h2, h3, h4, h5, h6 {
 
 #popup {
 
-
     h3 {
         font-size: 17px;
     }
-        z-index: 9999999999 !important;
 
-        position: fixed;
+    z-index: 9999999999 !important;
 
-        width: 2000px;
-        height: 2000px;
+    position: fixed;
 
-        // user-select: none;
-        width: 330px;
-        height: fit-content;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
-        position: fixed;
-        top: 10px;
-        right: 5px;
-        // z-index: 2147483647;
-        font-size: 17px;
-        box-sizing: content-box !important;
-        background-color: #35363A;
+    width: 2000px;
+    height: 2000px;
 
-        border-radius: 5px;
-        padding: 15px;
+    // user-select: none;
+    width: 330px;
+    height: fit-content;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 10px;
+    position: fixed;
+    top: 10px;
+    right: 5px;
+    // z-index: 2147483647;
+    font-size: 17px;
+    box-sizing: content-box !important;
+    background-color: #35363A;
 
-        display: flex;
-        flex-direction: column;
-        flex-wrap: nowrap;
-        justify-content: flex-start;
-        align-items: stretch;
-        align-content: stretch;
+    border-radius: 5px;
+    padding: 15px;
 
-        
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+
+    
 
     @media (prefers-color-scheme: light) {
             background: rgb(255, 255, 255);
