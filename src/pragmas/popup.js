@@ -9,12 +9,10 @@ let panel = block`
     <div class='article-panel'>
         <div class='button-gray' id='exit'> x </div>
         <div class='time-url'>
-            <h3 class='time blue no-select' id='time'>15'</h3>
-            <p class='url' id='url'>en.wikipedia.org</p>
+            <h3 class='time blue no-select' id='time'></h3>
+            <p class='url' id='url'></p>
         </div>
         <h3 class='title' id='title'>
-            Legality of bitcoin by country or territory
-            and the legality of marijuana by country and yeeters
         </h3>
         <div class='save-read'>
             <div class='button-gray' id='save'>${SVG('empty-heart-icon')} <span id='save-text'> Save </span></div>
@@ -34,7 +32,7 @@ let panel = block`
         this.savedText.html('Saved')
     },
     unsave() {
-        this.saved.css('background #303030')
+        this.saved.css('background #67686F')
         this.savedText.html('Save')
     }
 })
@@ -70,6 +68,11 @@ export class Popup extends ShadowPragma {
             lector.on('load article', slurpArticle)
         })
 
+        this.xfready.on('link:load', article => {
+            article.saved ? panel.save() : panel.unsave()
+        })
+        
+
         this.as(template)
         this.shadow.find(".article-panel").replaceWith(panel.element)
 
@@ -85,7 +88,7 @@ export class Popup extends ShadowPragma {
 
         // panel.title.listenTo('click', () => )
         panel.saved.listenTo('click', () => {
-            let action = this.xfready.link.saved ? 'unsave' : 'save'
+            let action = this.xfready.link?.saved ? 'unsave' : 'save'
 
             this.xfready[action]()
             panel[action]() // panel.save / panel.unsave
@@ -120,10 +123,6 @@ async function slurpArticle(article) {
         panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
     })
 
-    let existingArticle = await window.bridge.request("links:get", HOST.getURL())
-    if (existingArticle && existingArticle.saved) panel.save()
-
-    console.log('existing article is', existingArticle)
 
     // return {
     //     url: HOST.getURL(),

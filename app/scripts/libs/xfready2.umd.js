@@ -5078,23 +5078,31 @@
             return this
         }
 
+        async parseArticle() {
+            if (this._parsed) return true
+            
+            this.reader.html(this.article.content)
+                        .removeClass('collapsed');
+
+            await wfy(this.reader);
+
+            this.article.content = this.reader.html();
+            console.log('triggering event with', this.article);
+            this.triggerEvent('parse article', this.article);
+            this._parsed = true;
+        }
+
         load() {
+            if (this.loaded) return console.warn('lec already loaded')
+
             setTimeout(async () => {
                 this.loadArticle();
-                
+                await this.parseArticle();
                 // console.log(article)
-                this.reader.html(this.article.content)
-                           .removeClass('collapsed');
-
-                await wfy(this.reader);
-
-                this.article.content = this.reader.html();
-                console.log('triggering event with', this.article);
-                this.triggerEvent('parse article', this.article);
 
                 this.lec = (await Jt(this.reader, {
                     wfy: false,
-                    onboarding: true,
+                    onboarding: false,
                     scaler: true,
                     experimental: true,
 
@@ -5105,6 +5113,7 @@
                     this.mark.addClass('billion-z-index');
                 }).run(() => {
                     console.log("lec: ", this.lec);
+                    this.loaded = true;
                     this.triggerEvent('load', this.lec);
                     console.timeEnd('creating lec....');
                 });
@@ -5244,12 +5253,10 @@
     <div class='article-panel'>
         <div class='button-gray' id='exit'> x </div>
         <div class='time-url'>
-            <h3 class='time blue no-select' id='time'>15'</h3>
-            <p class='url' id='url'>en.wikipedia.org</p>
+            <h3 class='time blue no-select' id='time'></h3>
+            <p class='url' id='url'></p>
         </div>
         <h3 class='title' id='title'>
-            Legality of bitcoin by country or territory
-            and the legality of marijuana by country and yeeters
         </h3>
         <div class='save-read'>
             <div class='button-gray' id='save'>${SVG('empty-heart-icon')} <span id='save-text'> Save </span></div>
@@ -5269,7 +5276,7 @@
             this.savedText.html('Saved');
         },
         unsave() {
-            this.saved.css('background #303030');
+            this.saved.css('background #67686F');
             this.savedText.html('Save');
         }
     });
@@ -5305,6 +5312,11 @@
                 lector.on('load article', slurpArticle);
             });
 
+            this.xfready.on('link:load', article => {
+                article.saved ? panel.save() : panel.unsave();
+            });
+            
+
             this.as(template);
             this.shadow.find(".article-panel").replaceWith(panel.element);
 
@@ -5320,7 +5332,7 @@
 
             // panel.title.listenTo('click', () => )
             panel.saved.listenTo('click', () => {
-                let action = this.xfready.link.saved ? 'unsave' : 'save';
+                let action = this.xfready.link?.saved ? 'unsave' : 'save';
 
                 this.xfready[action]();
                 panel[action](); // panel.save / panel.unsave
@@ -5355,10 +5367,6 @@
             panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'");
         });
 
-        let existingArticle = await window.bridge.request("links:get", HOST.getURL());
-        if (existingArticle && existingArticle.saved) panel.save();
-
-        console.log('existing article is', existingArticle);
 
         // return {
         //     url: HOST.getURL(),
@@ -5384,7 +5392,7 @@
     class Xfready extends q$3 {
         constructor() {
             super();
-            this.createEvents('lector:create', 'lector:destroy');
+            this.createEvents('lector:create', 'lector:destroy', 'link:load');
             this.as('html');
             // this.setElement('body')
             // pragmaSpace.onDocLoad(() => {
@@ -5401,19 +5409,25 @@
         }
         async init() {
             // set existing link if there is one
-            this.link = await window.bridge.request("links:get", HOST.getURL());
             console.log('existing article is', this.link);
 
             // pragmaSpace.onDocLoad(() => {
             this.lector = _lector()
-                .on('load article', article => { this.article = article; })
-                .on('parse article', this.createLink);
+                // .on('load article')
+                .on('parse article', article => {
+                    this.article = article;
+                    this.createLink(article);
+                });
 
+            this.link = await window.bridge.request("links:get", HOST.getURL());
+            if (this.link) this.triggerEvent('link:load', this.link);
+            console.log('loading article');
             this.lector.loadArticle();
         }
 
         async createLink(article, saved=null) {
 
+            await this.link;
             if (saved===null && this.link && this.link.saved) saved = true;
             console.log('creating new link');
             
@@ -5430,17 +5444,23 @@
             };
 
             this.link = link;
+            this.triggerEvent('link:load', this.link);
 
             return window.bridge.request("links:create", { link })
         }
+        
 
         async read() {
             await this.lector.load();
             return this.lector.render()
         }
 
-        save() {
+        async save() {
             // saveArticle(this.lector.article)
+            console.log('saving...');
+            console.log('article is', this.article);
+            await this.lector.parseArticle();
+            console.log('now after parsearticle is', this.article);
             return this.createLink(this.article, true)
         }
 

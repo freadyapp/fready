@@ -155,23 +155,31 @@ export class LectorPragma extends Pragma {
         return this
     }
 
+    async parseArticle() {
+        if (this._parsed) return true
+        
+        this.reader.html(this.article.content)
+                    .removeClass('collapsed')
+
+        await wfy(this.reader)
+
+        this.article.content = this.reader.html()
+        console.log('triggering event with', this.article)
+        this.triggerEvent('parse article', this.article)
+        this._parsed = true
+    }
+
     load() {
+        if (this.loaded) return console.warn('lec already loaded')
+
         setTimeout(async () => {
             this.loadArticle()
-            
+            await this.parseArticle()
             // console.log(article)
-            this.reader.html(this.article.content)
-                       .removeClass('collapsed')
-
-            await wfy(this.reader)
-
-            this.article.content = this.reader.html()
-            console.log('triggering event with', this.article)
-            this.triggerEvent('parse article', this.article)
 
             this.lec = (await Lector(this.reader, {
                 wfy: false,
-                onboarding: true,
+                onboarding: false,
                 scaler: true,
                 experimental: true,
 
@@ -182,6 +190,7 @@ export class LectorPragma extends Pragma {
                 this.mark.addClass('billion-z-index')
             }).run(() => {
                 console.log("lec: ", this.lec)
+                this.loaded = true
                 this.triggerEvent('load', this.lec)
                 console.timeEnd('creating lec....')
             })

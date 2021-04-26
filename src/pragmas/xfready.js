@@ -6,7 +6,7 @@ import { HOST, SYNC } from "../misc/helpers"
 export class Xfready extends Pragma {
     constructor() {
         super()
-        this.createEvents('lector:create', 'lector:destroy')
+        this.createEvents('lector:create', 'lector:destroy', 'link:load')
         this.as('html')
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
@@ -23,19 +23,25 @@ export class Xfready extends Pragma {
     }
     async init() {
         // set existing link if there is one
-        this.link = await window.bridge.request("links:get", HOST.getURL())
         console.log('existing article is', this.link)
 
         // pragmaSpace.onDocLoad(() => {
         this.lector = _lector()
-            .on('load article', article => { this.article = article })
-            .on('parse article', this.createLink)
+            // .on('load article')
+            .on('parse article', article => {
+                this.article = article
+                this.createLink(article)
+            })
 
+        this.link = await window.bridge.request("links:get", HOST.getURL())
+        if (this.link) this.triggerEvent('link:load', this.link)
+        console.log('loading article')
         this.lector.loadArticle()
     }
 
     async createLink(article, saved=null) {
 
+        await this.link
         if (saved===null && this.link && this.link.saved) saved = true
         console.log('creating new link')
         
@@ -52,17 +58,23 @@ export class Xfready extends Pragma {
         }
 
         this.link = link
+        this.triggerEvent('link:load', this.link)
 
         return window.bridge.request("links:create", { link })
     }
+    
 
     async read() {
         await this.lector.load()
         return this.lector.render()
     }
 
-    save() {
+    async save() {
         // saveArticle(this.lector.article)
+        console.log('saving...')
+        console.log('article is', this.article)
+        await this.lector.parseArticle()
+        console.log('now after parsearticle is', this.article)
         return this.createLink(this.article, true)
     }
 
