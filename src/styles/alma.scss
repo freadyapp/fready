@@ -119,6 +119,21 @@
         &#empty-heart-icon {
             height: 20px;
         }
+
+        &#full-heart-icon {
+            display: none;
+        }
+    }
+
+    .save {
+
+        >svg#empty-heart-icon {
+            display: none;
+        }
+
+        >svg#full-heart-icon {
+            display: block;
+        }
     }
 
     .no-select {

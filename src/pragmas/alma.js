@@ -11,6 +11,7 @@ let element = html`
             ${SVG('read-icon-new')}
         
             ${SVG('empty-heart-icon')}
+            ${SVG('full-heart-icon')}
             ${SVG('close-icon')}
 
             <div class='press-space'>Press ${SVG('new-space-white')} to read</div>
@@ -27,11 +28,20 @@ export class Alma extends ShadowPragma {
 
         this.injectStyles('main', 'alma')
 
-        let self = this
+        console.log(this.element)
 
         this.shadow.find('#close-icon').listenTo('click', () => {
             this.element.hide()
         })
+
+        this.shadow.find('#empty-heart-icon').listenTo('click', ()=>{
+            this.element.addClass('save')
+        })
+    }
+
+    save(){
+        console.log('saving')
+        this.element.find('.alma').addClass('save')
     }
 }
 

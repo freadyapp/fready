@@ -11,11 +11,11 @@ export class Xfready extends Pragma {
         this.as('html')
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
-        // _popup().appendTo(this)
-        _alma().appendTo(this)
+
+        // _alma().appendTo(this)
         this.createEvents('lector:create', 'lector:destroy')
-        // this.popup = _popup(this)
-        //                 .appendTo(this)
+        this.popup = _popup(this)
+                        .appendTo(this)
 
         // })
         // if (existingArticle && existingArticle.saved) panel.save()
