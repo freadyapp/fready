@@ -14,7 +14,7 @@ let element = html`
             ${SVG('full-heart-icon')}
             ${SVG('close-icon')}
 
-            <div class='press-space'>Press ${SVG('new-space-white')} to read</div>
+            <div class='press-space fade-onload'>Press ${SVG('new-space-white')} to read</div>
         </div>
 
 `
@@ -26,12 +26,17 @@ export class Alma extends ShadowPragma {
 
         this.as(element)
 
-        this.injectStyles('main', 'alma')
+        this.injectStyles( 'alma', 'main')
 
         console.log(this.element)
 
         this.shadow.find('#close-icon').listenTo('click', () => {
-            this.element.hide()
+            this.shadow.addClass('fade-out')
+
+            setTimeout(() => {
+                this.element.hide()
+ 
+            }, 2000);
         })
 
         this.shadow.find('#empty-heart-icon').listenTo('click', ()=>{

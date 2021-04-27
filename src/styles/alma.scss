@@ -4,6 +4,10 @@
 // font-family: 'IBM Plex Sans', sans-serif;
 
 .alma {
+    position: fixed;
+        top: 10px;
+        right: -200px;
+        z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
     height: 50px;   
     width: 230px;
     background-color: #35363A;
@@ -19,8 +23,25 @@
     font-size: 18px;
     border-radius: 3px;
     padding: 5px 7px;
+    opacity: 1;
     box-sizing: border-box;
     float: right;
+    transition: all ease 0.3s;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 2s;
+    animation: slide 0.5s forwards;
+
+
+    @-webkit-keyframes slide {
+        100% { right: 5px; }
+    }
+
+    @keyframes slide {
+        100% { right: 5px; }
+    }
+
+
+
 
     @media (prefers-color-scheme: light) {
         background: rgb(255, 255, 255);
@@ -29,7 +50,10 @@
     &:hover {
 
         .press-space {
+            
             display: flex;
+         
+
         }
     }
 
@@ -65,7 +89,7 @@
         left: 40px;
         font-size: 14px;
         padding: 5px 15px;
-        transition: all ease 0.2s;
+        transition: all ease 0.5s;
         font-family: 'IBM Plex Sans', sans-serif;
         display: flex;
         flex-direction: row;
@@ -75,13 +99,14 @@
         align-content: center;
         display: none;
 
-
         >svg {
             height: auto;
             width: 48px;
             margin: 0 5px;
         }
     }
+
+    
 
 
     .time {
@@ -144,57 +169,78 @@
         transition: all ease 0.2 !important;
     }
 
-    .button {
-        @extend .no-select;
-        cursor: pointer;
-        background-color: #303030;
-        border-radius: 3px;
-        padding: 5px 20px;
-        color :whitesmoke;
-        cursor: pointer;
-        display: inline-block;
-        font-size: 16px;
-        font-weight: 500;
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        justify-content: space-between;
-        align-items: center;
-        align-content: center;
-        width: 60px;
 
-        @media (prefers-color-scheme: light) { 
-            background-color: #e3e3e3!important;
-            color: #383B3E !important;
-            fill: #383B3E;
-            
-            path, svg {
-                fill: #383B3E;
-            }
+
+}
+
+
+.fade-out {
+
+    $time: .5s;
+    -webkit-animation: fadeout $time;
+    /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeout $time;
+    /* Firefox < 16 */
+    -ms-animation: fadeout $time;
+    /* Internet Explorer */
+    -o-animation: fadeout $time;
+    /* Opera < 12.1 */
+    animation: fadeout $time;
+
+
+    @keyframes fadeout {
+        from {
+            opacity: 1;
         }
 
-        &:hover {
-            background-color:rgb(113, 113, 113);
-
-        }
-
-        &:active {
-            background-color: #2b6cce;
-        }
-
-        transition: all ease .1s;
-
-        &-gray {
-            @extend .button;
-            background-color: #67686F;
-            color: #fff;
-
-            > svg {
-                width: auto;
-                height: 15px;
-            }
+        to {
+            opacity: 0;
         }
     }
 
+    /* Firefox < 16 */
+    @-moz-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
 
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Safari, Chrome and Opera > 12.1 */
+    @-webkit-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Internet Explorer */
+    @-ms-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Opera < 12.1 */
+    @-o-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    } 
+
+    opacity: 0;
 }
