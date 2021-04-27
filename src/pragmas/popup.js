@@ -102,9 +102,9 @@ export class Popup extends ShadowPragma {
                     // .render()
         })
 
-        // this.shadow.find("#exit").listenTo('click', () => {
-        //     this.element.hide()
-        // })
+        _e('body').listenTo('click', (e)=>{
+            this.element.hide()
+        })
 
         this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
             this.shadow.find('#checked-checkbox').toggleClass('fade-out')
