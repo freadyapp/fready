@@ -40,13 +40,20 @@ export class Alma extends ShadowPragma {
         })
 
         this.shadow.find('#empty-heart-icon').listenTo('click', ()=>{
-            this.element.addClass('save')
+            this.save()
+        })
+        this.shadow.find('#full-heart-icon').listenTo('click', ()=>{
+            this.unsave()
         })
     }
 
     save(){
         console.log('saving')
-        this.element.find('.alma').addClass('save')
+        this.shadow.addClass('save')
+    }
+    unsave(){
+        console.log('unsaving')
+        this.shadow.removeClass('save')
     }
 }
 

@@ -146,18 +146,19 @@
         }
 
         &#full-heart-icon {
+            height: 20px;
             display: none;
         }
     }
 
-    .save {
+    &.save {
 
         >svg#empty-heart-icon {
-            display: none;
+            display: none !important;
         }
 
         >svg#full-heart-icon {
-            display: block;
+            display: inline-block !important;
         }
     }
 
