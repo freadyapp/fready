@@ -129,7 +129,24 @@ p {
         }
 
         #save {
-            margin-right: 10px
+            margin-right: 10px;
+
+
+            >svg#full-heart-icon {
+                display: none
+            }
+
+            &.saved {
+                padding-right: 15px;
+                >svg#empty-heart-icon {
+                    display: none
+                }
+
+                >svg#full-heart-icon {
+                    display: inline-block
+                }
+                
+            }
         }
 
         .save-read {
@@ -281,7 +298,8 @@ p {
         justify-content: space-between;
         align-items: center;
         align-content: center;
-        width: 60px;
+        box-sizing: border-box;
+        width: 100px;
 
         @media (prefers-color-scheme: light) { 
             background-color: #e3e3e3!important;

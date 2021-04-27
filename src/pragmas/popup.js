@@ -14,8 +14,15 @@ let panel = block`
         <h3 class='title' id='title'>
         </h3>
         <div class='save-read'>
-            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} <span id='save-text'> Save </span></div>
-            <div class='button-gray' id='read'>${SVG('read-icon')} <span id='read-text'> Read </span></div>
+            <div class='button-gray' id='save'>
+                ${SVG('empty-heart-icon')} 
+                ${SVG('full-heart-icon')}
+                <span id='save-text'>Save</span>
+            </div>
+            <div class='button-gray' id='read'>
+                ${SVG('read-icon')} 
+                <span id='read-text'> Read </span>
+            </div>
         </div>
     </div>
 `.define({
@@ -27,11 +34,11 @@ let panel = block`
     love: "#empty-heart-icon",
 
     save() {
-        this.saved.css('background #FF4136')
+        this.saved.addClass('saved')
         this.savedText.html('Saved')
     },
     unsave() {
-        this.saved.css('background #67686F')
+        this.saved.removeClass('saved')
         this.savedText.html('Save')
     }
 })
