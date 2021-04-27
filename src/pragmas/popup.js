@@ -7,7 +7,6 @@ import { HOST, SYNC } from "../misc/helpers"
 
 let panel = block`
     <div class='article-panel'>
-        <div class='button-gray' id='exit'> x </div>
         <div class='time-url'>
             <h3 class='time blue no-select' id='time'></h3>
             <p class='url' id='url'></p>
@@ -103,9 +102,9 @@ export class Popup extends ShadowPragma {
                     // .render()
         })
 
-        this.shadow.find("#exit").listenTo('click', () => {
-            this.element.hide()
-        })
+        // this.shadow.find("#exit").listenTo('click', () => {
+        //     this.element.hide()
+        // })
 
         this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
             this.shadow.find('#checked-checkbox').toggleClass('fade-out')

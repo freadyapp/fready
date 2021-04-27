@@ -2,6 +2,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'IBM Plex Mono', monospace;
     font-weight: bold;
     color: #fff;
+    margin: 0;
 
     @media (prefers-color-scheme: light) {
         h1, h2, h3, h4, h5 {
@@ -9,6 +10,12 @@ h1, h2, h3, h4, h5, h6 {
         }
     }
 }
+
+p {
+    margin: 0;
+}
+
+
 
 .flex-h {
     display: flex;
@@ -70,10 +77,14 @@ h1, h2, h3, h4, h5, h6 {
     align-items: stretch;
     align-content: stretch;
 
-    
-
     @media (prefers-color-scheme: light) {
             background: rgb(255, 255, 255);
+    }
+
+    #exit {
+        position: absolute;
+        right: 10px;
+        top: 5px;
     }
 
     .article-panel {
@@ -117,7 +128,7 @@ h1, h2, h3, h4, h5, h6 {
             }
         }
 
-        #exit {                     //TODO change exit to save
+        #save {
             margin-right: 10px
         }
 
