@@ -14,7 +14,7 @@ class APIController extends Pragma {
     constructor() {
         super()
 
-        this.url = 'http://localhost:3000/api'
+        this.url = _FREADY_API_URL
         this.createEvents("message", "send")
 
         this.bin = []

@@ -1,9 +1,10 @@
 import { Pragma, _e } from "pragmajs"
 import { _lector } from "./lectorPragma"
 import { _popup } from "./popup"
-import {_alma} from "./alma"
+import { _alma } from "./alma"
 
 import { HOST, SYNC } from "../misc/helpers"
+
 export class Xfready extends Pragma {
     constructor() {
         super()

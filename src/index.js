@@ -25,6 +25,7 @@ window.xfready = new Xfready()
 xfready.on('lector:create', lector => {
     console.group('constructing lector')
     console.time("CONSTRUCT LECTOR from DOCUMENT...")
+    console.log(_FREADY_API_URL)
     lector.on('load', () => {
         console.log(lector.reader)
         console.timeEnd("CONSTRUCT LECTOR from DOCUMENT...")

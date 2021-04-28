@@ -1,8 +1,4 @@
-// import { jolene } from "./3rdParty/jolene.js"
-// const xfready = import("./build/xfready2.umd.js")
-
-// self.importScripts("./build/jolene.js")
-// importScripts("libs/xfready2.umd")
+importScripts("./scripts/env.js") // get the env variables 
 const modules = [ "pragma", "hljs.min" ].map(k => `./modules/${k}`)
 const controllers = [ "install", "API", "messenger" ].map(k => `./controllers/${k}_controller`)
 let scripts = (modules.concat(controllers)).map(k => k + ".js")
@@ -148,7 +144,7 @@ injectInitiateHandshake: {
     messenger.on('command:inject', (data, tab, respond) => {
         console.log(data, tab, respond)
         console.log('injecting', tab)
-        injectScripts(tab.id, "libs/xfready2.umd")
+        injectScripts(tab.id, "env", "libs/xfready2.umd")
         respond("injected") 
     })
 
