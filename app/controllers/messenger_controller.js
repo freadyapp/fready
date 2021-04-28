@@ -3,18 +3,18 @@ class Messenger extends Pragma {
 
     constructor() {
         super()
-        console.log('created messenger')
+        this.log('created')
 
         this.connections = new Map()
         this.createEvents('connect', 'disconnect', 'receive')
 
         chrome.runtime.onConnect.addListener(port => {
-            console.log("NEW")
+            this.log("connected")
             this.connect(port)
         })
 
         chrome.runtime.onMessage.addListener((request, sender, respond) => {
-            console.log(request, sender)
+            // console.log(request, sender)
             this.triggerEvent(typeof request === 'object' ? Object.keys(request)[0] : request, request, sender.tab, respond)
         })
     }
@@ -35,7 +35,7 @@ class Messenger extends Pragma {
         this.registerConnection(port)
         this.triggerEvent('connect', port)
 
-        this.log(`CONNECTED`,port)
+        // this.log(`CONNECTED`, port)
 
         port.onMessage.addListener(msg => {
             this.receive(port, msg)
@@ -65,7 +65,7 @@ class Messenger extends Pragma {
                 else  {
                     data = msg.message[cmd]
                 }
-                console.log("OBJECT IS", msg.message)
+                // console.log("OBJECT IS", msg.message)
                 this.triggerEvent(`receive:${cmd}`, data, port.sender.tab, (data) => port.postMessage({ data, key: msg.key }))
             })
         }

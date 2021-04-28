@@ -25,12 +25,6 @@ function injectScripts(tab, ...scripts) {
     for (let script of scripts) injectScript(tab, script)
 }
 
-
-function reddenPage() {
-    document.body.style.backgroundColor = 'red';
-    console.log('redden')
-}
-
 chrome.action.onClicked.addListener((tab) => {
     // chrome.scripting.executeScript({
         // target: { tabId: tab.id },
@@ -51,8 +45,13 @@ chrome.action.onClicked.addListener((tab) => {
 
 function linksApiConfiguration() {
     this.onMsg('links:create', async (data, tab, respond) =>{
-        console.log('creating', data)
-        respond( await API.createLink(data))
+        respond(await API.createLink(data))
+        // respond(await API.post('/links', data))
+    })
+
+    this.onMsg('links:update', async (data, tab, respond) =>{
+        console.log('update', data)
+        respond(await API.updateLink(data))
         // respond(await API.post('/links', data))
     })
 
@@ -72,13 +71,14 @@ function linksApiConfiguration() {
         console.log('saving link as', data)
         respond(await API.saveLink(data))
     })
-    console.log('messenget is', this)
+
+    console.log('messenger is', this)
 }
 
 
 API.define({
     async syncLinks() {
-        let links = await this.get('/links')
+        let links = await API.get('/links')
 
         let linkMap = {} 
         links.forEach(link => linkMap[link.loc] = {
@@ -90,13 +90,31 @@ API.define({
         return SYNC.set({ links: linkMap })
     },
 
+    async doAndSyncLinks(cb, timeout=500) {
+        API.log('doing and syncing link afterwards....')
+        let resp = await cb()
+        setTimeout(() => API.syncLinks(), timeout)
+        return resp
+    },
+
     async syncPrefs() {
-        let preferences = await this.get('/preferences')
+        let preferences = await API.get('/preferences')
         console.log('prefs are', preferences)
         return SYNC.set({ preferences })
     },
 
     async createLink(link) {
+        API.log('creating new link', link)
+        return await API.doAndSyncLinks(
+            async () => API.post('/links', link)
+        )
+        // let promise = API.post('/links', link)
+        // let resp = await promise
+        // setTimeout(() => API.syncLinks(), 500)
+        // return resp
+    },
+
+    async updateLink(link) {
         let promise = API.post('/links', link)
         await promise
 

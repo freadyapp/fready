@@ -17,12 +17,18 @@ class APIController extends Pragma {
         this.url = 'http://localhost:3000/api'
         this.createEvents("message", "send")
 
+        this.bin = []
+
         let methods = ['post', 'put', 'get']
         methods.forEach(method => {
             this[method] = (...params) => this.request(method.toUpperCase(), ...params)
         })
+        this.log()
     }
 
+    log() {
+        console.log('[' + this.constructor.name + ']', ...arguments)
+    }
     // request(){
         // fetch('http://localhost:3000/api')
             // .then(response => response.text())
@@ -30,15 +36,21 @@ class APIController extends Pragma {
     // }
 
     async request(method='GET', suburl="", data = {}) {
-        // Default options are marked with *
+        if (this._requesting) return new Promise(resolve => {
+            setTimeout(() => this.request(...arguments).then(d => resolve(d)), 500)
+        })
+        // if (this._requesting) return new Promise(() => this.bin.push(arguments))
 
+        this.log(`${method}ing`, suburl, data)
+        this._requesting = true
+        // Default options are marked with *
 
         let api_key = await digCredential('misc').then(({api_key}) => api_key)
         data.api_key = api_key 
 
-        console.log('api key is', api_key)
+        // console.log('api key is', api_key)
 
-        let params = method === 'GET' ? toURLParams(data) : {}
+        let params = method === 'GET' ? toURLParams(data) : ''
 
         console.log('params are', params)
         const response = await fetch((this.url+suburl+`?${params}`), {
@@ -56,14 +68,19 @@ class APIController extends Pragma {
             body: method==="GET" ? null : JSON.stringify(data) // body data type must match "Content-Type" header
         })
 
-        console.log("done " + method+"ing to", this.url+suburl, data)
+
+        // this._requesting = false
         // let text = response.text()
+        let ret;
         try {
-            return response.json() 
+            ret = response.json() 
         } catch {
-            return response.text() 
+            ret = response.text() 
         }
-        // return response.json(); // parses JSON response into native JavaScript objects
+        
+        this._requesting = false
+        console.log("done " + method+"ing to", this.url+suburl, ret)
+        return ret
     }
 
 }

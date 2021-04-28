@@ -5407,8 +5407,10 @@
             this.init();
 
         }
+
         async init() {
             // set existing link if there is one
+            this.link = await window.bridge.request("links:get", HOST.getURL());
             console.log('existing article is', this.link);
 
             // pragmaSpace.onDocLoad(() => {
@@ -5419,16 +5421,17 @@
                     this.createLink(article);
                 });
 
-            this.link = await window.bridge.request("links:get", HOST.getURL());
             if (this.link) this.triggerEvent('link:load', this.link);
             console.log('loading article');
             this.lector.loadArticle();
         }
 
         async createLink(article, saved=null) {
+            console.log('creating link..............');
 
             await this.link;
             if (saved===null && this.link && this.link.saved) saved = true;
+
             console.log('creating new link');
             
             let link = {
