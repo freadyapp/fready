@@ -73,6 +73,10 @@ marker {
 
                 // filter: grayscale(1);
             }
+
+            w[data-word-atom=true] {
+                display: inline-block;
+            }
         }
     }
 

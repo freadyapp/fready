@@ -15,9 +15,9 @@ let parser = new DOMParser()
 
 function escapeHtml(unsafe) {
 return unsafe
-        // .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
+        // .replace(/&/g, "&amp;")
         // .replace(/"/g, "&quot;")
         // .replace(/'/g, "&#039;");
 }
@@ -228,7 +228,7 @@ export class LectorPragma extends ShadowPragma {
 
                 fullStyles: true,
                 defaultStyles: true,
-                settings: false,
+                settings: true,
 
                 styleInjector: (style, name) => {
                     this._injectCSS(name, style)
@@ -259,7 +259,7 @@ export class LectorPragma extends ShadowPragma {
         console.log('RENDERING')
 
         _e('body').html('')
-                    .append(this)
+                  .append(this)
 
         // this.shadow.show()
 
