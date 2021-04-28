@@ -5407,8 +5407,10 @@
             this.init();
 
         }
+
         async init() {
             // set existing link if there is one
+            this.link = await window.bridge.request("links:get", HOST.getURL());
             console.log('existing article is', this.link);
 
             // pragmaSpace.onDocLoad(() => {
@@ -5419,36 +5421,57 @@
                     this.createLink(article);
                 });
 
-            this.link = await window.bridge.request("links:get", HOST.getURL());
             if (this.link) this.triggerEvent('link:load', this.link);
             console.log('loading article');
             this.lector.loadArticle();
         }
 
-        async createLink(article, saved=null) {
+        async createLink(article, { saved=null, skipBody=false }={}) {
+            console.time('creating link..............');
 
             await this.link;
+            // console.log(`link is ${this.link?.inTheCloud ? '' : ' -- NOT --'} in the cloud`)
+            if (skipBody && !this.link?.inTheCloud) {
+                skipBody = false;
+                // console.log('link is already in the cloud!')
+            }
+
             if (saved===null && this.link && this.link.saved) saved = true;
-            console.log('creating new link');
+
             
             let link = {
                 url: HOST.getURL(),
-                body: article.content,
                 saved,
-                meta: {
+            };
+
+            if (!skipBody){
+                link.body = article.content;
+                link.meta = {
                     title: article.title,
                     by: authoredBy(),
                     words: Math.round((article.length/4.7)),
                     pages: 1
-                }
-            };
+                };
+            }
 
             this.link = link;
             this.triggerEvent('link:load', this.link);
 
-            return window.bridge.request("links:create", { link })
+            console.log("links:create", link);
+            console.timeEnd('creating link..............');
+            return new Promise( async resolve => {
+                // create link
+                await window.bridge.request("links:create", { link });
+
+                // wait a bit and then get the link back
+                // setTimeout(() => {
+                this.link = await window.bridge.request("links:get", HOST.getURL());
+                // })
+
+                resolve(this.link);
+            })
+            // return )
         }
-        
 
         async read() {
             await this.lector.load();
@@ -5458,14 +5481,14 @@
         async save() {
             // saveArticle(this.lector.article)
             console.log('saving...');
-            console.log('article is', this.article);
+            // console.log('article is', this.article)
             await this.lector.parseArticle();
             console.log('now after parsearticle is', this.article);
-            return this.createLink(this.article, true)
+            return this.createLink(this.article, { saved: true, skipBody: true })
         }
 
         unsave() {
-            return this.createLink(this.article, false)
+            return this.createLink(this.article, { saved: false, skipBody: true })
         }
 
         // static general helpers, handled by the 'core' of xfready
