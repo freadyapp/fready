@@ -84,7 +84,8 @@ API.define({
         links.forEach(link => linkMap[link.loc] = {
             id: link.id,
             saved: link.saved,
-            meta: link.meta
+            meta: link.meta,
+            inTheCloud: true
         })
 
         return SYNC.set({ links: linkMap })
