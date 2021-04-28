@@ -21,7 +21,11 @@ import { ShadowPragma } from "../misc/shadowPragma"
 
 let element = block`
     <div xfready id='alma' class='alma'>
-        <div class='time'></div>
+        <div class="eta-popup">
+            <div class='time'></div>
+            ${SVG('logo-icon-white')}
+        </div>
+
         ${SVG('read-icon-new')}
     
         ${SVG('empty-heart-icon')}
