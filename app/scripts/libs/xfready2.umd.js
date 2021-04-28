@@ -5304,8 +5304,8 @@
             <div class='article-panel'>
             </div>
             <div class='upload-dash'>
-                <div class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</div>
-                <div class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</div>
+                <a href='${FREADY_LINKS.upload}' class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</a>
+                <a href='${FREADY_LINKS.dashboard}' class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
             </div>
             <div class='xfready-footer'>
                 ${SVG('logo')}
