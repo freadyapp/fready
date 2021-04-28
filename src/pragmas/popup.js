@@ -7,7 +7,6 @@ import { HOST, SYNC } from "../misc/helpers"
 
 let panel = block`
     <div class='article-panel'>
-        <div class='button-gray' id='exit'> x </div>
         <div class='time-url'>
             <h3 class='time blue no-select' id='time'></h3>
             <p class='url' id='url'></p>
@@ -15,8 +14,15 @@ let panel = block`
         <h3 class='title' id='title'>
         </h3>
         <div class='save-read'>
-            <div class='button-gray' id='save'>${SVG('empty-heart-icon')} <span id='save-text'> Save </span></div>
-            <div class='button-gray' id='read'>${SVG('read-icon')} <span id='read-text'> Read </span></div>
+            <div class='button-gray' id='save'>
+                ${SVG('empty-heart-icon')} 
+                ${SVG('full-heart-icon')}
+                <span id='save-text'>Save</span>
+            </div>
+            <div class='button-gray' id='read'>
+                ${SVG('read-icon')} 
+                <span id='read-text'> Read </span>
+            </div>
         </div>
     </div>
 `.define({
@@ -28,11 +34,11 @@ let panel = block`
     love: "#empty-heart-icon",
 
     save() {
-        this.saved.css('background #FF4136')
+        this.saved.addClass('saved')
         this.savedText.html('Saved')
     },
     unsave() {
-        this.saved.css('background #67686F')
+        this.saved.removeClass('saved')
         this.savedText.html('Save')
     }
 })
@@ -63,6 +69,8 @@ export class Popup extends ShadowPragma {
     constructor(xfready) {
         super()
 
+        this.as(template)
+
         this.xfready = xfready
         this.xfready.on('lector:create', lector => { 
             lector.on('load article', slurpArticle)
@@ -73,8 +81,7 @@ export class Popup extends ShadowPragma {
         })
         
 
-        this.as(template)
-        this.shadow.find(".article-panel").replaceWith(panel.element)
+         this.shadow.find(".article-panel").replaceWith(panel.element)
 
         this.injectStyles('main', 'popup')
 
@@ -103,15 +110,32 @@ export class Popup extends ShadowPragma {
                     // .render()
         })
 
-        this.shadow.find("#exit").listenTo('click', () => {
+        _e('body').listenTo('click', (e)=>{
             this.element.hide()
         })
+        
 
         this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
             this.shadow.find('#checked-checkbox').toggleClass('fade-out')
             console.log('CLICKED')
         })
     }
+
+    hide(){
+        this.element.hide()
+
+        return this
+    }
+
+    show(){
+
+        console.log('showing')
+        this.element.show()
+
+        return this
+    }
+
+
 }
 
 async function slurpArticle(article) {

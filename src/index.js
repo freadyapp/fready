@@ -18,8 +18,8 @@ console.log('injecting styles...')
 
 window.bridge = _bridge()
 
-injectStyle("reset")
-injectStyle("main")
+// injectStyle("reset")
+// injectStyle("injected")
 
 window.xfready = new Xfready()
 xfready.on('lector:create', lector => {

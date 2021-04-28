@@ -2,6 +2,7 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'IBM Plex Mono', monospace;
     font-weight: bold;
     color: #fff;
+    margin: 0;
 
     @media (prefers-color-scheme: light) {
         h1, h2, h3, h4, h5 {
@@ -9,6 +10,12 @@ h1, h2, h3, h4, h5, h6 {
         }
     }
 }
+
+p {
+    margin: 0;
+}
+
+
 
 .flex-h {
     display: flex;
@@ -70,10 +77,14 @@ h1, h2, h3, h4, h5, h6 {
     align-items: stretch;
     align-content: stretch;
 
-    
-
     @media (prefers-color-scheme: light) {
             background: rgb(255, 255, 255);
+    }
+
+    #exit {
+        position: absolute;
+        right: 10px;
+        top: 5px;
     }
 
     .article-panel {
@@ -117,8 +128,25 @@ h1, h2, h3, h4, h5, h6 {
             }
         }
 
-        #exit {                     //TODO change exit to save
-            margin-right: 10px
+        #save {
+            margin-right: 10px;
+
+
+            >svg#full-heart-icon {
+                display: none
+            }
+
+            &.saved {
+                padding-right: 15px;
+                >svg#empty-heart-icon {
+                    display: none
+                }
+
+                >svg#full-heart-icon {
+                    display: inline-block
+                }
+                
+            }
         }
 
         .save-read {
@@ -263,14 +291,15 @@ h1, h2, h3, h4, h5, h6 {
         cursor: pointer;
         display: inline-block;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 500;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: space-between;
         align-items: center;
         align-content: center;
-        width: 60px;
+        box-sizing: border-box;
+        width: 100px;
 
         @media (prefers-color-scheme: light) { 
             background-color: #e3e3e3!important;

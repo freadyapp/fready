@@ -1,6 +1,7 @@
 import { Pragma, _e } from "pragmajs"
 import { _lector } from "./lectorPragma"
 import { _popup } from "./popup"
+import {_alma} from "./alma"
 
 import { HOST, SYNC } from "../misc/helpers"
 export class Xfready extends Pragma {
@@ -10,8 +11,14 @@ export class Xfready extends Pragma {
         this.as('html')
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
+        
+        _alma(this).appendTo(this)
+
+        // this.createEvents('lector:create', 'lector:destroy')
         this.popup = _popup(this)
                         .appendTo(this)
+                        .hide()
+
 
         // })
         // if (existingArticle && existingArticle.saved) panel.save()

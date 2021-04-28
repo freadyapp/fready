@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;700&display=swap');
+// font-family: 'IBM Plex Mono', monospace;
+// font-family: 'IBM Plex Sans', sans-serif;
+
+.alma {
+    position: fixed;
+        top: 10px;
+        right: -200px;
+        z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
+    height: 50px;   
+    width: 230px;
+    background-color: #35363A;
+    user-select: none;
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 15px 2px;
+    display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	justify-content: space-around;
+	align-items: center;
+	align-content: center;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 18px;
+    border-radius: 3px;
+    padding: 5px 7px;
+    opacity: 1;
+    box-sizing: border-box;
+    float: right;
+    transition: all ease 0.3s;
+    -webkit-animation: slide 0.5s forwards;
+    -webkit-animation-delay: 2s;
+    animation: slide 0.5s forwards;
+
+
+    @-webkit-keyframes slide {
+        100% { right: 5px; }
+    }
+
+    @keyframes slide {
+        100% { right: 5px; }
+    }
+
+
+
+
+    @media (prefers-color-scheme: light) {
+        background: rgb(255, 255, 255);
+    }
+
+    &:hover {
+
+        .press-space {
+            
+            display: flex;
+         
+
+        }
+    }
+
+    &::after {              // BLUE LINE
+        content: '';
+        position: absolute;
+        height: 100%;
+        width: 5px;
+        background-color: #2b6cce;
+        z-index: 45678987654356787654567876545678;
+        border-radius: 3px 0px 0px 3px;
+        left: 0;
+
+    }
+
+    &::before {
+        content: '';
+        position: absolute;
+        height: 60%;
+        width: 1px;
+        background-color: #fff;
+        opacity: 30%;
+        right: 52px;
+        border-radius: 2px;
+    }
+
+    .press-space {
+        position: absolute;
+        background-color: #35363A;
+        border-radius: 3px;
+        color: #fff;
+        bottom: -40px;
+        left: 40px;
+        font-size: 14px;
+        padding: 5px 15px;
+        transition: all ease 0.5s;
+        font-family: 'IBM Plex Sans', sans-serif;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+        display: none;
+
+        >svg {
+            height: auto;
+            width: 48px;
+            margin: 0 5px;
+        }
+    }
+
+    
+
+
+    .time {
+        color: #5A90E2 !important;
+        font-weight: 700;
+        // margin-left: 5px;
+        // margin-right: 15px;
+        font-size: 20px;
+    }
+
+    >svg {
+        @extend .transition;
+        width: auto;
+        height: 22px;
+        // margin-right: 10px;
+        opacity: 80%;
+        cursor: pointer;
+        transition: all ease 0.2s;
+
+
+        &:hover {
+            opacity: 1;
+        }
+
+        &#close-icon {
+            height: 15px;
+            opacity: 50%;
+            position: relative;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+
+        &#empty-heart-icon {
+            height: 20px;
+        }
+
+        &#full-heart-icon {
+            height: 20px;
+            display: none;
+        }
+    }
+
+    &.save {
+
+        >svg#empty-heart-icon {
+            display: none !important;
+        }
+
+        >svg#full-heart-icon {
+            display: inline-block !important;
+        }
+    }
+
+    .no-select {
+        user-select: none !important;
+    }
+
+    .transition {
+        transition: all ease 0.2 !important;
+    }
+
+
+
+}
+
+
+.fade-out {
+
+    $time: .5s;
+    -webkit-animation: fadeout $time;
+    /* Safari, Chrome and Opera > 12.1 */
+    -moz-animation: fadeout $time;
+    /* Firefox < 16 */
+    -ms-animation: fadeout $time;
+    /* Internet Explorer */
+    -o-animation: fadeout $time;
+    /* Opera < 12.1 */
+    animation: fadeout $time;
+
+
+    @keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Firefox < 16 */
+    @-moz-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Safari, Chrome and Opera > 12.1 */
+    @-webkit-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Internet Explorer */
+    @-ms-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* Opera < 12.1 */
+    @-o-keyframes fadeout {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    } 
+
+    opacity: 0;
+}

@@ -1,0 +1,30 @@
+// this will be injected in the main and actual page, used only to position shadow element wrappers
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=IBM+Plex+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&display=swap');
+
+body.xfready-lector-open {
+    overflow: hidden;
+}
+
+
+div[xfready]{
+    &.alma {
+        position: fixed;
+        top: 10px;
+        right: -200px;
+        z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
+       
+    
+    }
+
+
+    // &#popup {
+    //     z-index: 9999999999 !important;
+
+    //     position: fixed;
+
+    //     width: 2000px;
+    //     height: 2000px;
+
+    // }
+}
