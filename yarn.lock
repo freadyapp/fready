@@ -3851,15 +3851,15 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lectorjs@^0.8.0-b:
-  version "0.8.0-b"
-  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.8.0-b.tgz#76350ed8c2d768a8cef1f849b9e9a86a79fbe45e"
-  integrity sha512-x+J5erXPxIEqQGVcShLh+gWqFQmLG6ljZVJjo2VvMRj3rAjcauRpb+w7HmnhfFA8blQAbh78AtM0eBi57EskLw==
+lectorjs@^0.9.0:
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.0.tgz#4c28688442b614579e9fd414ffa13dde253b99fd"
+  integrity sha512-uqKBh/XoPaGbpSyuEXtXUwbj8OUbglsSDM7oSiMFze7czQUSYw6nnZnxxIQKbemJMz/RdHY/dn2lGPmGdfUj2g==
   dependencies:
     animejs "^3.2.1"
     compromise "^13.7.0"
     mousetrap "^1.6.5"
-    pragmajs "^0.8.4"
+    pragmajs "^0.8.8"
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4486,15 +4486,10 @@ postcss@^8.2.10:
     nanoid "^3.1.22"
     source-map "^0.6.1"
 
-pragmajs@^0.8.4:
-  version "0.8.4"
-  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.4.tgz#9d2e1823af7d1b992794eeeee43661e16a707742"
-  integrity sha512-fcnFcOssMnWL7i8VhetJUkuRp536iUxwMLasVS+bcKUCZaBY+0HufhI2odgei3LvLy34TMu1U65/DxSIbgqj/w==
-
-pragmajs@^0.8.6:
-  version "0.8.6"
-  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.6.tgz#a8c5c516ee884f7b3c359467d985237b70d1a24d"
-  integrity sha512-sa/q0ytPu8YRn8SiskMAJzgJfaWL9rApMnpa91ZORBFxxop1fh+WHZfR5vSpXBVi4BZEokp6yfsRh26kD+//jA==
+pragmajs@^0.8.8:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/pragmajs/-/pragmajs-0.8.8.tgz#cf9e6dfb153b20af7d3438bcd340e876b5daca15"
+  integrity sha512-omhgokKylDXioUUR+xqyiJ4bko1bG3HE+zESh2IvP8HHFyeyFdZfT4ii2DZrZiD/8+8FWNtNj0OERKj3+fX1DQ==
 
 prelude-ls@^1.2.1:
   version "1.2.1"

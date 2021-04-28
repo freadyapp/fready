@@ -1,23 +1,15 @@
-import { Pragma, html, _e, util } from "pragmajs"
+import { Pragma, html, _e, util, block } from "pragmajs"
 import { Xfready } from "./xfready"
 import Mousetrap from "mousetrap"
 import { Readability } from '@mozilla/readability'
 import { injectStyle } from "../.build_assets/index";
 import { Lector } from "lectorjs"
+import { ShadowPragma } from "../misc/shadowPragma"
 
 // window.Mousetrap = Mousetrap
 // console.log('readabilitys')
 // console.log(Readability)
 
-let template = () => html`
-<div xfready id=lector class='fade-onload'>
-    <div id='exit' class='button'> Exit </div>
-    <div id='reader-rapper'> 
-        <div id='reader' class='article collapsable collapsed'> 
-        </div>
-    </div>
-</div>
-`.hide()
 
 let parser = new DOMParser()
 
@@ -125,30 +117,78 @@ export function wfy(element) {
 }
 
 
-export class LectorPragma extends Pragma {
+// let shadow = _shadow().as(".article")
+
+// let lectorSettings = {
+//     wfy: true,
+//     loop: false,
+//     autostart: false,
+
+//     fullStyles: true,
+//     defaultStyles: true,
+
+//     styleInjector: (style, name) => {
+//         shadow.injectStyle(name, style)
+//     },
+
+//     scaler: true,
+//     //  pragmatizeOnCreate: true,
+//     experimental: true,
+
+//     //  legacySettings: true,
+//     settings: true
+//     //  shadow: 
+//     //  stream: fetchContent,
+//     // function with index as param that
+//     // returns the content for the page
+//     // can return a promise
+// }
+
+// let lec = Lector(shadow.shadow, lectorSettings)
+
+
+let popper = block`
+<div xfready id=lector class='fade-onload'>
+    <div id='exit' class='button'> Exit </div>
+    <div id='reader-rapper'> 
+        <div id='reader' class='article'> 
+        </div>
+    </div>
+</div>
+`
+
+export class LectorPragma extends ShadowPragma {
     constructor() {
+        console.time('lector construction')
         super()
+
+        this.as(_e(`div.`))
+            .shadow.append(popper)
+
         globalThis.pragmaSpace.integrateMousetrap(Mousetrap)
         window.Mousetrap = Mousetrap
-        console.log(Mousetrap)
-        console.time('creating lec....')
+
+        this.injectStyles("sanitized_elements", "syntax_highlight", "lector")
+
         this.createEvents('load', 'load article', 'parse article', 'render', 'destroy')
 
         // document.body.appendChild(element)
-        this.as(template())
 
-        this.element.find('#exit').listenTo('click', () => {
+        this.ogBody = _e('body').cloneNode(true)
+
+        this.shadow.find('#exit').listenTo('click', () => {
             this.exit()
         })
 
-        this.ogBody = _e('body').cloneNode(true)
-        this.reader = this.element.find("#reader")
+        this.reader = this.shadow.find("#reader")
                        .addClass("loading")
 
+        console.timeEnd('lector construction')
         // this.element.find("#reader").html(article.content)
     }
 
-    loadArticle() {
+    async loadArticle(reload=false) {
+        if (!reload && this.article) return this
         var article = new Readability(document.cloneNode(true)).parse()
         this.article = article
         this.triggerEvent('load article', article)
@@ -158,18 +198,20 @@ export class LectorPragma extends Pragma {
     async parseArticle() {
         if (this._parsed) return true
         
+        console.log('article is', this.article)
         this.reader.html(this.article.content)
                     .removeClass('collapsed')
 
-        await wfy(this.reader)
+        // await wfy(this.reader)
 
-        this.article.content = this.reader.html()
-        console.log('triggering event with', this.article)
-        this.triggerEvent('parse article', this.article)
+        // this.article.content = this.reader.html()
+        // console.log('triggering event with', this.article)
+        // this.triggerEvent('parse article', this.article)
         this._parsed = true
     }
 
     load() {
+        console.time('loading lec....')
         if (this.loaded) return console.warn('lec already loaded')
 
         setTimeout(async () => {
@@ -177,22 +219,29 @@ export class LectorPragma extends Pragma {
             await this.parseArticle()
             // console.log(article)
 
+            // this.reader.appendTo('html')
             this.lec = (await Lector(this.reader, {
-                wfy: false,
+                wfy: true,
                 onboarding: false,
                 scaler: true,
                 experimental: true,
 
                 fullStyles: true,
                 defaultStyles: true,
-                settings: true,
+                settings: false,
+
+                styleInjector: (style, name) => {
+                    this._injectCSS(name, style)
+                }
+
             })).run(function() {
                 this.mark.addClass('billion-z-index')
             }).run(() => {
+                this.shadow.find('#reader').removeClass('loading')
                 console.log("lec: ", this.lec)
                 this.loaded = true
                 this.triggerEvent('load', this.lec)
-                console.timeEnd('creating lec....')
+                console.timeEnd('loading lec....')
             })
 
             // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
@@ -209,12 +258,10 @@ export class LectorPragma extends Pragma {
     render() {
         console.log('RENDERING')
 
-        _e('body').addClass(`xfready-lector-open`)
-                    // .html(' ')
+        _e('body').html('')
                     .append(this)
 
-
-        this.element.show()
+        // this.shadow.show()
 
         setTimeout(() => {
             this.reader.findAll('code').forEach(code => {
@@ -228,6 +275,7 @@ export class LectorPragma extends Pragma {
                 // .appendTo(this.reader)
             })
             this.triggerEvent('render')
+        // _e('body').destroy()
 
         }, 0)
         // window.bridge.request({ parse: this.element.html() }).then(_html => {
@@ -259,18 +307,17 @@ export class LectorPragma extends Pragma {
     }
 }
 
-let injected = false
+// let injected = false
 export function _lector() {
-    if (!injected) {
-        let styles = [ "sanitized_elements", "syntax_highlight", "lector"]
-        console.log('injecting', styles)
-        styles.forEach(s => injectStyle(s))
+    // if (!injected) {
+        // let styles = [ ]
+        // styles.forEach(s => injectStyle(s))
         // console.log("injecting", styles)
         // injectStyle("sanitized_elements")
         // injectStyle("syntax_highlight")
         // injectStyle("lector")
-        injected = true
-    }
+        // injected = true
+    // }
 
     return new LectorPragma()
 }

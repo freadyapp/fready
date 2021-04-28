@@ -6,8 +6,8 @@ import { _alma } from "./alma"
 import { HOST, SYNC } from "../misc/helpers"
 
 export class Xfready extends Pragma {
-    constructor() {
-        super()
+
+    async init() {
         this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
         this.as('html')
         // this.setElement('body')
@@ -19,18 +19,6 @@ export class Xfready extends Pragma {
         this.popup = _popup(this)
                         .appendTo(this)
                         .hide()
-
-
-        // })
-        // if (existingArticle && existingArticle.saved) panel.save()
-
-        
-        // })
-        this.init()
-
-    }
-
-    async init() {
 
         this.on('lector:create', lector => {
             lector.on('load article', article => {
