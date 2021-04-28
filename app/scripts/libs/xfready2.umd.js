@@ -5329,9 +5329,7 @@
 
             this.xfready = xfready;
 
-            this.xfready.on('lector:create', lector => { 
-                lector.on('load article', slurpArticle);
-            });
+            this.xfready.on('article:ready', slurpArticle$1);
 
             this.xfready.on('link:load', article => {
                 article.saved ? panel.save() : panel.unsave();
@@ -5385,7 +5383,6 @@
         }
 
         show(){
-
             console.log('showing');
             this.element.show();
 
@@ -5395,27 +5392,14 @@
 
     }
 
-    async function slurpArticle(article) {
-
+    async function slurpArticle$1(article) {
         panel.title.html(article.title);
+        panel.eta.html(article.eta);
         panel.url.html(authoredBy$1());
 
-        SYNC.get('preferences', preferences => {
-            panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'");
-        });
-
-
-        // return {
-        //     url: HOST.getURL(),
-        //     body: article.content,
-        //     saved,
-        //     meta: {
-        //         title: article.title,
-        //         by: authoredBy(article),
-        //         words: article.length/5,
-        //         pages: 1
-        //     }
-        // }
+        // SYNC.get('preferences', preferences => {
+            // panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
+        // })
     }
 
     function _popup(){
@@ -5442,7 +5426,7 @@
 
     let element = block`
     <div xfready id='alma' class='alma'>
-        <div class='time'>51'</div>
+        <div class='time'></div>
         ${SVG('read-icon-new')}
     
         ${SVG('empty-heart-icon')}
@@ -5478,6 +5462,8 @@
         constructor(xfready){
             super();
             this.xfready = xfready;
+
+            this.xfready.on('article:ready', slurpArticle);
 
             this.xfready.on('link:load', article => {
                 article.saved ? element.save() : element.unsave();
@@ -5545,10 +5531,14 @@
         return new Alma(...arguments)
     }
 
+    async function slurpArticle(article) {
+        element.time.html(article.eta);
+    }
+
     class Xfready extends q$3 {
         constructor() {
             super();
-            this.createEvents('lector:create', 'lector:destroy', 'link:load');
+            this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready');
             this.as('html');
             // this.setElement('body')
             // pragmaSpace.onDocLoad(() => {
@@ -5571,6 +5561,17 @@
         }
 
         async init() {
+
+            this.on('lector:create', lector => {
+                lector.on('load article', article => {
+                    SYNC.get('preferences', preferences => {
+                        article.eta = (Math.round((article.length / 4.7) / (preferences.wpm || 250)) + "'");
+                        this.triggerEvent('article:ready', article);
+                    });
+                });
+            });
+
+
             // set existing link if there is one
             this.link = await window.bridge.request("links:get", HOST.getURL());
             console.log('existing article is', this.link);
