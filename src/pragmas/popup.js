@@ -72,6 +72,7 @@ export class Popup extends ShadowPragma {
         this.as(template)
 
         this.xfready = xfready
+
         this.xfready.on('lector:create', lector => { 
             lector.on('load article', slurpArticle)
         })
@@ -81,7 +82,7 @@ export class Popup extends ShadowPragma {
         })
         
 
-         this.shadow.find(".article-panel").replaceWith(panel.element)
+        this.shadow.find(".article-panel").replaceWith(panel.element)
 
         this.injectStyles('main', 'popup')
 
