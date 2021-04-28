@@ -69,6 +69,8 @@ export class Popup extends ShadowPragma {
     constructor(xfready) {
         super()
 
+        this.as(template)
+
         this.xfready = xfready
         this.xfready.on('lector:create', lector => { 
             lector.on('load article', slurpArticle)
@@ -79,8 +81,7 @@ export class Popup extends ShadowPragma {
         })
         
 
-        this.as(template)
-        this.shadow.find(".article-panel").replaceWith(panel.element)
+         this.shadow.find(".article-panel").replaceWith(panel.element)
 
         this.injectStyles('main', 'popup')
 
@@ -112,12 +113,29 @@ export class Popup extends ShadowPragma {
         _e('body').listenTo('click', (e)=>{
             this.element.hide()
         })
+        
 
         this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
             this.shadow.find('#checked-checkbox').toggleClass('fade-out')
             console.log('CLICKED')
         })
     }
+
+    hide(){
+        this.element.hide()
+
+        return this
+    }
+
+    show(){
+
+        console.log('showing')
+        this.element.show()
+
+        return this
+    }
+
+
 }
 
 async function slurpArticle(article) {

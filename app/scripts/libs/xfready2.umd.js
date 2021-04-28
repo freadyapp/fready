@@ -4944,7 +4944,7 @@
     // console.log('readabilitys')
     // console.log(Readability)
 
-    let template = () => X$3`
+    let template$1 = () => X$3`
 <div xfready id=lector class='fade-onload'>
     <div id='exit' class='button'> Exit </div>
     <div id='reader-rapper'> 
@@ -5070,7 +5070,7 @@
             this.createEvents('load', 'load article', 'parse article', 'render', 'destroy');
 
             // document.body.appendChild(element)
-            this.as(template());
+            this.as(template$1());
 
             this.element.find('#exit').listenTo('click', () => {
                 this.exit();
@@ -5261,7 +5261,7 @@
     let methods = ['get', 'set'];
     methods.forEach(meth => SYNC[meth] = (...params) => { return chrome.storage.sync[meth](...params) });
 
-    Z$2`
+    let panel = Z$2`
     <div class='article-panel'>
         <div class='time-url'>
             <h3 class='time blue no-select' id='time'></h3>
@@ -5299,7 +5299,7 @@
         }
     });
 
-    X$3`
+    let template = X$3`
         <div xfready id=popup class='fade-onload'>
             <div class='article-panel'>
             </div>
@@ -5320,6 +5320,111 @@
         </div>
     `;
 
+    class Popup extends ShadowPragma {
+
+        constructor(xfready) {
+            super();
+
+            this.as(template);
+
+            this.xfready = xfready;
+            this.xfready.on('lector:create', lector => { 
+                lector.on('load article', slurpArticle);
+            });
+
+            this.xfready.on('link:load', article => {
+                article.saved ? panel.save() : panel.unsave();
+            });
+            
+
+             this.shadow.find(".article-panel").replaceWith(panel.element);
+
+            this.injectStyles('main', 'popup');
+
+            
+            // pragmaSpace.onDocLoad(() => {
+                // this.lector = _lector()
+                                // .on('load article', slurpArticle)
+                                // .on('parse article', createArticle)
+                                // .loadArticle()
+            // })
+
+            // panel.title.listenTo('click', () => )
+            panel.saved.listenTo('click', () => {
+                let action = this.xfready.link?.saved ? 'unsave' : 'save';
+
+                this.xfready[action]();
+                panel[action](); // panel.save / panel.unsave
+                // saveArticle(this.lector.article)
+            });
+
+
+            this.shadow.find("#read").listenTo('click', () => {
+                this.xfready.read();
+                // this.lector
+                        // .load()
+                        // .render()
+            });
+
+            k$3('body').listenTo('click', (e)=>{
+                this.element.hide();
+            });
+            
+
+            this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
+                this.shadow.find('#checked-checkbox').toggleClass('fade-out');
+                console.log('CLICKED');
+            });
+        }
+
+        hide(){
+            this.element.hide();
+
+            return this
+        }
+
+        show(){
+
+            console.log('showing');
+            this.element.show();
+
+            return this
+        }
+
+
+    }
+
+    async function slurpArticle(article) {
+
+        panel.title.html(article.title);
+        panel.url.html(authoredBy$1());
+
+        SYNC.get('preferences', preferences => {
+            panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'");
+        });
+
+
+        // return {
+        //     url: HOST.getURL(),
+        //     body: article.content,
+        //     saved,
+        //     meta: {
+        //         title: article.title,
+        //         by: authoredBy(article),
+        //         words: article.length/5,
+        //         pages: 1
+        //     }
+        // }
+    }
+
+    function _popup(){
+        return new Popup(...arguments)
+    }
+
+    function authoredBy$1(article) {
+        return HOST.get()
+    }
+
     let element = X$3`
         <div xfready id='alma' class='alma'>
             <div class='time'>51'</div>
@@ -5336,15 +5441,21 @@
 
     class Alma extends ShadowPragma {
 
-        constructor(){
+        constructor(xfready){
             super();
 
             this.as(element);
+
+            this.xfready = xfready;
 
             this.injectStyles( 'alma', 'main');
 
             console.log(this.element);
 
+            this.init();
+        }
+
+        init() {
             this.shadow.find('#close-icon').listenTo('click', () => {
                 this.shadow.addClass('fade-out');
 
@@ -5360,6 +5471,14 @@
             this.shadow.find('#full-heart-icon').listenTo('click', ()=>{
                 this.unsave();
             });
+
+            this.shadow.find('.time').listenTo('click',()=>{
+
+                console.log('showing popup');
+                this.addClass('fade-out');
+
+                this.xfready.popup.show();
+            });
         }
 
         save(){
@@ -5373,7 +5492,7 @@
     }
 
     function _alma(){
-        return new Alma
+        return new Alma(...arguments)
     }
 
     class Xfready extends q$3 {
@@ -5384,17 +5503,13 @@
             // this.setElement('body')
             // pragmaSpace.onDocLoad(() => {
             
-            pragmaSpace.onDocLoad(()=>{
-                setTimeout(() => {
-                    _alma().appendTo(this);
-     
-                }, 1500);
-
-            });
+            _alma(this).appendTo(this);
 
             // this.createEvents('lector:create', 'lector:destroy')
-            // this.popup = _popup(this)
-            //                 .appendTo(this)
+            this.popup = _popup(this)
+                            .appendTo(this)
+                            .hide();
+
 
             // })
             // if (existingArticle && existingArticle.saved) panel.save()

@@ -12,17 +12,13 @@ export class Xfready extends Pragma {
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
         
-        pragmaSpace.onDocLoad(()=>{
-            setTimeout(() => {
-                _alma().appendTo(this)
- 
-            }, 1500);
-
-        })
+        _alma(this).appendTo(this)
 
         // this.createEvents('lector:create', 'lector:destroy')
-        // this.popup = _popup(this)
-        //                 .appendTo(this)
+        this.popup = _popup(this)
+                        .appendTo(this)
+                        .hide()
+
 
         // })
         // if (existingArticle && existingArticle.saved) panel.save()

@@ -21,15 +21,21 @@ let element = html`
 
 export class Alma extends ShadowPragma {
 
-    constructor(){
+    constructor(xfready){
         super()
 
         this.as(element)
+
+        this.xfready = xfready
 
         this.injectStyles( 'alma', 'main')
 
         console.log(this.element)
 
+        this.init()
+    }
+
+    init() {
         this.shadow.find('#close-icon').listenTo('click', () => {
             this.shadow.addClass('fade-out')
 
@@ -45,6 +51,14 @@ export class Alma extends ShadowPragma {
         this.shadow.find('#full-heart-icon').listenTo('click', ()=>{
             this.unsave()
         })
+
+        this.shadow.find('.time').listenTo('click',()=>{
+
+            console.log('showing popup')
+            this.addClass('fade-out')
+
+            this.xfready.popup.show()
+        })
     }
 
     save(){
@@ -58,5 +72,5 @@ export class Alma extends ShadowPragma {
 }
 
 export function _alma(){
-    return new Alma
+    return new Alma(...arguments)
 }
