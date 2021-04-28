@@ -5,69 +5,118 @@ import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
 
 
-let element = html`
-        <div xfready id='alma' class='alma'>
-            <div class='time'>51'</div>
-            ${SVG('read-icon-new')}
+// let element = html`
+//         <div xfready id='alma' class='alma'>
+//             <div class='time'>51'</div>
+//             ${SVG('read-icon-new')}
         
-            ${SVG('empty-heart-icon')}
-            ${SVG('full-heart-icon')}
-            ${SVG('close-icon')}
+//             ${SVG('empty-heart-icon')}
+//             ${SVG('full-heart-icon')}
+//             ${SVG('close-icon')}
 
-            <div class='press-space fade-onload'>Press ${SVG('new-space-white')} to read</div>
-        </div>
+//             <div class='press-space fade-onload'>Press ${SVG('new-space-white')} to read</div>
+//         </div>
 
-`
+// `
+
+let element = block`
+    <div xfready id='alma' class='alma'>
+        <div class='time'>51'</div>
+        ${SVG('read-icon-new')}
+    
+        ${SVG('empty-heart-icon')}
+        ${SVG('full-heart-icon')}
+        ${SVG('close-icon')}
+
+        <div class='press-space fade-onload'>Press ${SVG('new-space-white')} to read</div>
+    </div>
+`.define({
+    close: "#close-icon",
+    read: "#read-icon-new",
+    emptyLove: "#empty-heart-icon",
+    fullLove: "#full-heart-icon",
+    time: ".time",
+
+    save() {
+        this.addClass('saved')
+        // this.saved.addClass('saved')
+        // this.savedText.html('Saved')
+    },
+    unsave() {
+        this.removeClass('saved')
+        // this.addClass('saved')
+        // this.saved.removeClass('saved')
+        // this.savedText.html('Save')
+    }
+})
+
+
 
 export class Alma extends ShadowPragma {
 
     constructor(xfready){
         super()
-
-        this.as(element)
-
         this.xfready = xfready
 
-        this.injectStyles( 'alma', 'main')
+        this.xfready.on('link:load', article => {
+            article.saved ? element.save() : element.unsave()
+        })
 
-        console.log(this.element)
+        this.as(_e(`<div><div class='templ'></div></div>`))
+        this.shadow.find(".templ").replaceWith(element.element)
 
+
+        this.injectStyles('main', 'alma')
         this.init()
     }
 
     init() {
-        this.shadow.find('#close-icon').listenTo('click', () => {
-            this.shadow.addClass('fade-out')
 
-            setTimeout(() => {
-                this.element.hide()
- 
-            }, 2000);
+        
+
+        element.close.listenTo('click', () => {
+            this.hide()
         })
 
-        this.shadow.find('#empty-heart-icon').listenTo('click', ()=>{
+        element.read.listenTo('click', ()=>{
+            this.read()
+        })
+
+        element.emptyLove.listenTo('click', ()=>{
             this.save()
         })
-        this.shadow.find('#full-heart-icon').listenTo('click', ()=>{
+
+        element.fullLove.listenTo('click', ()=>{
             this.unsave()
         })
 
-        this.shadow.find('.time').listenTo('click',()=>{
-
-            console.log('showing popup')
-            this.addClass('fade-out')
-
+        element.time.listenTo('click',()=>{
+            this.hide()
             this.xfready.popup.show()
         })
     }
 
-    save(){
-        console.log('saving')
-        this.shadow.addClass('save')
+    hide() {
+        this.shadow.addClass('fade-out')
+
+        setTimeout(() => {
+            this.element.hide()
+
+        }, 200);
     }
+
+    read() {
+        this.xfready.read()
+    }
+
+    save(){
+        element.save()
+        this.xfready.save()
+    }
+
     unsave(){
-        console.log('unsaving')
-        this.shadow.removeClass('save')
+        element.unsave()
+        this.xfready.unsave()
     }
 }
 
