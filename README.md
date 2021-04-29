@@ -1,16 +1,26 @@
-![npm-size](https://img.shields.io/npm/v/xfready2?style=flat-square)
-![npm-size](https://img.shields.io/github/commit-activity/m/robo-monk/xfready2?style=flat-square)
-![npm-size](https://img.shields.io/npm/dw/xfready2?style=flat-square)
-
-# xfready2 
+# The Fready Browser Extension 
 > made with ❤ ️by Fready
 
-The code of our chrome extension in all its glory
+## Download it from the Extension Store [here](https://chrome.google.com/webstore/detail/fready/fbfecjjfhcgpocehenopdofhkdjfpcgl?hl=en)
+#### or [ as .crx ]()
 
-### [ Demo ](https://freadyapp.github.io/xfready2)
+--- 
+
+## Fready Home:
+[<img src="https://user-images.githubusercontent.com/57866906/116519059-b00ddc00-a8d9-11eb-8d68-8e2b396c5856.png" width="50" height="50" />](https://www.fready.co) 
+### [Home](https://www.fready.co)
+### [Dashboard](https://www.fready.co/dashboard)
+### [Beta (for PDFs)](https://www.fready.co/beta)
 
 
-## First time:
+
+--- 
+
+## Developing:
+
+Read more about [Chrome Extension V3 Manifest specification](https://developer.chrome.com/docs/extensions/mv3/intro/)
+
+### Installing the repo:
 
 ```bash
 git clone git@github.com:freadyapp/xfready2.git
@@ -21,10 +31,13 @@ pnpm dev -r # reload dependencies
 * Python 3 required (prefferably installed with `brew`)
 * Pragmatic Node Manager (pnpm) 
     > install curl -sSL raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python3 - && zsh
+    
+#### Watch files
 
-## Developing 
-Depends on your package manager (my recommendation would be `yarn`)
 ```bash
-pnpm dev # will start a server and watch the code. Will
-         # also check whether tests pass if configed so;
+pnpm dev # will start watching the code
 ```
+
+#### (re) Loading the extension in the browser
+This extension will work in all chromium based browsers. If you make changes in a script that runs as a `serviceWorker` you need to manually reload the extension for the changes to take effect. Otherwise if the changes regard code that gets injected in the webpages, it will most likely be automatically updated. If not try to reload the extension again.
+
