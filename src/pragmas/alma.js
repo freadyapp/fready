@@ -81,6 +81,7 @@ export class Alma extends ShadowPragma {
 
         element.read.listenTo('click', ()=>{
             this.read()
+            this.hide()
         })
 
         element.emptyLove.listenTo('click', ()=>{
