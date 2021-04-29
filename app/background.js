@@ -1,6 +1,6 @@
 importScripts("./scripts/env.js") // get the env variables 
-const modules = [ "pragma", "hljs.min" ].map(k => `./modules/${k}`)
-const controllers = [ "install", "API", "messenger" ].map(k => `./controllers/${k}_controller`)
+const modules = [ "pragma", "hljs.min", "jsdom" ].map(k => `./modules/${k}`)
+const controllers = [ "install", "API", "messenger", "wfy" ].map(k => `./controllers/${k}_controller`)
 let scripts = (modules.concat(controllers)).map(k => k + ".js")
 scripts.forEach(script => importScripts(script))
 console.log(`🎬 imported scripts\n\t $${scripts.join("\n\t $")}`)
@@ -198,5 +198,25 @@ messenger.onMsg('parse', (data, tab, respond) => {
     // respond(result) 
 })
 
+messenger.onMsg('wfy', async (html, tab, respond) => {
+    console.log('wfying...', tab)
 
+    // await WfyController.wfy(html)
+    let controller = new WfyController(html)
+    let outHTML = await controller.wfy()
+    console.log('out html > ', outHTML)
+    // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
+    // console.log("parsed", doc)
 
+    // console.log(data, tab, respond)
+    // const result = self.hljs.highlightAuto(data);
+    // console.log(result.value)
+    respond(outHTML)
+    // let doc = html(data)
+    // doc.querySelectorAll('pre').forEach((block) => {
+    // console.log('block')
+    // })
+
+    // respond(doc)
+    // respond(result) 
+})

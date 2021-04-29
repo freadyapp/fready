@@ -4974,7 +4974,7 @@
           }
       }
 
-      const wfy = U.wfy;
+      U.wfy;
       window.Mousetrap = mousetrap;
 
       let popper = G$2`
@@ -5024,20 +5024,46 @@
               return this
           }
 
+          // async parseArticle() {
+          //     if (this._parsed) return true
+              
+          //     console.log('article is', this.article)
+
+          //     this.reader.html(this.article.content)
+          //                .removeClass('collapsed')
+
+          //     await wfy(this.reader)
+
+          //     this.article.content = this.reader.html()
+          //     console.log('triggering event with', this.article)
+          //     this.triggerEvent('parse article', this.article)
+          //     this._parsed = true
+          // }
+
           async parseArticle() {
               if (this._parsed) return true
-              
-              console.log('article is', this.article);
+              // console.log('article is', this.article)
 
-              this.reader.html(this.article.content)
-                         .removeClass('collapsed');
+              // this.reader.html(this.article.content)
+                  //    .removeClass('collapsed')
 
-              await wfy(this.reader);
+              let wfiedHTML = await bridge.request({ wfy: this.article.content });
+              // console.log(wfiedHTML)
+
+              this.reader.html(wfiedHTML);
+              // this.reader.replaceWith(_e(wfiedHTML))
 
               this.article.content = this.reader.html();
-              console.log('triggering event with', this.article);
+              // console.log('triggering event with', this.article)
               this.triggerEvent('parse article', this.article);
               this._parsed = true;
+
+              // window.bridge.request({ parse: code.textContent }).then(_html => {
+                  // console.log("parsed", code)
+                  // code.html(Xfready.sanitizeHtml(_html))
+                  // console.log("parsed", code)
+                  // code.html('ue')
+              // })
           }
 
           load() {
