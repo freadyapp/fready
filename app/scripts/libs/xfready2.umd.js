@@ -5359,6 +5359,7 @@
           emptyLove: "#empty-heart-icon",
           fullLove: "#full-heart-icon",
           time: ".time",
+          etaPopup: ".eta-popup",
 
           save() {
               this.addClass('saved');
@@ -5409,8 +5410,8 @@
                   this.unsave();
               });
 
-              element.time.listenTo('click',()=>{
-                  this.hide();
+              element.etaPopup.listenTo('click',()=>{
+                  //this.hide()
                   this.xfready.popup.show();
               });
           }
