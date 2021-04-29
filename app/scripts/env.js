@@ -17,7 +17,11 @@ const BLACKLIST_URLS = [
     'pinterest', 'imgur', 'docs.google', 'stackoverflow', 'github', 'stackexchange'
 ]
 
-const BLACKLIST_SUBS = ["", null, 'home', 'contact', 'splash', "dashboard", 'pricing', 'terms']
+const WHITELIST_URLS = [
+    'investopedia'
+]
+
+const BLACKLIST_SUBS = ["", null, 'home', 'contact', 'splash', "dashboard", 'pricing']
 
 if (!__dev__) {
     console.log = console.error = console.warn = console.time = console.timeEnd = () => {}
