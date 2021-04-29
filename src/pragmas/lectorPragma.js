@@ -74,6 +74,7 @@ export class LectorPragma extends ShadowPragma {
 
     async parseArticle() {
         if (this._parsed) return true
+        console.time('wfying....')
         // console.log('article is', this.article)
 
         // this.reader.html(this.article.content)
@@ -86,10 +87,12 @@ export class LectorPragma extends ShadowPragma {
         // this.reader.replaceWith(_e(wfiedHTML))
 
         this.article.content = this.reader.html()
-        // console.log('triggering event with', this.article)
+        console.timeEnd('wfying....')
+
+        console.time('triggering parse....')
         this.triggerEvent('parse article', this.article)
         this._parsed = true
-
+        console.timeEnd('triggering parse....')
         // window.bridge.request({ parse: code.textContent }).then(_html => {
             // console.log("parsed", code)
             // code.html(Xfready.sanitizeHtml(_html))
@@ -117,15 +120,14 @@ export class LectorPragma extends ShadowPragma {
                 fullStyles: true,
                 defaultStyles: true,
                 settings: true,
-
                 styleInjector: (style, name) => {
                     this._injectCSS(name, style)
                 }
-
             })).run(function() {
                 this.mark.addClass('billion-z-index')
             }).run(() => {
-                this.shadow.find('#reader').removeClass('loading')
+                this.shadow.find('#reader')
+                    .removeClass('loading')
                 console.log("lec: ", this.lec)
                 this.loaded = true
                 this.triggerEvent('load', this.lec)
@@ -136,9 +138,6 @@ export class LectorPragma extends ShadowPragma {
             // this.lec.mark.element.destroy()
             // this.lec.mark.element.replaceWith(clone)
             // clone.replaceWith(this.lec.mark.element)
-
-            
-
         }, 0)
         return this
     }
@@ -165,8 +164,7 @@ export class LectorPragma extends ShadowPragma {
             })
             this.triggerEvent('render')
             console.timeEnd('RENDERING')
-        // _e('body').destroy()
-
+            // _e('body').destroy()
         }, 10)
         // window.bridge.request({ parse: this.element.html() }).then(_html => {
             // console.log('html', _html)
