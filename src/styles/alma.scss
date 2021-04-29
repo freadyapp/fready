@@ -67,7 +67,6 @@
         z-index: 45678987654356787654567876545678;
         border-radius: 3px 0px 0px 3px;
         left: 0;
-
     }
 
     &::before {
@@ -79,6 +78,10 @@
         opacity: 30%;
         right: 52px;
         border-radius: 2px;
+
+        @media (prefers-color-scheme: light) {
+            background-color: #6F6F6F;
+        }
     }
 
     .press-space {
@@ -134,6 +137,12 @@
             width: auto;
             height: 18px;
             display: none;
+
+            @media (prefers-color-scheme: light) {
+                >path {
+                    fill: black;
+                }
+            }
         }
 
         &:hover {
@@ -164,6 +173,10 @@
         padding: 15px;
         margin: -15px;
 
+        @media (prefers-color-scheme: light) {
+            opacity: 60%;
+        } 
+
 
         &:hover {
             opacity: 1;
@@ -180,15 +193,25 @@
             &:hover {
                 opacity: 1;
             }
+
+            
         }
 
         &#empty-heart-icon {
             height: 20px;
+
+           
         }
 
         &#full-heart-icon {
             height: 20px;
             display: none;
+        }
+
+        @media (prefers-color-scheme: light) {
+            >path {
+                fill: black;
+            }
         }
     }
 
