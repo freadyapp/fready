@@ -1,4 +1,5 @@
-import {Pragma, _p, _e, html} from 'pragmajs'
+import { Pragma, _p, _e, html } from 'pragmajs'
+import { HOST } from '../misc/helpers';
 
 var REGEXPS = {
     // NOTE: These two regular expressions are duplicated in
@@ -134,12 +135,31 @@ function addDomainCred(location) {
     return cred
 }
 
+function checkURL(url) {
+    let ary = url.replace("https://", "").replace("http://", "").split("/")
+    let host = ary[0].replace("www.", "")
+    let sub = (ary[1].split("?"))[0]
+    console.log(host)
+    console.log(sub)
+    return !(BLACKLIST_URLS.some(voo => {
+        if (host.includes(voo)) {
+            console.log('BLACKLIST domain')
+            return true
+        }
+    })) && !(BLACKLIST_SUBS.some(voo => {
+        if (sub == voo) {
+            console.log('BLACKLIST subsdomain')
+            return true
+        }
+    }))
+}
+
 class ArticleAI extends Pragma {
-    init() {
-    }
+    // init() {
+    // }
 
     _isDocFreadable(doc=document) {
-        return isProbablyReaderable(doc)
+        return checkURL(HOST.getURL()) && isProbablyReaderable(doc)
     }
 }
 
