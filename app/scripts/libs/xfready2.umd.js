@@ -5501,8 +5501,8 @@
           unlikelyCandidates: /-ad-|ai2html|banner|breadcrumbs|combx|comment|community|cover-wrap|disqus|extra|footer|gdpr|header|legends|menu|related|remark|replies|rss|shoutbox|sidebar|skyscraper|social|sponsor|supplemental|ad-break|agegate|pagination|pager|popup|yom-remote/i,
           okMaybeItsACandidate: /and|article|body|column|main|shadow/i,
 
-          likelyDomains: /wikipedia|wiki|blog|medium|news/i,
-          likelyPathContents: /topic|article|news|blog|read|doc|about|info|wiki/i,
+          likelyDomains: WHITELIST_URL_REGEX,
+          likelyPathContents: WHITELIST_PATH_REGEX
       };
 
       function isNodeVisible(node) {
@@ -5556,6 +5556,7 @@
           // This is a little cheeky, we use the accumulator 'score' to decide what to return from
           // this callback:
           const domainCred = addDomainCred(window.location);
+          // console.log('domain cred', domainCred)
           const result = [].some.call(nodes, function (node) {
               if (!options.visibilityChecker(node)) {
                   return false;
@@ -5587,6 +5588,10 @@
           function floor(n) { return Math.round((n + Number.EPSILON) * 100) / 100 }
 
           console.timeEnd("readable done in");
+          // score range
+
+          // let base = Math.min(Math.max(score, 0), 30) * 3
+          // let accuracy = Math.min(Math.sqrt(Math.abs(score - 30)), 10)
           //let certainty = floor(base+accuracy) 
 
           let certainty = Math.max(Math.min(100, score > 0 ? Math.sqrt(score) * 15 : 0), 0);
@@ -5643,6 +5648,7 @@
               }
           }))
       }
+
 
       class ArticleAI extends q$2 {
           // init() {
