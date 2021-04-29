@@ -5115,12 +5115,16 @@
               console.time('RENDERING');
 
               this.ogBody = j$2('body').clone();
+              this.ogScrollTop = window.scrollY; 
 
+
+              document.body.scrollIntoView({ behavior: "smooth" });
               j$2('body').html('')
                         .append(this);
               // this.shadow.show()
 
               setTimeout(() => {
+                  
                   this.reader.findAll('code').forEach(code => {
                       console.log("PARSE:", code.html());
                       window.bridge.request({ parse: code.textContent }).then(_html => {
@@ -5154,9 +5158,13 @@
           exit() {
               // this.lec.destroy()
               
-              console.log('og body is', this.ogBody);
+              // console.log('og body is', this.ogBody)
 
               j$2('body').replaceWith(this.ogBody);
+              window.scroll({
+                  top: this.ogScrollTop
+              });
+
               this.element.destroy();
               // _e('html').append(this.ogBody)
               // this.ogBody.appendTo(_e('html'))
