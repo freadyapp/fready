@@ -5,9 +5,9 @@
 
 .alma {
     position: fixed;
-        top: 10px;
-        right: -200px;
-        z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
+    top: 10px;
+    right: -200px;
+    z-index: 97543456789863212389098323459098765432489098434567890987654345678987654345678 !important;
     height: 50px;   
     width: 230px;
     background-color: #35363A;
@@ -30,6 +30,7 @@
     -webkit-animation: slide 0.5s forwards;
     -webkit-animation-delay: 2s;
     animation: slide 0.5s forwards;
+    padding-right: 3px;
 
 
     @-webkit-keyframes slide {
