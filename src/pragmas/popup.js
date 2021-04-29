@@ -15,11 +15,12 @@ let panel = block`
         </h3>
         <div class='save-read'>
             <div class='button-gray' id='save'>
-                ${SVG('empty-heart-icon')} 
+                ${SVG('empty-heart-icon')}
                 ${SVG('full-heart-icon')}
                 <span id='save-text'>Save</span>
             </div>
             <div class='button-gray' id='read'>
+                ${SVG('close-icon')}
                 ${SVG('read-icon')} 
                 <span id='read-text'> Read </span>
             </div>
@@ -33,6 +34,7 @@ let panel = block`
     savedText: "#save-text",
     readText: "#read-text",
     love: "#empty-heart-icon",
+    readButton: '#read',
 
     save() {
         this.saved.addClass('saved')
@@ -46,11 +48,17 @@ let panel = block`
     read() {
         // switch layout to exit
         this.readText.html('Exit')
+        this.readButton.addClass('exit')
+
+
+
     },
 
     exit() {
         // switch layout to read
         this.readText.html('Read')
+        this.readButton.removeClass('exit')
+
     }
 })
 
