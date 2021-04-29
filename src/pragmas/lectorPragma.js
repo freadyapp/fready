@@ -119,11 +119,10 @@ export class LectorPragma extends ShadowPragma {
     }
 
     render() {
-        console.log('RENDERING')
+        console.time('RENDERING')
 
         _e('body').html('')
                   .append(this)
-
         // this.shadow.show()
 
         setTimeout(() => {
@@ -138,9 +137,10 @@ export class LectorPragma extends ShadowPragma {
                 // .appendTo(this.reader)
             })
             this.triggerEvent('render')
+            console.timeEnd('RENDERING')
         // _e('body').destroy()
 
-        }, 0)
+        }, 10)
         // window.bridge.request({ parse: this.element.html() }).then(_html => {
             // console.log('html', _html)
             // this.reader.html(' ')
