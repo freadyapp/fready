@@ -146,12 +146,16 @@ export class LectorPragma extends ShadowPragma {
         console.time('RENDERING')
 
         this.ogBody = _e('body').clone()
+        this.ogScrollTop = window.scrollY 
 
+
+        document.body.scrollIntoView({ behavior: "smooth" })
         _e('body').html('')
                   .append(this)
         // this.shadow.show()
 
         setTimeout(() => {
+            
             this.reader.findAll('code').forEach(code => {
                 console.log("PARSE:", code.html())
                 window.bridge.request({ parse: code.textContent }).then(_html => {
@@ -185,9 +189,13 @@ export class LectorPragma extends ShadowPragma {
     exit() {
         // this.lec.destroy()
         
-        console.log('og body is', this.ogBody)
+        // console.log('og body is', this.ogBody)
 
         _e('body').replaceWith(this.ogBody)
+        window.scroll({
+            top: this.ogScrollTop
+        })
+
         this.element.destroy()
         // _e('html').append(this.ogBody)
         // this.ogBody.appendTo(_e('html'))
