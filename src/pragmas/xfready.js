@@ -13,21 +13,26 @@ export class Xfready extends Pragma {
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
         
-        bridge.on('message', (data, respond) => {
-            console.log(data)
-            respond('sheeeeeeeeesh')
+        bridge.on('message:click', async (data, respond) => {
+            console.log("CLICKKKKKKK")
+            if (!this._injected) await this.injectSelfInArticle({ skipAlma: true })
+            this.popup.toggle()
+            // respond('sheeeeeeeeesh')
         })
+
         this.ai = _articleAI()
         if (this.ai._isDocFreadable()){
             this.injectSelfInArticle()
         }
     }
 
-    async injectSelfInArticle() {
+    async injectSelfInArticle({ skipAlma=false } = {}) {
+        if (this._injected) return console.warn('already injected')
+        this._injected = true
         this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
         this.as('html')
 
-        _alma(this).appendTo(this)
+        if (!skipAlma) _alma(this).appendTo(this)
 
         this.popup = _popup(this)
                         .appendTo(this)

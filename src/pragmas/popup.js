@@ -120,16 +120,20 @@ export class Popup extends ShadowPragma {
         })
     }
 
-    hide(){
-        this.element.hide()
+    toggle() {
+        if (this.shown) return this.hide()
+        return this.show()
+    }
 
+    hide() {
+        this.shown = false
+        this.element.hide()
         return this
     }
 
-    show(){
-        console.log('showing')
+    show() {
+        this.shown = true
         this.element.show()
-
         return this
     }
 

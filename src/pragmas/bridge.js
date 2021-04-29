@@ -19,7 +19,10 @@ export class Bridge extends Pragma {
                     responded = true
                     respond(...arguments)
                 }
+
                 this.triggerEvent('message', data, _r, sender)
+                if (typeof data === 'string') this.triggerEvent(`message:${data}`, data, _r, sender)
+                if (typeof data === 'object') this.triggerEvent(`message:${Object.keys(data)[0]}`, data, _r, sender)
 
                 if (!responded) respond(200)
             }
