@@ -15,11 +15,12 @@ let panel = block`
         </h3>
         <div class='save-read'>
             <div class='button-gray' id='save'>
-                ${SVG('empty-heart-icon')} 
+                ${SVG('empty-heart-icon')}
                 ${SVG('full-heart-icon')}
                 <span id='save-text'>Save</span>
             </div>
             <div class='button-gray' id='read'>
+                ${SVG('close-icon')}
                 ${SVG('read-icon')} 
                 <span id='read-text'> Read </span>
             </div>
@@ -31,7 +32,9 @@ let panel = block`
     eta: "#time",
     saved: "#save",
     savedText: "#save-text",
+    readText: "#read-text",
     love: "#empty-heart-icon",
+    readButton: '#read',
 
     save() {
         this.saved.addClass('saved')
@@ -40,6 +43,22 @@ let panel = block`
     unsave() {
         this.saved.removeClass('saved')
         this.savedText.html('Save')
+    },
+
+    read() {
+        // switch layout to exit
+        this.readText.html('Exit')
+        this.readButton.addClass('exit')
+
+
+
+    },
+
+    exit() {
+        // switch layout to read
+        this.readText.html('Read')
+        this.readButton.removeClass('exit')
+
     }
 })
 
@@ -78,6 +97,9 @@ export class Popup extends ShadowPragma {
         this.xfready.on('link:load', article => {
             article.saved ? panel.save() : panel.unsave()
         })
+
+        this.xfready.on('article:read', () => panel.read())
+        this.xfready.on('article:exit', () => panel.exit())
         
 
         this.shadow.find(".article-panel").replaceWith(panel.element)
@@ -87,8 +109,8 @@ export class Popup extends ShadowPragma {
         
         // pragmaSpace.onDocLoad(() => {
             // this.lector = _lector()
-                            // .on('load article', slurpArticle)
-                            // .on('parse article', createArticle)
+                            // .on('article:load', slurpArticle)
+                            // .on('article:parse', createArticle)
                             // .loadArticle()
         // })
 
@@ -103,14 +125,16 @@ export class Popup extends ShadowPragma {
 
 
         this.shadow.find("#read").listenTo('click', () => {
-            this.xfready.read()
+            this.xfready.toggleReadOrExit()
             // this.lector
                     // .load()
                     // .render()
         })
 
-        _e('body').listenTo('click', (e)=>{
-            this.element.hide()
+        document.addEventListener('click', e => {
+            if (e.target?.shadowRoot !== this.root
+                && e.target?.shadowRoot !== this.xfready.alma?.root
+                ) this.hide()
         })
         
 
@@ -120,16 +144,22 @@ export class Popup extends ShadowPragma {
         })
     }
 
-    hide(){
-        this.element.hide()
+    toggle() {
+        if (this.shown) return this.hide()
+        return this.show()
+    }
 
+    hide() {
+        if (this.show === false) return this
+
+        this.shown = false
+        this.element.hide()
         return this
     }
 
-    show(){
-        console.log('showing')
+    show() {
+        this.shown = true
         this.element.show()
-
         return this
     }
 

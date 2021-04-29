@@ -32,7 +32,7 @@ export class LectorPragma extends ShadowPragma {
 
         this.injectStyles("sanitized_elements", "syntax_highlight", "lector")
 
-        this.createEvents('load', 'load article', 'parse article', 'render', 'destroy')
+        this.createEvents('load', 'article:load', 'article:parse', 'render', 'destroy')
 
         // document.body.appendChild(element)
 
@@ -52,7 +52,7 @@ export class LectorPragma extends ShadowPragma {
         if (!reload && this.article) return this
         var article = new Readability(document.cloneNode(true)).parse()
         this.article = article
-        this.triggerEvent('load article', article)
+        this.triggerEvent('article:load', article)
         return this
     }
 
@@ -68,7 +68,7 @@ export class LectorPragma extends ShadowPragma {
 
     //     this.article.content = this.reader.html()
     //     console.log('triggering event with', this.article)
-    //     this.triggerEvent('parse article', this.article)
+    //     this.triggerEvent('article:parse', this.article)
     //     this._parsed = true
     // }
 
@@ -90,7 +90,7 @@ export class LectorPragma extends ShadowPragma {
         console.timeEnd('wfying....')
 
         console.time('triggering parse....')
-        this.triggerEvent('parse article', this.article)
+        this.triggerEvent('article:parse', this.article)
         this._parsed = true
         console.timeEnd('triggering parse....')
         // window.bridge.request({ parse: code.textContent }).then(_html => {

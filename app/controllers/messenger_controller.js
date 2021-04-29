@@ -1,4 +1,3 @@
-
 class Messenger extends Pragma {
 
     constructor() {
@@ -73,6 +72,15 @@ class Messenger extends Pragma {
         this.on(`receive:${cmd}`, ...cbs)
 
         return this
+    }
+
+    request() { return this.sendTo(...arguments) }
+
+    sendTo(tab, data) {
+        this.log(`sending to ${tab}`, data)
+        return new Promise(resolve => {
+            chrome.tabs.sendMessage(tab.id, data, resolve)
+        })
     }
 
     log() {

@@ -22,6 +22,7 @@ function injectScripts(tab, ...scripts) {
 }
 
 chrome.action.onClicked.addListener((tab) => {
+    messenger.sendTo(tab, 'click').then(resp => console.log(resp))
     // chrome.scripting.executeScript({
         // target: { tabId: tab.id },
         // file: `scripts/${script}.js`
@@ -204,7 +205,6 @@ messenger.onMsg('wfy', async (html, tab, respond) => {
     // await WfyController.wfy(html)
     let controller = new WfyController(html)
     let outHTML = await controller.wfy()
-    console.log('out html > ', outHTML)
     // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
     // console.log("parsed", doc)
 

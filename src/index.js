@@ -14,8 +14,6 @@ import("pragmajs").then(pragmajs => {
     
 })
 
-console.log('injecting styles...')
-
 window.bridge = _bridge()
 
 // injectStyle("reset")
