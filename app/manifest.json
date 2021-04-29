@@ -16,7 +16,7 @@
     ],
 
     "background": {
-        "service_worker": "main.js"
+        "service_worker": "background.js"
     },
     "content_scripts": [
         {

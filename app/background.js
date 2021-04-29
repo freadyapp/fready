@@ -29,7 +29,16 @@ chrome.action.onClicked.addListener((tab) => {
     // injectScript(tab, "test")
 })
 
+chrome.runtime.onInstalled.addListener(reason => {
+    chrome.tabs.create({
+        url: FREADY_LINKS.welcome,
+        index: 0
+    })
 
+    if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
+        chrome.runtime.setUninstallURL(_FREADY_ROOT_URL+"/:c");
+    }
+})
 // put in a pragmatic controller
 // chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 //     if (request === "inject"){

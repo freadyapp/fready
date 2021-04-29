@@ -6,9 +6,9 @@ import { _alma } from "./alma"
 import { HOST, SYNC } from "../misc/helpers"
 
 export class Xfready extends Pragma {
-    constructor() {
-        super()
-        this.createEvents('lector:create', 'lector:destroy', 'link:load')
+
+    async init() {
+        this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
         this.as('html')
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
@@ -20,17 +20,16 @@ export class Xfready extends Pragma {
                         .appendTo(this)
                         .hide()
 
+        this.on('lector:create', lector => {
+            lector.on('load article', article => {
+                SYNC.get('preferences', preferences => {
+                    article.eta = (Math.round((article.length / 4.7) / (preferences.wpm || 250)) + "'")
+                    this.triggerEvent('article:ready', article)
+                })
+            })
+        })
 
-        // })
-        // if (existingArticle && existingArticle.saved) panel.save()
 
-        
-        // })
-        this.init()
-
-    }
-
-    async init() {
         // set existing link if there is one
         this.link = await window.bridge.request("links:get", HOST.getURL())
         console.log('existing article is', this.link)
@@ -67,6 +66,8 @@ export class Xfready extends Pragma {
         }
 
         if (!skipBody){
+            if (!article) return console.error('no article to create...', article)
+            
             link.body = article.content
             link.meta = {
                 title: article.title,

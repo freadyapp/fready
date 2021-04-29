@@ -48,8 +48,8 @@ let template = html`
             <div class='article-panel'>
             </div>
             <div class='upload-dash'>
-                <div class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</div>
-                <div class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</div>
+                <a href='${FREADY_LINKS.upload}' class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</a>
+                <a href='${FREADY_LINKS.dashboard}' class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
             </div>
             <div class='xfready-footer'>
                 ${SVG('logo')}
@@ -73,9 +73,7 @@ export class Popup extends ShadowPragma {
 
         this.xfready = xfready
 
-        this.xfready.on('lector:create', lector => { 
-            lector.on('load article', slurpArticle)
-        })
+        this.xfready.on('article:ready', slurpArticle)
 
         this.xfready.on('link:load', article => {
             article.saved ? panel.save() : panel.unsave()
@@ -129,7 +127,6 @@ export class Popup extends ShadowPragma {
     }
 
     show(){
-
         console.log('showing')
         this.element.show()
 
@@ -140,26 +137,13 @@ export class Popup extends ShadowPragma {
 }
 
 async function slurpArticle(article) {
-
     panel.title.html(article.title)
+    panel.eta.html(article.eta)
     panel.url.html(authoredBy(article))
 
-    SYNC.get('preferences', preferences => {
-        panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
-    })
-
-
-    // return {
-    //     url: HOST.getURL(),
-    //     body: article.content,
-    //     saved,
-    //     meta: {
-    //         title: article.title,
-    //         by: authoredBy(article),
-    //         words: article.length/5,
-    //         pages: 1
-    //     }
-    // }
+    // SYNC.get('preferences', preferences => {
+        // panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
+    // })
 }
 
 export function _popup(){

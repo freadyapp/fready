@@ -21,7 +21,7 @@ import { ShadowPragma } from "../misc/shadowPragma"
 
 let element = block`
     <div xfready id='alma' class='alma'>
-        <div class='time'>51'</div>
+        <div class='time'></div>
         ${SVG('read-icon-new')}
     
         ${SVG('empty-heart-icon')}
@@ -54,9 +54,11 @@ let element = block`
 
 export class Alma extends ShadowPragma {
 
-    constructor(xfready){
-        super()
+    init(xfready) {
+
         this.xfready = xfready
+
+        this.xfready.on('article:ready', slurpArticle)
 
         this.xfready.on('link:load', article => {
             article.saved ? element.save() : element.unsave()
@@ -67,12 +69,6 @@ export class Alma extends ShadowPragma {
 
 
         this.injectStyles('main', 'alma')
-        this.init()
-    }
-
-    init() {
-
-        
 
         element.close.listenTo('click', () => {
             this.hide()
@@ -122,4 +118,8 @@ export class Alma extends ShadowPragma {
 
 export function _alma(){
     return new Alma(...arguments)
+}
+
+async function slurpArticle(article) {
+    element.time.html(article.eta)
 }
