@@ -19,6 +19,7 @@ export class Xfready extends Pragma {
         this.popup = _popup(this)
                         .appendTo(this)
                         .hide()
+                        
 
         this.on('lector:create', lector => {
             lector.on('load article', article => {

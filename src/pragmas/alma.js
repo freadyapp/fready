@@ -21,7 +21,11 @@ import { ShadowPragma } from "../misc/shadowPragma"
 
 let element = block`
     <div xfready id='alma' class='alma'>
-        <div class='time'></div>
+        <div class="eta-popup">
+            <div class='time'></div>
+            ${SVG('logo-icon-white')}
+        </div>
+
         ${SVG('read-icon-new')}
     
         ${SVG('empty-heart-icon')}
@@ -36,6 +40,7 @@ let element = block`
     emptyLove: "#empty-heart-icon",
     fullLove: "#full-heart-icon",
     time: ".time",
+    etaPopup: ".eta-popup",
 
     save() {
         this.addClass('saved')
@@ -86,8 +91,8 @@ export class Alma extends ShadowPragma {
             this.unsave()
         })
 
-        element.time.listenTo('click',()=>{
-            this.hide()
+        element.etaPopup.listenTo('click',()=>{
+            //this.hide()
             this.xfready.popup.show()
         })
     }
