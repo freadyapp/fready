@@ -66,6 +66,8 @@ export class Xfready extends Pragma {
         }
 
         if (!skipBody){
+            if (!article) return console.error('no article to create...', article)
+            
             link.body = article.content
             link.meta = {
                 title: article.title,

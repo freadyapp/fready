@@ -3,149 +3,11 @@ import { Xfready } from "./xfready"
 import Mousetrap from "mousetrap"
 import { Readability } from '@mozilla/readability'
 import { injectStyle } from "../.build_assets/index";
-import { Lector } from "lectorjs"
+import { Lector, helpers } from "lectorjs"
 import { ShadowPragma } from "../misc/shadowPragma"
 
-// window.Mousetrap = Mousetrap
-// console.log('readabilitys')
-// console.log(Readability)
-
-
-let parser = new DOMParser()
-
-function escapeHtml(unsafe) {
-return unsafe
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        // .replace(/&/g, "&amp;")
-        // .replace(/"/g, "&quot;")
-        // .replace(/'/g, "&#039;");
-}
-
-const wregex = /(\w+)/gm
-
-
-const obsKey = util.rk(5)
-const obs = {
-    "<": `;;#${obsKey}0;`,
-    ">": `;;#${obsKey}1;`
-}
-
-let obsegex = {}
-for (let [key, value] of Object.entries(obs)) {
-    obsegex[key] = new RegExp(value, "gm")
-}
-
-const esc = (str) => str.replace(/</g, obs["<"])
-                            .replace(/>/g, obs[">"])
-
-const unesc = (str) => {
-    const r = (key) => obsegex[key]
-    return str.replaceAll(r("<"), "<")
-              .replaceAll(r(">"), ">")
-}
-
-function wegex(str) {
-    // return str
-    return str.replaceAll(wregex, (match, re) => esc("<w>") + escapeHtml(re) + esc("</w> "))
-}
-
-function wfyInner(desc) {
-    if (desc == undefined) return desc
-    if (desc.tagName == "CODE" || desc.tagName == "PRE") return desc
-    if (desc.tagName == undefined) {
-        // if text, wfy it and return node
-        desc.textContent = wegex(desc.textContent)
-        return desc
-    }
-    let og = desc
-    let childMap = new Map()
-    desc = og.cloneNode(true)
-
-    let childTag = (key) => `{{{{@XFREADY:${key}:}}}}`
-
-    desc.childNodes.forEach((element, i) => {
-        let key = i.toString()
-        childMap.set(key, element.cloneNode(true))
-        element.replaceWith(childTag(key))
-    })
-
-
-    let txt = desc.innerHTML
-    const regex = /\{{4}@XFREADY:(.+?(?=\:)).+?(?=\}{4})\}{4}/gm
-
-    function replaceElement(match, key){
-        let child = childMap.get(key)
-        let inner = wfyInner(child)
-
-        // console.log(inner.innerHTML)
-        // inner.innerHTML = inner.textContent.replaceAll(wregex, (match, re) => `<w>${re}</w>`)
-        // console.log(inner.innerHTML)
-        let outer = inner.outerHTML
-        if (outer) return outer 
-        return parser.parseFromString(unesc(inner.textContent), "text/html").documentElement.innerHTML 
-    }
-    
-    const parse = txt.replaceAll(regex, replaceElement)
-    // console.log(parser.parseFromString(parse, "text/html").documentElement.innerHTML)
-    og.innerHTML = parse
-    // og.innerHTML = parser.parseFromString((parse), "text/html").documentElement.innerHTML
-    return og 
-}
-
-export function wfyElement(element) {
-    console.log('wfy element', element)
-    // element = _e(element)
-    // let nodes = element.findAll("*")
-    // let nodes = element.childrenArray
-    // console.log('children', nodes)
-    // if (nodes.length != 0) nodes.forEach(desc => wfyElement(desc))
-
-    return wfyInner(element)
-}
-
-export function wfy(element) {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            console.time('wfying...')
-            wfyElement(element)
-            element.removeClass('loading')
-            resolve()
-            console.timeEnd('wfying...')
-        }, 200)
-    })
-}
-
-
-// let shadow = _shadow().as(".article")
-
-// let lectorSettings = {
-//     wfy: true,
-//     loop: false,
-//     autostart: false,
-
-//     fullStyles: true,
-//     defaultStyles: true,
-
-//     styleInjector: (style, name) => {
-//         shadow.injectStyle(name, style)
-//     },
-
-//     scaler: true,
-//     //  pragmatizeOnCreate: true,
-//     experimental: true,
-
-//     //  legacySettings: true,
-//     settings: true
-//     //  shadow: 
-//     //  stream: fetchContent,
-//     // function with index as param that
-//     // returns the content for the page
-//     // can return a promise
-// }
-
-// let lec = Lector(shadow.shadow, lectorSettings)
-
+const wfy = helpers.wfy
+window.Mousetrap = Mousetrap
 
 let popper = block`
 <div xfready id=lector class='fade-onload'>
@@ -199,14 +61,15 @@ export class LectorPragma extends ShadowPragma {
         if (this._parsed) return true
         
         console.log('article is', this.article)
+
         this.reader.html(this.article.content)
-                    .removeClass('collapsed')
+                   .removeClass('collapsed')
 
-        // await wfy(this.reader)
+        await wfy(this.reader)
 
-        // this.article.content = this.reader.html()
-        // console.log('triggering event with', this.article)
-        // this.triggerEvent('parse article', this.article)
+        this.article.content = this.reader.html()
+        console.log('triggering event with', this.article)
+        this.triggerEvent('parse article', this.article)
         this._parsed = true
     }
 
@@ -221,7 +84,7 @@ export class LectorPragma extends ShadowPragma {
 
             // this.reader.appendTo('html')
             this.lec = (await Lector(this.reader, {
-                wfy: true,
+                wfy: false,
                 onboarding: false,
                 scaler: true,
                 experimental: true,
