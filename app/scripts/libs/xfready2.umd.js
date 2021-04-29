@@ -5115,12 +5115,16 @@
               console.time('RENDERING');
 
               this.ogBody = j$2('body').clone();
+              this.ogScrollTop = window.scrollY; 
 
+
+              document.body.scrollIntoView({ behavior: "smooth" });
               j$2('body').html('')
                         .append(this);
               // this.shadow.show()
 
               setTimeout(() => {
+                  
                   this.reader.findAll('code').forEach(code => {
                       console.log("PARSE:", code.html());
                       window.bridge.request({ parse: code.textContent }).then(_html => {
@@ -5154,9 +5158,13 @@
           exit() {
               // this.lec.destroy()
               
-              console.log('og body is', this.ogBody);
+              // console.log('og body is', this.ogBody)
 
               j$2('body').replaceWith(this.ogBody);
+              window.scroll({
+                  top: this.ogScrollTop
+              });
+
               this.element.destroy();
               // _e('html').append(this.ogBody)
               // this.ogBody.appendTo(_e('html'))
@@ -5539,7 +5547,7 @@
               options = { visibilityChecker: options };
           }
 
-          var defaultOptions = { minScore: 30, minContentLength: 190, visibilityChecker: isNodeVisible };
+          var defaultOptions = { minScore: 30, minContentLength: MIN_ARTICLE_LENGTH, visibilityChecker: isNodeVisible };
           options = Object.assign(defaultOptions, options);
 
           var nodes = doc.querySelectorAll("p, pre");
@@ -5564,7 +5572,7 @@
           // This is a little cheeky, we use the accumulator 'score' to decide what to return from
           // this callback:
           const domainCred = addDomainCred(window.location);
-          // console.log('domain cred', domainCred)
+
           const result = [].some.call(nodes, function (node) {
               if (!options.visibilityChecker(node)) {
                   return false;
