@@ -109,6 +109,17 @@
     
     .eta-popup {
         cursor: pointer;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
         .time {
             color: #5A90E2 !important;
             font-weight: 700;
@@ -119,7 +130,8 @@
         }
 
         >svg#logo-icon-white {
-            @extend .fade-onload;
+            width: auto;
+            height: 18px;
             display: none;
         }
 
@@ -129,9 +141,10 @@
             }
             
             >svg#logo-icon-white {
-                transition: all ease 0.3s;
-                width: auto;
-                height: 18px;
+                @extend .fade-onload;
+
+                //transition: all ease 0.3s;
+                
                 display: block;
             }
         }
