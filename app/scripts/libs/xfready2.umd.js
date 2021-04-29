@@ -5004,7 +5004,6 @@
 
               // document.body.appendChild(element)
 
-              this.ogBody = j$2('body').cloneNode(true);
 
               this.shadow.find('#exit').listenTo('click', () => {
                   this.exit();
@@ -5089,6 +5088,8 @@
           render() {
               console.time('RENDERING');
 
+              this.ogBody = j$2('body').clone();
+
               j$2('body').html('')
                         .append(this);
               // this.shadow.show()
@@ -5127,10 +5128,12 @@
 
           exit() {
               // this.lec.destroy()
-              this.element.destroy();
               
               console.log('og body is', this.ogBody);
-              j$2('html').append(this.ogBody);
+
+              j$2('body').replaceWith(this.ogBody);
+              this.element.destroy();
+              // _e('html').append(this.ogBody)
               // this.ogBody.appendTo(_e('html'))
                           // .removeClass(`xfready-lector-open`)
               this.triggerEvent('destroy');

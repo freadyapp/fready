@@ -36,7 +36,6 @@ export class LectorPragma extends ShadowPragma {
 
         // document.body.appendChild(element)
 
-        this.ogBody = _e('body').cloneNode(true)
 
         this.shadow.find('#exit').listenTo('click', () => {
             this.exit()
@@ -121,6 +120,8 @@ export class LectorPragma extends ShadowPragma {
     render() {
         console.time('RENDERING')
 
+        this.ogBody = _e('body').clone()
+
         _e('body').html('')
                   .append(this)
         // this.shadow.show()
@@ -159,10 +160,12 @@ export class LectorPragma extends ShadowPragma {
 
     exit() {
         // this.lec.destroy()
-        this.element.destroy()
         
         console.log('og body is', this.ogBody)
-        _e('html').append(this.ogBody)
+
+        _e('body').replaceWith(this.ogBody)
+        this.element.destroy()
+        // _e('html').append(this.ogBody)
         // this.ogBody.appendTo(_e('html'))
                     // .removeClass(`xfready-lector-open`)
         this.triggerEvent('destroy')
