@@ -6,6 +6,10 @@ marker {
     z-index: 99999999999999999 !important;
 }
 
+#zoom-bar {
+    top: 80px !important;
+}
+
 #lector {
 
     background-color: #303030;
@@ -20,15 +24,35 @@ marker {
 
     text-align: center;
 
-    .exit {
-        width: 30px;
-        height: 30px;
+   
+
+    #exit {
+        width: 44px;
+        height: 44px;
         display: flex;
         flex-direction: row;
         flex-wrap: nowrap;
         justify-content: center;
         align-items: center;
         align-content: center;
+        background-color: #262626;
+        border-radius: 4px;
+        position: fixed;
+        right: 10px;
+        top: 20px;
+        cursor: pointer;
+        
+        >svg {
+            height: auto;
+            width: 18px;
+            opacity: 70%;
+        }
+
+        &:hover {
+            >svg {
+                opacity: 1;
+            }
+        }
 
     }
 
