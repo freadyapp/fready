@@ -14,10 +14,8 @@ export class Xfready extends Pragma {
         // pragmaSpace.onDocLoad(() => {
         
         bridge.on('message:click', async (data, respond) => {
-            console.log("CLICKKKKKKK")
             if (!this._injected) await this.injectSelfInArticle({ skipAlma: true })
             this.popup.toggle()
-            // respond('sheeeeeeeeesh')
         })
 
         this.ai = _articleAI()
@@ -32,14 +30,14 @@ export class Xfready extends Pragma {
         this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
         this.as('html')
 
-        if (!skipAlma) _alma(this).appendTo(this)
+        if (!skipAlma) this.alma = _alma(this).appendTo(this)
 
         this.popup = _popup(this)
                         .appendTo(this)
                         .hide()
 
         this.on('lector:create', lector => {
-            lector.on('load article', article => {
+            lector.on('article:load', article => {
                 SYNC.get('preferences', preferences => {
                     article.eta = (Math.round((article.length / 4.7) / (preferences.wpm || 250)) + "'")
                     this.triggerEvent('article:ready', article)
@@ -54,14 +52,20 @@ export class Xfready extends Pragma {
 
         // pragmaSpace.onDocLoad(() => {
         this.lector = _lector()
-            // .on('load article')
-            .on('parse article', article => {
+            // .on('article:load')
+            .on('article:parse', article => {
                 this.article = article
                 this.createLink(article)
             })
+            .on('destroy', article => {
+                this.triggerEvent('article:exit')
+            })
+            .on('render', article => {
+                this.triggerEvent('article:read')
+            })
 
         if (this.link) this.triggerEvent('link:load', this.link)
-        console.log('loading article')
+        
         this.lector.loadArticle()
     }
 
@@ -114,9 +118,20 @@ export class Xfready extends Pragma {
         // return )
     }
 
+    toggleReadOrExit() {
+        if (this._isReading) return this.exit()
+        return this.read()
+    }
+
     async read() {
+        this._isReading = true
         await this.lector.load()
         return this.lector.render()
+    }
+
+    exit() {
+        this._isReading = false
+        return this.lector.exit()
     }
 
     async save() {

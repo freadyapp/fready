@@ -31,6 +31,7 @@ let panel = block`
     eta: "#time",
     saved: "#save",
     savedText: "#save-text",
+    readText: "#read-text",
     love: "#empty-heart-icon",
 
     save() {
@@ -40,6 +41,16 @@ let panel = block`
     unsave() {
         this.saved.removeClass('saved')
         this.savedText.html('Save')
+    },
+
+    read() {
+        // switch layout to exit
+        this.readText.html('Exit')
+    },
+
+    exit() {
+        // switch layout to read
+        this.readText.html('Read')
     }
 })
 
@@ -78,6 +89,9 @@ export class Popup extends ShadowPragma {
         this.xfready.on('link:load', article => {
             article.saved ? panel.save() : panel.unsave()
         })
+
+        this.xfready.on('article:read', () => panel.read())
+        this.xfready.on('article:exit', () => panel.exit())
         
 
         this.shadow.find(".article-panel").replaceWith(panel.element)
@@ -87,8 +101,8 @@ export class Popup extends ShadowPragma {
         
         // pragmaSpace.onDocLoad(() => {
             // this.lector = _lector()
-                            // .on('load article', slurpArticle)
-                            // .on('parse article', createArticle)
+                            // .on('article:load', slurpArticle)
+                            // .on('article:parse', createArticle)
                             // .loadArticle()
         // })
 
@@ -103,14 +117,16 @@ export class Popup extends ShadowPragma {
 
 
         this.shadow.find("#read").listenTo('click', () => {
-            this.xfready.read()
+            this.xfready.toggleReadOrExit()
             // this.lector
                     // .load()
                     // .render()
         })
 
-        _e('body').listenTo('click', (e)=>{
-            this.element.hide()
+        document.addEventListener('click', e => {
+            if (e.target?.shadowRoot !== this.root
+                && e.target?.shadowRoot !== this.xfready.alma?.root
+                ) this.hide()
         })
         
 
@@ -126,6 +142,8 @@ export class Popup extends ShadowPragma {
     }
 
     hide() {
+        if (this.show === false) return this
+
         this.shown = false
         this.element.hide()
         return this

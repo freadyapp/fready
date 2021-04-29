@@ -5000,7 +5000,7 @@
 
               this.injectStyles("sanitized_elements", "syntax_highlight", "lector");
 
-              this.createEvents('load', 'load article', 'parse article', 'render', 'destroy');
+              this.createEvents('load', 'article:load', 'article:parse', 'render', 'destroy');
 
               // document.body.appendChild(element)
 
@@ -5020,7 +5020,7 @@
               if (!reload && this.article) return this
               var article = new readability.Readability(document.cloneNode(true)).parse();
               this.article = article;
-              this.triggerEvent('load article', article);
+              this.triggerEvent('article:load', article);
               return this
           }
 
@@ -5036,7 +5036,7 @@
 
           //     this.article.content = this.reader.html()
           //     console.log('triggering event with', this.article)
-          //     this.triggerEvent('parse article', this.article)
+          //     this.triggerEvent('article:parse', this.article)
           //     this._parsed = true
           // }
 
@@ -5058,7 +5058,7 @@
               console.timeEnd('wfying....');
 
               console.time('triggering parse....');
-              this.triggerEvent('parse article', this.article);
+              this.triggerEvent('article:parse', this.article);
               this._parsed = true;
               console.timeEnd('triggering parse....');
               // window.bridge.request({ parse: code.textContent }).then(_html => {
@@ -5224,6 +5224,7 @@
           eta: "#time",
           saved: "#save",
           savedText: "#save-text",
+          readText: "#read-text",
           love: "#empty-heart-icon",
 
           save() {
@@ -5233,6 +5234,16 @@
           unsave() {
               this.saved.removeClass('saved');
               this.savedText.html('Save');
+          },
+
+          read() {
+              // switch layout to exit
+              this.readText.html('Exit');
+          },
+
+          exit() {
+              // switch layout to read
+              this.readText.html('Read');
           }
       });
 
@@ -5271,6 +5282,9 @@
               this.xfready.on('link:load', article => {
                   article.saved ? panel.save() : panel.unsave();
               });
+
+              this.xfready.on('article:read', () => panel.read());
+              this.xfready.on('article:exit', () => panel.exit());
               
 
               this.shadow.find(".article-panel").replaceWith(panel.element);
@@ -5280,8 +5294,8 @@
               
               // pragmaSpace.onDocLoad(() => {
                   // this.lector = _lector()
-                                  // .on('load article', slurpArticle)
-                                  // .on('parse article', createArticle)
+                                  // .on('article:load', slurpArticle)
+                                  // .on('article:parse', createArticle)
                                   // .loadArticle()
               // })
 
@@ -5296,14 +5310,16 @@
 
 
               this.shadow.find("#read").listenTo('click', () => {
-                  this.xfready.read();
+                  this.xfready.toggleReadOrExit();
                   // this.lector
                           // .load()
                           // .render()
               });
 
-              j$2('body').listenTo('click', (e)=>{
-                  this.element.hide();
+              document.addEventListener('click', e => {
+                  if (e.target?.shadowRoot !== this.root
+                      && e.target?.shadowRoot !== this.xfready.alma?.root
+                      ) this.hide();
               });
               
 
@@ -5319,6 +5335,8 @@
           }
 
           hide() {
+              if (this.show === false) return this
+
               this.shown = false;
               this.element.hide();
               return this
@@ -5621,10 +5639,8 @@
               // pragmaSpace.onDocLoad(() => {
               
               bridge.on('message:click', async (data, respond) => {
-                  console.log("CLICKKKKKKK");
                   if (!this._injected) await this.injectSelfInArticle({ skipAlma: true });
                   this.popup.toggle();
-                  // respond('sheeeeeeeeesh')
               });
 
               this.ai = _articleAI();
@@ -5639,14 +5655,14 @@
               this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready');
               this.as('html');
 
-              if (!skipAlma) _alma(this).appendTo(this);
+              if (!skipAlma) this.alma = _alma(this).appendTo(this);
 
               this.popup = _popup(this)
                               .appendTo(this)
                               .hide();
 
               this.on('lector:create', lector => {
-                  lector.on('load article', article => {
+                  lector.on('article:load', article => {
                       SYNC.get('preferences', preferences => {
                           article.eta = (Math.round((article.length / 4.7) / (preferences.wpm || 250)) + "'");
                           this.triggerEvent('article:ready', article);
@@ -5661,14 +5677,20 @@
 
               // pragmaSpace.onDocLoad(() => {
               this.lector = _lector()
-                  // .on('load article')
-                  .on('parse article', article => {
+                  // .on('article:load')
+                  .on('article:parse', article => {
                       this.article = article;
                       this.createLink(article);
+                  })
+                  .on('destroy', article => {
+                      this.triggerEvent('article:exit');
+                  })
+                  .on('render', article => {
+                      this.triggerEvent('article:read');
                   });
 
               if (this.link) this.triggerEvent('link:load', this.link);
-              console.log('loading article');
+              
               this.lector.loadArticle();
           }
 
@@ -5721,9 +5743,20 @@
               // return )
           }
 
+          toggleReadOrExit() {
+              if (this._isReading) return this.exit()
+              return this.read()
+          }
+
           async read() {
+              this._isReading = true;
               await this.lector.load();
               return this.lector.render()
+          }
+
+          exit() {
+              this._isReading = false;
+              return this.lector.exit()
           }
 
           async save() {
