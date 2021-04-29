@@ -5616,6 +5616,10 @@
               // this.setElement('body')
               // pragmaSpace.onDocLoad(() => {
               
+              bridge.on('message', (data, respond) => {
+                  console.log(data);
+                  respond('sheeeeeeeeesh');
+              });
               this.ai = _articleAI();
               if (this.ai._isDocFreadable()){
                   this.injectSelfInArticle();
@@ -5763,15 +5767,29 @@
               super();
 
               this.port = port; 
-              this.createEvents("message", "send");
+              this.createEvents("portMessage", "send", 'message');
+
               this.port.onMessage.addListener(msg => {
                   console.log('received', msg);
-                  this.triggerEvent('message', msg);
+                  this.triggerEvent('portMessage', msg);
               });
+
+              chrome.runtime.onMessage.addListener(
+                  (data, sender, respond) => {
+                      let responded = false;
+                      let _r = function() {
+                          responded = true;
+                          respond(...arguments);
+                      };
+                      this.triggerEvent('message', data, _r, sender);
+
+                      if (!responded) respond(200);
+                  }
+              );
           }
 
           awaitResponse(key) {
-              return new Promise(resolve => this.on("message", (msg) => {
+              return new Promise(resolve => this.on("portMessage", (msg) => {
                   // console.log(msg.key, key)
                   if (msg.key === key) {
                       resolve(msg.data);

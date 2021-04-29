@@ -13,6 +13,10 @@ export class Xfready extends Pragma {
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
         
+        bridge.on('message', (data, respond) => {
+            console.log(data)
+            respond('sheeeeeeeeesh')
+        })
         this.ai = _articleAI()
         if (this.ai._isDocFreadable()){
             this.injectSelfInArticle()
