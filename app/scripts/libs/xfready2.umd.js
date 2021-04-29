@@ -5547,7 +5547,7 @@
               options = { visibilityChecker: options };
           }
 
-          var defaultOptions = { minScore: 30, minContentLength: 190, visibilityChecker: isNodeVisible };
+          var defaultOptions = { minScore: 30, minContentLength: MIN_ARTICLE_LENGTH, visibilityChecker: isNodeVisible };
           options = Object.assign(defaultOptions, options);
 
           var nodes = doc.querySelectorAll("p, pre");
@@ -5572,7 +5572,7 @@
           // This is a little cheeky, we use the accumulator 'score' to decide what to return from
           // this callback:
           const domainCred = addDomainCred(window.location);
-          // console.log('domain cred', domainCred)
+
           const result = [].some.call(nodes, function (node) {
               if (!options.visibilityChecker(node)) {
                   return false;
