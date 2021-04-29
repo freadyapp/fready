@@ -9,7 +9,8 @@ marker {
 #lector {
 
     background-color: #303030;
-    width: 100vw;
+    //width: 100vw;
+    overflow-x: hidden;
 
     top: 0;
     left: 0;
@@ -18,6 +19,18 @@ marker {
     height: fit-content;
 
     text-align: center;
+
+    .exit {
+        width: 30px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        justify-content: center;
+        align-items: center;
+        align-content: center;
+
+    }
 
     #reader-rapper {
         font-size: 19px;
