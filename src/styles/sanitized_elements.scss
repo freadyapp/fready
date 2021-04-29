@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;700&display=swap');
+
 .article{
   position: relative;
   background-color: #eeeeee;
@@ -23,14 +25,14 @@
 
 .sanitized-elements{
   font-weight: 400;
-  font-size: 19px;
+  font-size: 18px;
   line-height: 31px;
   word-break: keep-all;
   overflow: hidden;
   h1, h2, h3, h4, h5, h6 {
     font-family: IBM Plex Mono, monospace ;
     font-weight: bold;
-    margin-top: 20px;
+    margin-top: 25px;
     margin-bottom: 5px;
     color: black;
     * {
@@ -61,11 +63,16 @@
 
   p{
     font-weight: 400;
-    font-size: 19px !important;
+    font-size: 18px !important;
     line-height: 30px !important;
   }
+
+  w {
+    font-family: 'IBM Plex Sans', sans-serif;
+  }
+
   a {
-    color: #797979;
+    color: #393939;
     text-decoration-color: #25227044;
     display: unset !important;
     border-bottom: #929292 0.09em dashed;
@@ -185,7 +192,8 @@
       border-collapse: collapse;
 
       * {
-        font-size: .95em !important;
+        font-size: 16px !important;
+        line-height: 24px;
       } 
 
       @media screen and (max-width: 780px){

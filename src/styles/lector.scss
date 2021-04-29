@@ -33,31 +33,14 @@ marker {
 
         #reader {
             width: 80%;
-            padding: 80px 140px;
+            padding: 80px 100px;
             background: whitesmoke;
-            transition: all .2 ease;
+            transition: all .5s ease;
 
             &.loading {
-
-                // border: lightcoral 1px solid;
                 border: 1px solid whitesmoke;
                 background-color: #ffffff4c;
-                *:not(table) {
-                    > :not(table){
-                        filter: contrast(0);
-                        opacity: .3;
-                        transition: all .2 ease;
-                    }
-                }
-
-                table {
-                    color: transparent;
-                }
-
                 opacity: .3;
-
-                color: rgb(85, 85, 85) !important;
-
             }
 
             w[data-word-atom=true] {
