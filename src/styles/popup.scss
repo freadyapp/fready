@@ -150,7 +150,27 @@ p {
         }
 
         .save-read {
-           @extend .flex-h
+           @extend .flex-h;
+
+           #read {
+                >svg#close-icon {
+                    height: auto;
+                    width: 13px;
+                    display: none;
+                }
+
+                &.exit {
+                    >svg#read-icon {
+                        display: none;
+                    }
+
+                    >svg#close-icon {
+                        display: block;
+                    }
+                }
+
+           }
+
         }
     }
 
