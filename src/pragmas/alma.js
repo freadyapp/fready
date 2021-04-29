@@ -58,8 +58,8 @@ let element = block`
 
 export class Alma extends ShadowPragma {
 
-    constructor(xfready){
-        super()
+    init(xfready) {
+
         this.xfready = xfready
 
         this.xfready.on('article:ready', slurpArticle)
@@ -73,12 +73,6 @@ export class Alma extends ShadowPragma {
 
 
         this.injectStyles('main', 'alma')
-        this.init()
-    }
-
-    init() {
-
-        
 
         element.close.listenTo('click', () => {
             this.hide()

@@ -4,23 +4,23 @@ function __onDocLoad__() {
         chrome.storage.sync.get('user', data => {
             let name = data.user.name
 
-console.log(`%c
-    @@@@@@@@@@@@@@@@
-    @@@@@@@@@@@@@@
-    @@@@@@@@@@@.
-    @@@@@@@@@
-    @@@@@@  (@@@@@@
-    @@@@    (@@@,
-    @.      (@
+            console.log(`%c
+                @@@@@@@@@@@@@@@@
+                @@@@@@@@@@@@@@
+                @@@@@@@@@@@.
+                @@@@@@@@@
+                @@@@@@  (@@@@@@
+                @@@@    (@@@,
+                @.      (@
 
 
-   🌴 injected the Fready Chrome Extension!
-      Have a nice read${name ? `, ${name}` : ''}!
-`, "border-left: 2px solid #2b6cce;"
-            )
-        })
-    })
-}
+            🌴 injected the Fready Extension!
+                Have a nice read${name ? `, ${name}` : ''}!
+            `, "border-left: 2px solid #2b6cce;"
+                        )
+                    })
+                })
+            }
 
 if (document.readyState === "complete") {
     __onDocLoad__()
