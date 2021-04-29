@@ -2,20 +2,29 @@ import { Pragma, _e } from "pragmajs"
 import { _lector } from "./lectorPragma"
 import { _popup } from "./popup"
 import { _alma } from "./alma"
+import { _articleAI } from "./articleAI"
 
 import { HOST, SYNC } from "../misc/helpers"
 
 export class Xfready extends Pragma {
 
     async init() {
-        this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
-        this.as('html')
+
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
         
+        this.ai = _articleAI()
+        if (this.ai._isDocFreadable()){
+            this.injectSelfInArticle()
+        }
+    }
+
+    async injectSelfInArticle() {
+        this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
+        this.as('html')
+
         _alma(this).appendTo(this)
 
-        // this.createEvents('lector:create', 'lector:destroy')
         this.popup = _popup(this)
                         .appendTo(this)
                         .hide()

@@ -22,6 +22,7 @@ function injectScripts(tab, ...scripts) {
 }
 
 chrome.action.onClicked.addListener((tab) => {
+    // messenger.sendTo(tab, 'click')
     // chrome.scripting.executeScript({
         // target: { tabId: tab.id },
         // file: `scripts/${script}.js`
