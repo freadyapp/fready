@@ -3851,10 +3851,10 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lectorjs@^0.9.0:
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.0.tgz#4c28688442b614579e9fd414ffa13dde253b99fd"
-  integrity sha512-uqKBh/XoPaGbpSyuEXtXUwbj8OUbglsSDM7oSiMFze7czQUSYw6nnZnxxIQKbemJMz/RdHY/dn2lGPmGdfUj2g==
+lectorjs@^0.9.1:
+  version "0.9.1"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.1.tgz#c6f8f63745b6f2ae59559ff6348ec31399c6025d"
+  integrity sha512-T4UIJRVpYi/XKNV/CoJiV14UgsNx80U0c6nYO71l3ixXbU5fSvu1acY6gO3kVPws42LkFadCKg0uhOO02m8+4g==
   dependencies:
     animejs "^3.2.1"
     compromise "^13.7.0"
