@@ -5,3 +5,4 @@ node_modules/
 dist
 .pnp.js
 .DS_Store
+__pycache__/
