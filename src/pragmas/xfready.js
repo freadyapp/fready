@@ -13,34 +13,72 @@ export class Xfready extends Pragma {
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
         
-        window.bridge.on('message:click', async (data, respond) => {
-            if (!this._injected) await this.injectSelfInArticle({ skipAlma: true })
-            this.popup.toggle()
-        })
+        window.bridge
+            .on('message:click', async (data, respond) => {
+                if (!this._injected) await this.inject({ skipAlma: true })
+                this.popup.toggle()
+            })
+            .on('message:reload', async (data, respond) => {
+                this.updateView()
+            })
 
         this.ai = _articleAI()
+        this.updateView()
+        
+    }
+
+    updateView() {
         if (this.ai._isDocFreadable()){
-            this.injectSelfInArticle()
+            this.inject()
+        } else {
+            this.eject()
         }
     }
 
-    async injectSelfInArticle({ skipAlma=false } = {}) {
+    eject() {
+        if (!this._injected) return console.warn('not injected')
+
+        this.alma?.destroy().then(() => {
+            this.alma = null
+            console.log('destroyed alma')
+        })
+
+        this.popup?.destroy().then(() => {
+            this.popup = null
+            console.log('destroyed popup')
+        })
+
+        this.lector?.destroy().then(() => {
+            this._lector = null
+            console.log('destroyed lector')
+        })
+        // this.popup?.destroy()
+        // this.lector?.destroy()
+        this.link = null
+        this._element = null
+
+        this._injected = false
+    }
+
+    async inject({ skipAlma=false } = {}) {
         if (this._injected) return console.warn('already injected')
+
         this._injected = true
         this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
         this.as('html')
 
         if (!skipAlma) this.alma = _alma(this).appendTo(this)
 
-        this.popup = _popup(this)
-                        .appendTo(this)
-                        .hide()
+        if (!this.popup) this.popup = _popup(this)
+                                        .appendTo(this)
+                                        .hide()
                         
 
         this.on('lector:create', lector => {
             lector.on('article:load', article => {
                 SYNC.get('preferences', preferences => {
-                    article.eta = (Math.round((article.length / 4.7) / (preferences.wpm || 250)) + "'")
+                    console.log('preferences are', preferences)
+                    article.eta = (Math.round((article.length / 4.7) / (preferences.wpm ?? 250)) + "'")
                     this.triggerEvent('article:ready', article)
                 })
             })

@@ -5,7 +5,7 @@ import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
 import { HOST, SYNC } from "../misc/helpers"
 
-let panel = block`
+let panel = () => block`
     <div class='article-panel'>
         <div class='time-url'>
             <h3 class='time blue no-select' id='time'></h3>
@@ -49,20 +49,16 @@ let panel = block`
         // switch layout to exit
         this.readText.html('Exit')
         this.readButton.addClass('exit')
-
-
-
     },
 
     exit() {
         // switch layout to read
         this.readText.html('Read')
         this.readButton.removeClass('exit')
-
     }
 })
 
-let template = html`
+let template = () => html`
         <div xfready id=popup class='fade-onload'>
             <div class='article-panel'>
             </div>
@@ -88,21 +84,19 @@ export class Popup extends ShadowPragma {
     constructor(xfready) {
         super()
 
-        this.as(template)
+        this.as(template())
+        this.panel = panel()
 
         this.xfready = xfready
-
-        this.xfready.on('article:ready', slurpArticle)
-
-        this.xfready.on('link:load', article => {
-            article.saved ? panel.save() : panel.unsave()
-        })
-
-        this.xfready.on('article:read', () => panel.read())
-        this.xfready.on('article:exit', () => panel.exit())
+                        .on('article:ready', article => this.slurpArticle(article))
+                        .on('link:load', article => {
+                            article.saved ? this.panel.save() : this.panel.unsave()
+                        })
+                        .on('article:read', () => this.panel.read())
+                        .on('article:exit', () => this.panel.exit())
         
 
-        this.shadow.find(".article-panel").replaceWith(panel.element)
+        this.shadow.find(".article-panel").replaceWith(this.panel.element)
 
         this.injectStyles('main', 'popup')
 
@@ -114,12 +108,12 @@ export class Popup extends ShadowPragma {
                             // .loadArticle()
         // })
 
-        // panel.title.listenTo('click', () => )
-        panel.saved.listenTo('click', () => {
+        // this.panel.title.listenTo('click', () => )
+        this.panel.saved.listenTo('click', () => {
             let action = this.xfready.link?.saved ? 'unsave' : 'save'
 
             this.xfready[action]()
-            panel[action]() // panel.save / panel.unsave
+            this.panel[action]() // this.panel.save / this.panel.unsave
             // saveArticle(this.lector.article)
         })
 
@@ -163,19 +157,26 @@ export class Popup extends ShadowPragma {
         return this
     }
 
+    destroy() {
+        return new Promise(resolve => {
+            this.hide()
+            this.element.destroy()
+            resolve()
+        })
+    }
+
+
+    async slurpArticle(article) {
+        this.panel.title.html(article.title)
+        this.panel.eta.html(article.eta)
+        this.panel.url.html(authoredBy(article))
+
+        // SYNC.get('preferences', preferences => {
+            // this.panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
+        // })
+    }
 
 }
-
-async function slurpArticle(article) {
-    panel.title.html(article.title)
-    panel.eta.html(article.eta)
-    panel.url.html(authoredBy(article))
-
-    // SYNC.get('preferences', preferences => {
-        // panel.eta.html(Math.round((article.length/4.7)/(preferences.wpm || 250)) + "'")
-    // })
-}
-
 export function _popup(){
     return new Popup(...arguments)
 }

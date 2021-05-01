@@ -105,6 +105,12 @@ export class LectorPragma extends ShadowPragma {
         // })
     }
 
+    destroy() {
+        return new Promise(resolve => {
+            this.exit()
+            resolve()
+        })
+    }
     load() {
         console.time('loading lec....')
         if (this.loaded) return console.warn('lec already loaded')
@@ -152,6 +158,7 @@ export class LectorPragma extends ShadowPragma {
         this.ogBody = _e('body')
                         .addClass('revert-all')
                         .clone()
+
         this.ogScrollTop = window.scrollY 
 
 
@@ -197,14 +204,15 @@ export class LectorPragma extends ShadowPragma {
         
         // console.log('og body is', this.ogBody)
 
-        _e('body').replaceWith(
-            this.ogBody.removeClass('revert-all')
-        )
+        if (this.ogBody) {
+            _e('body').replaceWith(
+                this.ogBody.removeClass('revert-all')
+            )
 
-        window.scroll({
-            top: this.ogScrollTop
-        })
-
+            window.scroll({
+                top: this.ogScrollTop
+            })
+        }
         this.element.destroy()
         // _e('html').append(this.ogBody)
         // this.ogBody.appendTo(_e('html'))
@@ -212,6 +220,8 @@ export class LectorPragma extends ShadowPragma {
         this.triggerEvent('destroy')
         return this
     }
+
+
 }
 
 // let injected = false

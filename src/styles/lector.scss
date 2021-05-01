@@ -41,6 +41,7 @@ marker {
         right: 10px;
         top: 20px;
         cursor: pointer;
+        z-index: 99999999999999999999999999;
         
         >svg {
             height: auto;

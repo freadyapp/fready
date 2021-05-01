@@ -30,6 +30,15 @@ chrome.action.onClicked.addListener((tab) => {
     // injectScript(tab, "test")
 })
 
+chrome.tabs.onUpdated.addListener( (tabId, change) => {
+    if (change.url) messenger.sendToId(tabId, 'reload')
+                            .catch(msg => console.log(`could not update ${tabId}`))
+                            .then(resp => console.log(`> ${resp} updated ${tabId}, ${change.url}`))
+    // console.log(`${tabId} changed to ${change.url}`)
+    // console.log(change)
+    return false
+})
+
 chrome.runtime.onInstalled.addListener(reason => {
     chrome.tabs.create({
         url: FREADY_LINKS.welcome,
@@ -90,7 +99,7 @@ API.define({
         links.forEach(link => linkMap[link.loc] = {
             id: link.id,
             saved: link.saved,
-            meta: link.meta,
+            // meta: link.meta,
             inTheCloud: true
         })
 

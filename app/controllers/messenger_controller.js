@@ -76,11 +76,21 @@ class Messenger extends Pragma {
 
     request() { return this.sendTo(...arguments) }
 
-    sendTo(tab, data) {
-        this.log(`sending to ${tab}`, data)
-        return new Promise(resolve => {
-            chrome.tabs.sendMessage(tab.id, data, resolve)
+    sendToId(id, data) {
+        this.log(`sending to tab#${id}`, data)
+        return new Promise((resolve, reject) => {
+            chrome.tabs.sendMessage(id, data, (...params) => {
+                if (chrome.runtime.lastError) return reject(chrome.runtime.lastError.message)
+                resolve(...params)
+            })
         })
+    }
+    sendTo(tab, data) {
+        return this.sendToId(tab.id, data)
+        // this.log(`sending to ${tab}`, data)
+        // return new Promise(resolve => {
+            // chrome.tabs.sendMessage(tab.id, data, resolve)
+        // })
     }
 
     log() {

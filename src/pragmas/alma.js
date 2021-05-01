@@ -99,12 +99,14 @@ export class Alma extends ShadowPragma {
     }
 
     hide() {
-        this.shadow.addClass('fade-out')
+        return new Promise((resolve) => {
+            this.shadow.addClass('fade-out')
 
-        setTimeout(() => {
-            this.element.hide()
-
-        }, 200);
+            setTimeout(() => {
+                this.element.hide()
+                resolve()
+            }, 200)
+        })
     }
 
     read() {
@@ -120,7 +122,14 @@ export class Alma extends ShadowPragma {
         element.unsave()
         this.xfready.unsave()
     }
+
+    destroy() {
+        return this.hide().then(() => {
+            this.element.destroy()
+        })
+    }
 }
+
 
 export function _alma(){
     return new Alma(...arguments)
