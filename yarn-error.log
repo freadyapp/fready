@@ -1,25 +1,30 @@
 Arguments: 
-  /usr/local/Cellar/node/15.13.0/bin/node /usr/local/bin/yarn run build
+  /usr/local/Cellar/node/14.9.0/bin/node /Users/robo/.yarn/releases/yarn-1.22.10.cjs add babel-lint --save-dev
 
 PATH: 
-  /Users/nikitasfilosofof/.pyenv/versions/3.9.1/bin:/usr/local/Cellar/pyenv/1.2.26/libexec:/usr/local/Cellar/pyenv/1.2.26/plugins/python-build/bin:/Users/nikitasfilosofof/.rvm/gems/ruby-3.0.0/bin:/Users/nikitasfilosofof/.rvm/gems/ruby-3.0.0@global/bin:/Users/nikitasfilosofof/.rvm/rubies/ruby-3.0.0/bin:/Users/nikitasfilosofof/.pyenv/shims:/Users/nikitasfilosofof/.pyenv/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Users/nikitasfilosofof/.rvm/bin
+  /Users/robo/.rvm/gems/ruby-2.6.6/bin:/Users/robo/.rvm/gems/ruby-2.6.6@global/bin:/Users/robo/.rvm/rubies/ruby-2.6.6/bin:/Users/robo/.poetry/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Applications/VMware Fusion.app/Contents/Public:/Library/Apple/usr/bin:/Library/Frameworks/Mono.framework/Versions/Current/Commands:/Users/robo/.rvm/bin
 
 Yarn version: 
   1.22.10
 
 Node version: 
-  15.13.0
+  14.9.0
 
 Platform: 
   darwin x64
 
 Trace: 
-  SyntaxError: /Users/nikitasfilosofof/Documents/xfready2/package.json: Unexpected token < in JSON at position 1697
-      at JSON.parse (<anonymous>)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:1625:59
-      at Generator.next (<anonymous>)
-      at step (/usr/local/lib/node_modules/yarn/lib/cli.js:310:30)
-      at /usr/local/lib/node_modules/yarn/lib/cli.js:321:13
+  Error: https://registry.yarnpkg.com/babel-lint: Not found
+      at Request.params.callback [as _callback] (/Users/robo/.yarn/releases/yarn-1.22.10.cjs:78518:18)
+      at Request.self.callback (/Users/robo/.yarn/releases/yarn-1.22.10.cjs:135160:22)
+      at Request.emit (events.js:314:20)
+      at Request.<anonymous> (/Users/robo/.yarn/releases/yarn-1.22.10.cjs:136132:10)
+      at Request.emit (events.js:314:20)
+      at IncomingMessage.<anonymous> (/Users/robo/.yarn/releases/yarn-1.22.10.cjs:136054:12)
+      at Object.onceWrapper (events.js:420:28)
+      at IncomingMessage.emit (events.js:326:22)
+      at endReadableNT (_stream_readable.js:1244:12)
+      at processTicksAndRejections (internal/process/task_queues.js:80:21)
 
 npm manifest: 
   {
@@ -75,11 +80,7 @@ npm manifest:
       "dependencies": {
           "@mozilla/readability": "^0.4.1",
           "highlight.js": "^10.7.2",
-  <<<<<<< HEAD
           "lectorjs": "^0.9.2",
-  =======
-          "lectorjs": "^0.9.1",
-  >>>>>>> 90aee24ec5419ecc0a491c417fea410cf8dcc99e
           "mousetrap": "^1.6.5",
           "pragmajs": "^0.8.8"
       },
@@ -3951,17 +3952,10 @@ Lockfile:
     dependencies:
       package-json "^6.3.0"
   
-  <<<<<<< HEAD
   lectorjs@^0.9.2:
     version "0.9.2"
     resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.2.tgz#e9faecd9305866ff84a666a72353542871affb3b"
     integrity sha512-bAnCSZ4ZU2ydKBDNls4EGs0OGqL0YpNaZRZJYzecZu1SKLu+ZUvx9Tzt6RMLZZol2YmG0K+nnyD711VQj/HJew==
-  =======
-  lectorjs@^0.9.1:
-    version "0.9.1"
-    resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.1.tgz#c6f8f63745b6f2ae59559ff6348ec31399c6025d"
-    integrity sha512-T4UIJRVpYi/XKNV/CoJiV14UgsNx80U0c6nYO71l3ixXbU5fSvu1acY6gO3kVPws42LkFadCKg0uhOO02m8+4g==
-  >>>>>>> 90aee24ec5419ecc0a491c417fea410cf8dcc99e
     dependencies:
       animejs "^3.2.1"
       compromise "^13.7.0"

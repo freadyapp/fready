@@ -6,7 +6,12 @@ import { injectStyle, SVG } from "../.build_assets/index";
 import { Lector, helpers } from "lectorjs"
 import { ShadowPragma } from "../misc/shadowPragma"
 
-const wfy = helpers.wfy
+util.addStyles(`
+    .revert-all {
+        all: initial !important;
+    }
+`)
+
 window.Mousetrap = Mousetrap
 
 let popper = block`
@@ -31,7 +36,6 @@ export class LectorPragma extends ShadowPragma {
         window.Mousetrap = Mousetrap
 
         this.injectStyles("sanitized_elements", "syntax_highlight", "lector")
-
         this.createEvents('load', 'article:load', 'article:parse', 'render', 'destroy')
 
         // document.body.appendChild(element)
@@ -145,7 +149,9 @@ export class LectorPragma extends ShadowPragma {
     render() {
         console.time('RENDERING')
 
-        this.ogBody = _e('body').clone()
+        this.ogBody = _e('body')
+                        .addClass('revert-all')
+                        .clone()
         this.ogScrollTop = window.scrollY 
 
 
@@ -191,7 +197,10 @@ export class LectorPragma extends ShadowPragma {
         
         // console.log('og body is', this.ogBody)
 
-        _e('body').replaceWith(this.ogBody)
+        _e('body').replaceWith(
+            this.ogBody.removeClass('revert-all')
+        )
+
         window.scroll({
             top: this.ogScrollTop
         })

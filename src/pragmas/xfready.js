@@ -13,7 +13,7 @@ export class Xfready extends Pragma {
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
         
-        bridge.on('message:click', async (data, respond) => {
+        window.bridge.on('message:click', async (data, respond) => {
             if (!this._injected) await this.injectSelfInArticle({ skipAlma: true })
             this.popup.toggle()
         })

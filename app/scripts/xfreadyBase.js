@@ -1,3 +1,5 @@
+/*global chrome */
+
 function __onDocLoad__() {
     chrome.runtime.sendMessage("command:inject", (response) => {
         // let name 

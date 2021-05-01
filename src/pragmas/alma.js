@@ -1,7 +1,7 @@
-import {Pragma, _p, _e, html} from 'pragmajs'
-import { SVG, styles } from "../.build_assets/index"
+import { _p, _e, block } from 'pragmajs'
+import { SVG } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
-import { Xfready } from "./xfready"
+// import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
 
 

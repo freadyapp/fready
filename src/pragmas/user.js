@@ -16,7 +16,7 @@ function grabUserFromJolene() {
 
 
 export class User {
-    static data = {}
+    static data = {};
 
     static setData(data){
         for (let [key, value] of Object.entries(data)) {
