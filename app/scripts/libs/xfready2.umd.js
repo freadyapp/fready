@@ -5053,7 +5053,7 @@
               // this.reader.html(this.article.content)
                   //    .removeClass('collapsed')
 
-              let wfiedHTML = await bridge.request({ wfy: this.article.content });
+              let wfiedHTML = await window.bridge.request({ wfy: this.article.content });
               // console.log(wfiedHTML)
 
               this.reader.html(wfiedHTML);
@@ -5284,8 +5284,8 @@
             <div class='article-panel'>
             </div>
             <div class='upload-dash'>
-                <a href='${FREADY_LINKS.upload}' class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</a>
-                <a href='${FREADY_LINKS.dashboard}' class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
+                <a href='${FREADY_LINKS.upload}' target="_blank" class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</a>
+                <a href='${FREADY_LINKS.dashboard}' target="_blank" class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
             </div>
             <div class='xfready-footer'>
                 ${SVG('logo')}
@@ -5708,13 +5708,36 @@
           return new ArticleAI
       }
 
+      function clearBadge() { return setBadge() }
+      function setBadge(badge) {
+          console.log('badge setting', badge);
+          return window.bridge.request({ badge })
+      }
+
+      function setColorScheme(colorScheme='dark') {
+          return window.bridge.request({ colorScheme })
+      }
+
+      function initColorScheme() {
+          if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+              setColorScheme('dark');
+          } else setColorScheme('light');
+
+          window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+              const scheme = e.matches ? "dark" : "light";
+              setColorScheme(scheme);
+          });
+      }
+
       class Xfready extends q$2 {
 
           async init() {
 
               // this.setElement('body')
               // pragmaSpace.onDocLoad(() => {
-              
+
+              initColorScheme();
+
               window.bridge
                   .on('message:click', async (data, respond) => {
                       if (!this._injected) await this.inject({ skipAlma: true });
@@ -5724,6 +5747,11 @@
                       this.updateView();
                   });
 
+              
+              this
+                  .createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
+                  .on('article:ready', (article) => setBadge(article.eta));
+               
               this.ai = _articleAI();
               this.updateView();
               
@@ -5738,7 +5766,7 @@
           }
 
           eject() {
-              if (!this._injected) return console.warn('not injected')
+              if (!this._injected) return;
 
               this.alma?.destroy().then(() => {
                   this.alma = null;
@@ -5763,10 +5791,9 @@
           }
 
           async inject({ skipAlma=false } = {}) {
-              if (this._injected) return console.warn('already injected')
+              if (this._injected) return;
 
               this._injected = true;
-              this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready');
               this.as('html');
 
               if (!skipAlma) this.alma = _alma(this).appendTo(this);
@@ -5781,6 +5808,7 @@
                       SYNC.get('preferences', preferences => {
                           console.log('preferences are', preferences);
                           article.eta = (Math.round((article.length / 4.7) / (preferences.wpm ?? 250)) + "'");
+                          // article.etaMinutes = 
                           this.triggerEvent('article:ready', article);
                       });
                   });
@@ -5871,6 +5899,7 @@
           }
 
           exit() {
+              clearBadge();
               this._isReading = false;
               return this.lector.exit()
           }

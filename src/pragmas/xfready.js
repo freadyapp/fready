@@ -6,13 +6,36 @@ import { _articleAI } from "./articleAI"
 
 import { HOST, SYNC } from "../misc/helpers"
 
+function clearBadge() { return setBadge() }
+function setBadge(badge) {
+    console.log('badge setting', badge)
+    return window.bridge.request({ badge })
+}
+
+function setColorScheme(colorScheme='dark') {
+    return window.bridge.request({ colorScheme })
+}
+
+function initColorScheme() {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setColorScheme('dark')
+    } else setColorScheme('light')
+
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        const scheme = e.matches ? "dark" : "light"
+        setColorScheme(scheme)
+    })
+}
+
 export class Xfready extends Pragma {
 
     async init() {
 
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
-        
+
+        initColorScheme()
+
         window.bridge
             .on('message:click', async (data, respond) => {
                 if (!this._injected) await this.inject({ skipAlma: true })
@@ -22,6 +45,11 @@ export class Xfready extends Pragma {
                 this.updateView()
             })
 
+        
+        this
+            .createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
+            .on('article:ready', (article) => setBadge(article.eta))
+         
         this.ai = _articleAI()
         this.updateView()
         
@@ -36,7 +64,7 @@ export class Xfready extends Pragma {
     }
 
     eject() {
-        if (!this._injected) return console.warn('not injected')
+        if (!this._injected) return;
 
         this.alma?.destroy().then(() => {
             this.alma = null
@@ -61,10 +89,9 @@ export class Xfready extends Pragma {
     }
 
     async inject({ skipAlma=false } = {}) {
-        if (this._injected) return console.warn('already injected')
+        if (this._injected) return;
 
         this._injected = true
-        this.createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
         this.as('html')
 
         if (!skipAlma) this.alma = _alma(this).appendTo(this)
@@ -79,6 +106,7 @@ export class Xfready extends Pragma {
                 SYNC.get('preferences', preferences => {
                     console.log('preferences are', preferences)
                     article.eta = (Math.round((article.length / 4.7) / (preferences.wpm ?? 250)) + "'")
+                    // article.etaMinutes = 
                     this.triggerEvent('article:ready', article)
                 })
             })
@@ -169,6 +197,7 @@ export class Xfready extends Pragma {
     }
 
     exit() {
+        clearBadge()
         this._isReading = false
         return this.lector.exit()
     }

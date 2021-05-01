@@ -63,8 +63,8 @@ let template = () => html`
             <div class='article-panel'>
             </div>
             <div class='upload-dash'>
-                <a href='${FREADY_LINKS.upload}' class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</a>
-                <a href='${FREADY_LINKS.dashboard}' class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
+                <a href='${FREADY_LINKS.upload}' target="_blank" class='hyperbutton upload'>${SVG('upload-icon')}Upload PDF</a>
+                <a href='${FREADY_LINKS.dashboard}' target="_blank" class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
             </div>
             <div class='xfready-footer'>
                 ${SVG('logo')}

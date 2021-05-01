@@ -189,43 +189,50 @@ injectInitiateHandshake: {
 
 }
 
-messenger.onMsg('parse', (data, tab, respond) => {
-    console.log('parsing', tab)
+messenger
+    .onMsg('parse', (data, tab, respond) => {
+        console.log('parsing', tab)
 
-    // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
-    // console.log("parsed", doc)
+        // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
+        // console.log("parsed", doc)
 
-    // console.log(data, tab, respond)
-    const result = self.hljs.highlightAuto(data);
-    // console.log(result.value)
-    respond(result.value)
-    // let doc = html(data)
-    // doc.querySelectorAll('pre').forEach((block) => {
-        // console.log('block')
-    // })
+        // console.log(data, tab, respond)
+        const result = self.hljs.highlightAuto(data);
+        // console.log(result.value)
+        respond(result.value)
+        // let doc = html(data)
+        // doc.querySelectorAll('pre').forEach((block) => {
+            // console.log('block')
+        // })
 
-    // respond(doc)
-    // respond(result) 
-})
+        // respond(doc)
+        // respond(result) 
+    })
+    .onMsg('wfy', async (html, tab, respond) => {
+        console.log('wfying...', tab)
 
-messenger.onMsg('wfy', async (html, tab, respond) => {
-    console.log('wfying...', tab)
+        let controller = new WfyController(html)
+        let outHTML = await controller.wfy()
+        respond(outHTML)
+    })
+    .onMsg('badge', (text, tab, respond) => {
+        const tabId = tab.id
+        console.log('setting badge to ', text, tabId)
+        text = text.toString()
+        // console.log(chrome.action.setBadgeText.toString())
 
-    // await WfyController.wfy(html)
-    let controller = new WfyController(html)
-    let outHTML = await controller.wfy()
-    // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
-    // console.log("parsed", doc)
+        // chrome.action.disable({tabId})
+        let color = "#303343"
+        chrome.action.setBadgeBackgroundColor({ color, tabId })
+        // chrome.action.setBadgeText({ text, tabId }, () => {
+            respond('ok')
+        // })
+    })
+    .onMsg('colorScheme', (style, tab, respond) => {
+        let path = {};
+        [ 16, 32 ].forEach(size => path[size] = `assets/icon/${style}/${size}.png`);
 
-    // console.log(data, tab, respond)
-    // const result = self.hljs.highlightAuto(data);
-    // console.log(result.value)
-    respond(outHTML)
-    // let doc = html(data)
-    // doc.querySelectorAll('pre').forEach((block) => {
-    // console.log('block')
-    // })
+        chrome.action.setIcon({ path }, (...params) => console.log('data', params))
+        respond('ok')
+    })
 
-    // respond(doc)
-    // respond(result) 
-})

@@ -15,6 +15,12 @@
         "file:///*"
     ],
 
+    "icons": {
+        "16": "assets/icon/circle/16.png",
+        "32": "assets/icon/circle/32.png",
+        "128": "assets/icon/circle/128.png",
+        "512": "assets/icon/circle/512.png"
+    },
     "background": {
         "service_worker": "background.js"
     },

@@ -84,7 +84,7 @@ export class LectorPragma extends ShadowPragma {
         // this.reader.html(this.article.content)
             //    .removeClass('collapsed')
 
-        let wfiedHTML = await bridge.request({ wfy: this.article.content })
+        let wfiedHTML = await window.bridge.request({ wfy: this.article.content })
         // console.log(wfiedHTML)
 
         this.reader.html(wfiedHTML)
