@@ -2,7 +2,7 @@ import { Pragma, html, _e, util, block } from "pragmajs"
 import { Xfready } from "./xfready"
 import Mousetrap from "mousetrap"
 import { Readability } from '@mozilla/readability'
-import { injectStyle } from "../.build_assets/index";
+import { injectStyle, SVG } from "../.build_assets/index";
 import { Lector, helpers } from "lectorjs"
 import { ShadowPragma } from "../misc/shadowPragma"
 
@@ -11,7 +11,7 @@ window.Mousetrap = Mousetrap
 
 let popper = block`
 <div xfready id=lector class='fade-onload'>
-    <div id='exit' class='button'> Exit </div>
+    <div id='exit' class='button'>${SVG('close-icon')}</div>
     <div id='reader-rapper'> 
         <div id='reader' class='article'> 
         </div>
