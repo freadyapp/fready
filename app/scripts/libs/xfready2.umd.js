@@ -5079,6 +5079,7 @@
                   resolve();
               })
           }
+
           load() {
               console.time('loading lec....');
               if (this.loaded) return console.warn('lec already loaded')
@@ -5089,6 +5090,7 @@
                   // console.log(article)
 
                   // this.reader.appendTo('html')
+                  let exitButton = this.shadow.find('#exit');
                   this.lec = (await _t(this.reader, {
                       wfy: false,
                       onboarding: false,
@@ -5103,9 +5105,12 @@
                       }
                   })).run(function() {
                       this.mark.addClass('billion-z-index');
+                      this.settings?.fader?.include(exitButton);
                   }).run(() => {
+
                       this.shadow.find('#reader')
                           .removeClass('loading');
+
                       console.log("lec: ", this.lec);
                       this.loaded = true;
                       this.triggerEvent('load', this.lec);

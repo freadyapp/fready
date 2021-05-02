@@ -110,6 +110,7 @@ export class LectorPragma extends ShadowPragma {
             resolve()
         })
     }
+
     load() {
         console.time('loading lec....')
         if (this.loaded) return console.warn('lec already loaded')
@@ -120,6 +121,7 @@ export class LectorPragma extends ShadowPragma {
             // console.log(article)
 
             // this.reader.appendTo('html')
+            let exitButton = this.shadow.find('#exit')
             this.lec = (await Lector(this.reader, {
                 wfy: false,
                 onboarding: false,
@@ -134,9 +136,12 @@ export class LectorPragma extends ShadowPragma {
                 }
             })).run(function() {
                 this.mark.addClass('billion-z-index')
+                this.settings?.fader?.include(exitButton)
             }).run(() => {
+
                 this.shadow.find('#reader')
                     .removeClass('loading')
+
                 console.log("lec: ", this.lec)
                 this.loaded = true
                 this.triggerEvent('load', this.lec)
