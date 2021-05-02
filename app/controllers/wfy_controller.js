@@ -51,7 +51,6 @@ class WfyController extends Pragma {
             })
             // simple utility functions to avoid a lot of typing:
 
-
             for (var i = 0; i < textNodes.length; i++) {
                 var n = textNodes[i];
                 var txt = n.nodeValue;

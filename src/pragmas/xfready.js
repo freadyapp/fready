@@ -7,6 +7,7 @@ import { _articleAI } from "./articleAI"
 import { HOST, SYNC } from "../misc/helpers"
 
 function clearBadge() { return setBadge() }
+
 function setBadge(badge) {
     console.log('badge setting', badge)
     return window.bridge.request({ badge })
@@ -34,6 +35,7 @@ export class Xfready extends Pragma {
         // this.setElement('body')
         // pragmaSpace.onDocLoad(() => {
 
+        console.log(await this.getSettings())
         initColorScheme()
 
         window.bridge
@@ -49,6 +51,9 @@ export class Xfready extends Pragma {
         this
             .createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
             .on('article:ready', (article) => setBadge(article.eta))
+            .on('updateSetting:showOnWebsites', setting => {
+                if (setting === false) this._ejectAlma();
+            })
          
         this.ai = _articleAI()
         this.updateView()
@@ -66,10 +71,8 @@ export class Xfready extends Pragma {
     eject() {
         if (!this._injected) return;
 
-        this.alma?.destroy().then(() => {
-            this.alma = null
-            console.log('destroyed alma')
-        })
+
+        this._ejectAlma()
 
         this.popup?.destroy().then(() => {
             this.popup = null
@@ -88,17 +91,35 @@ export class Xfready extends Pragma {
         this._injected = false
     }
 
+    _injectAlma() {
+        this.alma = _alma(this).appendTo(this)
+    }
+
+    _ejectAlma() {
+        this.alma?.destroy().then(() => {
+            this.alma = null
+            console.log('destroyed alma')
+        })
+    }
+
     async inject({ skipAlma=false } = {}) {
         if (this._injected) return;
 
         this._injected = true
         this.as('html')
 
-        if (!skipAlma) this.alma = _alma(this).appendTo(this)
+        let showOnWebsites = (await this.getSettings()).showOnWebsites !== false
+
+        if (!skipAlma && showOnWebsites) {
+            this._injectAlma()
+        }
 
         if (!this.popup) this.popup = _popup(this)
                                         .appendTo(this)
                                         .hide()
+                                        .run(function() {
+                                            this[`${showOnWebsites ? 'show' : 'hide'}OnWebsites`]()
+                                        })
                         
 
         this.on('lector:create', lector => {
@@ -239,6 +260,26 @@ export class Xfready extends Pragma {
                 resolve(lector)
             })
         })
+    }
+
+
+    async getSettings() {
+        return new Promise(r => SYNC.get('settings', data => r(data.settings)))
+    }
+
+    async updateSettings(update) {
+        let settings = await this.getSettings() || {}
+        // SYNC.get('settings', settings => {
+        console.log('settings in the db are', settings)
+
+        for (let [ key, val ] of Object.entries(update)) {
+            settings[key] = val
+            this.triggerEvent(`updateSetting:${key}`, val)
+        }
+
+        console.log('updating settings to ', settings)
+        SYNC.set({ settings })
+        // })
     }
 
 }

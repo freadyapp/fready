@@ -36,14 +36,17 @@ let panel = () => block`
     love: "#empty-heart-icon",
     readButton: '#read',
 
+
     save() {
         this.saved.addClass('saved')
         this.savedText.html('Saved')
     },
+
     unsave() {
         this.saved.removeClass('saved')
         this.savedText.html('Save')
     },
+
 
     read() {
         // switch layout to exit
@@ -68,7 +71,7 @@ let template = () => html`
             </div>
             <div class='xfready-footer'>
                 ${SVG('logo')}
-                <div class='hyperbutton visibility'>
+                <div id='show-on-websites' class='hyperbutton visibility'>
                     <div class="checkbox">
                         ${SVG('checked-checkbox')} 
                         ${SVG('empty-checkbox')}
@@ -78,13 +81,34 @@ let template = () => html`
             </div>
         </div>
     `
+let _popper = (element) => _p().as(element).define({
+        showCheckbox: "#checked-checkbox",
+        visibility: "#show-on-websites",
+
+        showOnWebsites() {
+            this.showCheckbox.removeClass('fade-out')
+            // this.shadow.find('#checked-checkbox').toggleClass('fade-out')
+        },
+        hideOnWebsites() {
+            this.showCheckbox.addClass('fade-out')
+            // this.shadow.find('#checked-checkbox').toggleClass('fade-out')
+        },
+    })
 
 export class Popup extends ShadowPragma {
 
     constructor(xfready) {
         super()
 
+        // this.as(this.popper.element)
+        // this.popper.element = this.shadow
+
+
         this.as(template())
+        this.popper = _popper(this.shadow) // kinda patch solution for the shadow dom
+
+        // this.popper = _p().as(this.shadow)
+
         this.panel = panel()
 
         this.xfready = xfready
@@ -132,10 +156,28 @@ export class Popup extends ShadowPragma {
         })
         
 
-        this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
-            this.shadow.find('#checked-checkbox').toggleClass('fade-out')
-            console.log('CLICKED')
+        console.log(this.popper)
+        console.log(this.popper.visibility)
+        this.popper.visibility.listenTo('click', () => {       // CHECKBOX display on websites
+            console.log('CLCLCLCLCLCIIICK')
+
+            if (this._showOnWebsites) this.hideOnWebsites(); else this.showOnWebsites();
+            const showOnWebsites = this._showOnWebsites
+
+            this.xfready.updateSettings({ showOnWebsites })
+            // this.shadow.find('#checked-checkbox').toggleClass('fade-out')
+            // console.log('CLICKED')
         })
+    }
+
+    showOnWebsites() {
+        this._showOnWebsites = true
+        this.popper.showOnWebsites()
+    }
+
+    hideOnWebsites() {
+        this._showOnWebsites = false
+        this.popper.hideOnWebsites()
     }
 
     toggle() {

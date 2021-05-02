@@ -5256,14 +5256,17 @@
           love: "#empty-heart-icon",
           readButton: '#read',
 
+
           save() {
               this.saved.addClass('saved');
               this.savedText.html('Saved');
           },
+
           unsave() {
               this.saved.removeClass('saved');
               this.savedText.html('Save');
           },
+
 
           read() {
               // switch layout to exit
@@ -5288,7 +5291,7 @@
             </div>
             <div class='xfready-footer'>
                 ${SVG('logo')}
-                <div class='hyperbutton visibility'>
+                <div id='show-on-websites' class='hyperbutton visibility'>
                     <div class="checkbox">
                         ${SVG('checked-checkbox')} 
                         ${SVG('empty-checkbox')}
@@ -5298,13 +5301,34 @@
             </div>
         </div>
     `;
+      let _popper = (element) => _p().as(element).define({
+              showCheckbox: "#checked-checkbox",
+              visibility: "#show-on-websites",
+
+              showOnWebsites() {
+                  this.showCheckbox.removeClass('fade-out');
+                  // this.shadow.find('#checked-checkbox').toggleClass('fade-out')
+              },
+              hideOnWebsites() {
+                  this.showCheckbox.addClass('fade-out');
+                  // this.shadow.find('#checked-checkbox').toggleClass('fade-out')
+              },
+          });
 
       class Popup extends ShadowPragma {
 
           constructor(xfready) {
               super();
 
+              // this.as(this.popper.element)
+              // this.popper.element = this.shadow
+
+
               this.as(template());
+              this.popper = _popper(this.shadow); // kinda patch solution for the shadow dom
+
+              // this.popper = _p().as(this.shadow)
+
               this.panel = panel();
 
               this.xfready = xfready
@@ -5352,10 +5376,28 @@
               });
               
 
-              this.shadow.find('.visibility').listenTo('click', ()=> {       // CHECKBOX display on websites
-                  this.shadow.find('#checked-checkbox').toggleClass('fade-out');
-                  console.log('CLICKED');
+              console.log(this.popper);
+              console.log(this.popper.visibility);
+              this.popper.visibility.listenTo('click', () => {       // CHECKBOX display on websites
+                  console.log('CLCLCLCLCLCIIICK');
+
+                  if (this._showOnWebsites) this.hideOnWebsites(); else this.showOnWebsites();
+                  const showOnWebsites = this._showOnWebsites;
+
+                  this.xfready.updateSettings({ showOnWebsites });
+                  // this.shadow.find('#checked-checkbox').toggleClass('fade-out')
+                  // console.log('CLICKED')
               });
+          }
+
+          showOnWebsites() {
+              this._showOnWebsites = true;
+              this.popper.showOnWebsites();
+          }
+
+          hideOnWebsites() {
+              this._showOnWebsites = false;
+              this.popper.hideOnWebsites();
           }
 
           toggle() {
@@ -5717,6 +5759,7 @@
       }
 
       function clearBadge() { return setBadge() }
+
       function setBadge(badge) {
           console.log('badge setting', badge);
           return window.bridge.request({ badge })
@@ -5744,6 +5787,7 @@
               // this.setElement('body')
               // pragmaSpace.onDocLoad(() => {
 
+              console.log(await this.getSettings());
               initColorScheme();
 
               window.bridge
@@ -5758,7 +5802,10 @@
               
               this
                   .createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
-                  .on('article:ready', (article) => setBadge(article.eta));
+                  .on('article:ready', (article) => setBadge(article.eta))
+                  .on('updateSetting:showOnWebsites', setting => {
+                      if (setting === false) this._ejectAlma();
+                  });
                
               this.ai = _articleAI();
               this.updateView();
@@ -5776,10 +5823,8 @@
           eject() {
               if (!this._injected) return;
 
-              this.alma?.destroy().then(() => {
-                  this.alma = null;
-                  console.log('destroyed alma');
-              });
+
+              this._ejectAlma();
 
               this.popup?.destroy().then(() => {
                   this.popup = null;
@@ -5798,17 +5843,35 @@
               this._injected = false;
           }
 
+          _injectAlma() {
+              this.alma = _alma(this).appendTo(this);
+          }
+
+          _ejectAlma() {
+              this.alma?.destroy().then(() => {
+                  this.alma = null;
+                  console.log('destroyed alma');
+              });
+          }
+
           async inject({ skipAlma=false } = {}) {
               if (this._injected) return;
 
               this._injected = true;
               this.as('html');
 
-              if (!skipAlma) this.alma = _alma(this).appendTo(this);
+              let showOnWebsites = (await this.getSettings()).showOnWebsites !== false;
+
+              if (!skipAlma && showOnWebsites) {
+                  this._injectAlma();
+              }
 
               if (!this.popup) this.popup = _popup(this)
                                               .appendTo(this)
-                                              .hide();
+                                              .hide()
+                                              .run(function() {
+                                                  this[`${showOnWebsites ? 'show' : 'hide'}OnWebsites`]();
+                                              });
                               
 
               this.on('lector:create', lector => {
@@ -5949,6 +6012,26 @@
                       resolve(lector);
                   });
               })
+          }
+
+
+          async getSettings() {
+              return new Promise(r => SYNC.get('settings', data => r(data.settings)))
+          }
+
+          async updateSettings(update) {
+              let settings = await this.getSettings() || {};
+              // SYNC.get('settings', settings => {
+              console.log('settings in the db are', settings);
+
+              for (let [ key, val ] of Object.entries(update)) {
+                  settings[key] = val;
+                  this.triggerEvent(`updateSetting:${key}`, val);
+              }
+
+              console.log('updating settings to ', settings);
+              SYNC.set({ settings });
+              // })
           }
 
       }
