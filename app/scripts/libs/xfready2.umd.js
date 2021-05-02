@@ -5480,10 +5480,18 @@
                   this.hide();
               });
 
-              element.read.listenTo('click', ()=>{
+
+              const triggerRead = () => {
                   this.read();
                   this.hide();
+              };
+
+              element.read.listenTo('click', triggerRead);
+              mousetrap.bind("space", () => {
+                  triggerRead();
+                  return false
               });
+
 
               element.emptyLove.listenTo('click', ()=>{
                   this.save();
@@ -5502,6 +5510,7 @@
           hide() {
               return new Promise((resolve) => {
                   this.shadow.addClass('fade-out');
+                  mousetrap.unbind('space');
 
                   setTimeout(() => {
                       this.element.hide();

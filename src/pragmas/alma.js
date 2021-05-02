@@ -1,6 +1,7 @@
 import { _p, _e, block } from 'pragmajs'
 import { SVG } from "../.build_assets/index"
 import { _lector } from "./lectorPragma"
+import Mousetrap, { trigger } from "mousetrap"
 // import { Xfready } from "./xfready"
 import { ShadowPragma } from "../misc/shadowPragma"
 
@@ -79,10 +80,18 @@ export class Alma extends ShadowPragma {
             this.hide()
         })
 
-        element.read.listenTo('click', ()=>{
+
+        const triggerRead = () => {
             this.read()
             this.hide()
+        }
+
+        element.read.listenTo('click', triggerRead)
+        Mousetrap.bind("space", () => {
+            triggerRead()
+            return false
         })
+
 
         element.emptyLove.listenTo('click', ()=>{
             this.save()
@@ -101,6 +110,7 @@ export class Alma extends ShadowPragma {
     hide() {
         return new Promise((resolve) => {
             this.shadow.addClass('fade-out')
+            Mousetrap.unbind('space')
 
             setTimeout(() => {
                 this.element.hide()
