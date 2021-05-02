@@ -37,15 +37,18 @@ class APIController extends Pragma {
 
     async request(method='GET', suburl="", data = {}) {
         if (this._requesting) return new Promise(resolve => {
+            console.log("BINNING REQUEST", ...arguments)
             setTimeout(() => this.request(...arguments).then(d => resolve(d)), 500)
         })
         // if (this._requesting) return new Promise(() => this.bin.push(arguments))
 
-        this.log(`${method}ing`, suburl, data)
-        this._requesting = true
         // Default options are marked with *
 
-        let api_key = await digCredential('misc').then(({api_key}) => api_key)
+        let api_key = (await digCredential('misc'))?.api_key
+        if (!api_key) return console.log("you're not logged in!")
+
+        this.log(`${method}ing`, suburl, data)
+        this._requesting = true
         data.api_key = api_key 
 
         // console.log('api key is', api_key)

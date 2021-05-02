@@ -21,81 +21,13 @@ function injectScripts(tab, ...scripts) {
     for (let script of scripts) injectScript(tab, script)
 }
 
-chrome.action.onClicked.addListener((tab) => {
-    messenger.sendTo(tab, 'click').then(resp => console.log(resp))
-    // chrome.scripting.executeScript({
-        // target: { tabId: tab.id },
-        // file: `scripts/${script}.js`
-    // })
-    // injectScript(tab, "test")
-})
-
-chrome.tabs.onUpdated.addListener( (tabId, change) => {
-    if (change.url) messenger.sendToId(tabId, 'reload')
-                            .catch(msg => console.log(`could not update ${tabId}`))
-                            .then(resp => console.log(`> ${resp} updated ${tabId}, ${change.url}`))
-    // console.log(`${tabId} changed to ${change.url}`)
-    // console.log(change)
-    return false
-})
-
-chrome.runtime.onInstalled.addListener(reason => {
-    chrome.tabs.create({
-        url: FREADY_LINKS.welcome,
-        index: 0
-    })
-
-    if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        chrome.runtime.setUninstallURL(_FREADY_ROOT_URL+"/:c");
-    }
-})
-// put in a pragmatic controller
-// chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-//     if (request === "inject"){
-//         console.log(request, sender)
-//         injectScripts(sender.tab.id, "libs/xfready2.umd", "libs/helpers", "libs/bridge", "user")
-//         sendResponse({ tab: sender.tab.id })
-//     }
-// })
-
-function linksApiConfiguration() {
-    this.onMsg('links:create', async (data, tab, respond) =>{
-        respond(await API.createLink(data))
-        // respond(await API.post('/links', data))
-    })
-
-    this.onMsg('links:update', async (data, tab, respond) =>{
-        console.log('update', data)
-        respond(await API.updateLink(data))
-        // respond(await API.post('/links', data))
-    })
-
-    this.onMsg('links:index', async (data, tab, respond) =>{
-        console.log('indexing', data)
-        respond(await API.get('/links'))
-    })
-
-    this.onMsg('links:get', async (data, tab, respond) => {
-        console.log('getting link by', data)
-        respond(await new Promise(resolve => SYNC.get('links', ({links}) => {
-            resolve(data ? links[data] : links)
-        })))
-    })
-
-    this.onMsg('links:save', async (data, tab, respond) => {
-        console.log('saving link as', data)
-        respond(await API.saveLink(data))
-    })
-
-    console.log('messenger is', this)
-}
-
 
 API.define({
     async syncLinks() {
         let links = await API.get('/links')
+        if (!links) return null; // user is not logged in
 
-        let linkMap = {} 
+        let linkMap = {}
         links.forEach(link => linkMap[link.loc] = {
             id: link.id,
             saved: link.saved,
@@ -106,7 +38,7 @@ API.define({
         return SYNC.set({ links: linkMap })
     },
 
-    async doAndSyncLinks(cb, timeout=500) {
+    async doAndSyncLinks(cb, timeout = 500) {
         API.log('doing and syncing link afterwards....')
         let resp = await cb()
         setTimeout(() => API.syncLinks(), timeout)
@@ -124,10 +56,6 @@ API.define({
         return await API.doAndSyncLinks(
             async () => API.post('/links', link)
         )
-        // let promise = API.post('/links', link)
-        // let resp = await promise
-        // setTimeout(() => API.syncLinks(), 500)
-        // return resp
     },
 
     async updateLink(link) {
@@ -139,13 +67,11 @@ API.define({
 
     async saveLink(link) {
         console.log('saving link', link)
-        SYNC.get('links', ({links}) => {
+        SYNC.get('links', ({ links }) => {
             console.log('saving link...', links[link])
             console.log('id is', links[link].id)
         })
 
-        // let promise = API.post('/links', link)
-        // return promise
         return 'ok'
     }
 })
@@ -153,60 +79,69 @@ API.define({
 API.syncLinks()
 API.syncPrefs()
 
-injectInitiateHandshake: {
-    // let libraries = ["xfready2.umd"]
-    // let scripts = libraries.map(k => `libs/${k}`)
-    // scripts.push("user")
 
-    console.log('listentign to injecting')
+chrome.action.onClicked.addListener((tab) => {
+    messenger.sendTo(tab, 'click').then(resp => console.log(resp))
+})
 
-    messenger.on('command:inject', (data, tab, respond) => {
+chrome.tabs.onUpdated.addListener( (tabId, change) => {
+    if (change.url) messenger.sendToId(tabId, 'reload')
+                            .catch(msg => console.log(`could not update ${tabId}`))
+                            .then(resp => console.log(`> ${resp} updated ${tabId}, ${change.url}`))
+    return false
+})
+
+chrome.runtime.onInstalled.addListener(reason => {
+    chrome.tabs.create({
+        url: FREADY_LINKS.welcome,
+        index: 0
+    })
+
+    if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
+        chrome.runtime.setUninstallURL(_FREADY_ROOT_URL+"/:c");
+    }
+})
+
+function linksApiConfiguration() {
+    this.onMsg('links:create', async (data, tab, respond) =>{
+        respond(await API.createLink(data))
+    })
+
+    this.onMsg('links:update', async (data, tab, respond) =>{
+        console.log('update', data)
+        respond(await API.updateLink(data))
+    })
+
+    this.onMsg('links:index', async (data, tab, respond) =>{
+        console.log('indexing', data)
+        respond(await API.get('/links'))
+    })
+
+    this.onMsg('links:get', async (data, tab, respond) => {
+        console.log('getting link by', data)
+        respond(await new Promise(resolve => SYNC.get('links', ({links}) => {
+            resolve((links && data) ? links[data] : links)
+        })))
+    })
+
+    this.onMsg('links:save', async (data, tab, respond) => {
+        console.log('saving link as', data)
+        respond(await API.saveLink(data))
+    })
+}
+
+messenger
+    .run(linksApiConfiguration)
+    .on('command:inject', (data, tab, respond) => {
         console.log(data, tab, respond)
         console.log('injecting', tab)
         injectScripts(tab.id, "env", "libs/xfready2.umd")
         respond("injected") 
     })
-
-    messenger.run(linksApiConfiguration)
-    messenger.on('command:request', (data, tab, respond) => {
-
-        // let link = {
-        //     "link": {
-        //         "url": "https://growandconvert.com/content-marketing/going-viral-medium/",
-        //         "body": "<h1> xss attack suck my ass bitch </h1> <img src='x' onerror='alert('youre fucked :*)')';>",
-        //         "saved": true,
-        //         "meta": {
-        //             "title": "xss attack",
-        //             "words": 420,
-        //             "pages": 69
-        //         }
-        //     }
-        // }
-
-        // API.post('/links', link)
-    })
-
-
-}
-
-messenger
     .onMsg('parse', (data, tab, respond) => {
         console.log('parsing', tab)
-
-        // var doc = new DOMParser().parseFromString(data.toString(), "text/html");
-        // console.log("parsed", doc)
-
-        // console.log(data, tab, respond)
         const result = self.hljs.highlightAuto(data);
-        // console.log(result.value)
         respond(result.value)
-        // let doc = html(data)
-        // doc.querySelectorAll('pre').forEach((block) => {
-            // console.log('block')
-        // })
-
-        // respond(doc)
-        // respond(result) 
     })
     .onMsg('wfy', async (html, tab, respond) => {
         console.log('wfying...', tab)
@@ -214,19 +149,6 @@ messenger
         let controller = new WfyController(html)
         let outHTML = await controller.wfy()
         respond(outHTML)
-    })
-    .onMsg('badge', (text, tab, respond) => {
-        const tabId = tab.id
-        console.log('setting badge to ', text, tabId)
-        text = text.toString()
-        // console.log(chrome.action.setBadgeText.toString())
-
-        // chrome.action.disable({tabId})
-        let color = "#303343"
-        chrome.action.setBadgeBackgroundColor({ color, tabId })
-        // chrome.action.setBadgeText({ text, tabId }, () => {
-            respond('ok')
-        // })
     })
     .onMsg('colorScheme', (style, tab, respond) => {
         let path = {};
@@ -236,3 +158,16 @@ messenger
         respond('ok')
     })
 
+    // .onMsg('badge', (text, tab, respond) => {
+    //     // const tabId = tab.id
+    //     // console.log('setting badge to ', text, tabId)
+    //     // text = text.toString()
+    //     // console.log(chrome.action.setBadgeText.toString())
+
+    //     // chrome.action.disable({tabId})
+    //     // let color = "#303343"
+    //     // chrome.action.setBadgeBackgroundColor({ color, tabId })
+    //     // chrome.action.setBadgeText({ text, tabId }, () => {
+    //     respond('ok')
+    //     // })
+    // })

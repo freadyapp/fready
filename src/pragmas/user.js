@@ -53,20 +53,23 @@ export class User {
 User.sync()
 
 if (HOST.is("fready", "localhost:3000")) {
-    console.log('[xfready] grabbing user from jolene')
+    // console.log('user data', User.data)
+    console.log('[xfready] Grabbing user from jolene')
     grabUserFromJolene().then(async data => {
+        console.log('data', data)
         await User.sync(data)
         console.log("DATA", data)
-        
     })
 }
 
-(async () => {
-    let api_key = await User.get('api_key')
-    console.log("USER DATA", User.data)
-    let name = await User.get('name')
-    console.log(`* ${name} in XFREADY *`)
-})()
+
+
+// (async () => {
+    // let api_key = await User.get('api_key')
+    // console.log("USER DATA", User.data)
+    // let name = await User.get('name')
+    // console.log(`* ${name} in XFREADY *`)
+// })()
 
 
 // if (HOST.is("fready", "localhost:3000")) {
