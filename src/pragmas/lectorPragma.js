@@ -40,7 +40,6 @@ export class LectorPragma extends ShadowPragma {
 
         // document.body.appendChild(element)
 
-
         this.shadow.find('#exit').listenTo('click', () => {
             this.exit()
         })
