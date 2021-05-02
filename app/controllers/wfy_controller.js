@@ -1,3 +1,7 @@
+function isEmptyOrSpaces(str) {
+    return !str || str.trim() === '';
+}
+
 class WfyController extends Pragma {
     constructor(html) {
         super()
@@ -25,7 +29,7 @@ class WfyController extends Pragma {
     }
 
     makeW(txt) {
-        if (txt.length === 0) return null
+        if (isEmptyOrSpaces(txt)) return null;
         var s = this.document.createElement('w');
         s.appendChild(this.makeText(txt));
         return s;
