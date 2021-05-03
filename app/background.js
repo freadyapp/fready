@@ -106,10 +106,9 @@ chrome.runtime.onInstalled.addListener(reason => {
         index: 0
     })
 
-    if (reason === chrome.runtime.OnInstalledReason.INSTALL) {
-        chrome.runtime.setUninstallURL(_FREADY_ROOT_URL+"/:c");
-    }
 })
+
+chrome.runtime.setUninstallURL(FREADY_LINKS.bye);
 
 function linksApiConfiguration() {
     this.onMsg('links:create', async (data, tab, respond) =>{

@@ -9,7 +9,8 @@ const FREADY_LINKS = {
     welcome: _FREADY_ROOT_URL + "/introducing-xfready2",
     dashboard: _FREADY_ROOT_URL + "/dashboard",
     upload: _FREADY_ROOT_URL + "/beta/dashboard?onboarding=true",
-    home: _FREADY_ROOT_URL + "/home"
+    home: _FREADY_ROOT_URL + "/home",
+    bye: _FREADY_ROOT_URL + "/bye-bye:c"
 }
 
 
