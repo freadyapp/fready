@@ -70,7 +70,7 @@ let template = () => html`
                 <a href='${FREADY_LINKS.dashboard}' target="_blank" class='hyperbutton dashboard'>${SVG('home-icon')}Dashboard</a>
             </div>
             <div class='xfready-footer'>
-                ${SVG('logo')}
+                <a href="${FREADY_LINKS.home}">${SVG('logo')}</a>
                 <div id='show-on-websites' class='hyperbutton visibility'>
                     <div class="checkbox">
                         ${SVG('checked-checkbox')} 
