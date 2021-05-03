@@ -25,9 +25,10 @@ let popper = block`
 `
 
 export class LectorPragma extends ShadowPragma {
-    constructor() {
+    constructor(xfready) {
         console.time('lector construction')
         super()
+        this.xfready = xfready
 
         this.as(_e(`div.`))
             .shadow.append(popper)
@@ -131,6 +132,7 @@ export class LectorPragma extends ShadowPragma {
                 fullStyles: true,
                 defaultStyles: true,
                 settings: true,
+                // debug: true,
                 styleInjector: (style, name) => {
                     this._injectCSS(name, style)
                 }
@@ -147,6 +149,20 @@ export class LectorPragma extends ShadowPragma {
                 this.triggerEvent('load', this.lec)
                 console.timeEnd('loading lec....')
             })
+
+
+            let ogSettings = (await this.xfready.getSettings()).lectorPrefs
+            console.info('og settings are ', ogSettings)
+
+            this.lec.settings
+                .on('update', () => {
+                    // console.info(this.toObj())
+                    let lectorPrefs = Object.fromEntries(this.lec.settings.toObj())
+                    this.xfready.updateSettings({lectorPrefs})
+                })
+                .run(function() {
+                    if (ogSettings) this.update(ogSettings)
+                })
 
             // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
             // this.lec.mark.element.destroy()
@@ -240,5 +256,5 @@ export function _lector() {
         // injected = true
     // }
 
-    return new LectorPragma()
+    return new LectorPragma(...arguments)
 }

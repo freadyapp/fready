@@ -139,7 +139,7 @@ export class Xfready extends Pragma {
         console.log('existing article is', this.link)
 
         // pragmaSpace.onDocLoad(() => {
-        this.lector = _lector()
+        this.lector = _lector(this)
             // .on('article:load')
             .on('article:parse', article => {
                 this.article = article
@@ -270,9 +270,12 @@ export class Xfready extends Pragma {
     async updateSettings(update) {
         let settings = await this.getSettings() || {}
         // SYNC.get('settings', settings => {
-        console.log('settings in the db are', settings)
+        console.info('settings in the db are', settings)
 
-        for (let [ key, val ] of Object.entries(update)) {
+        /// support for both Objects and Maps
+        if (update.constructor !== Map) update = Object.entries(update)
+
+        for (let [ key, val ] of update) {
             settings[key] = val
             this.triggerEvent(`updateSetting:${key}`, val)
         }

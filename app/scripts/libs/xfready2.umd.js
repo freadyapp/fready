@@ -4994,9 +4994,10 @@
 `;
 
       class LectorPragma extends ShadowPragma {
-          constructor() {
+          constructor(xfready) {
               console.time('lector construction');
               super();
+              this.xfready = xfready;
 
               this.as(j$2(`div.`))
                   .shadow.append(popper);
@@ -5100,6 +5101,7 @@
                       fullStyles: true,
                       defaultStyles: true,
                       settings: true,
+                      // debug: true,
                       styleInjector: (style, name) => {
                           this._injectCSS(name, style);
                       }
@@ -5116,6 +5118,20 @@
                       this.triggerEvent('load', this.lec);
                       console.timeEnd('loading lec....');
                   });
+
+
+                  let ogSettings = (await this.xfready.getSettings()).lectorPrefs;
+                  console.info('og settings are ', ogSettings);
+
+                  this.lec.settings
+                      .on('update', () => {
+                          // console.info(this.toObj())
+                          let lectorPrefs = Object.fromEntries(this.lec.settings.toObj());
+                          this.xfready.updateSettings({lectorPrefs});
+                      })
+                      .run(function() {
+                          if (ogSettings) this.update(ogSettings);
+                      });
 
                   // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
                   // this.lec.mark.element.destroy()
@@ -5209,7 +5225,7 @@
               // injected = true
           // }
 
-          return new LectorPragma()
+          return new LectorPragma(...arguments)
       }
 
       class HOST {
@@ -5896,7 +5912,7 @@
               console.log('existing article is', this.link);
 
               // pragmaSpace.onDocLoad(() => {
-              this.lector = _lector()
+              this.lector = _lector(this)
                   // .on('article:load')
                   .on('article:parse', article => {
                       this.article = article;
@@ -6027,9 +6043,12 @@
           async updateSettings(update) {
               let settings = await this.getSettings() || {};
               // SYNC.get('settings', settings => {
-              console.log('settings in the db are', settings);
+              console.info('settings in the db are', settings);
 
-              for (let [ key, val ] of Object.entries(update)) {
+              /// support for both Objects and Maps
+              if (update.constructor !== Map) update = Object.entries(update);
+
+              for (let [ key, val ] of update) {
                   settings[key] = val;
                   this.triggerEvent(`updateSetting:${key}`, val);
               }
