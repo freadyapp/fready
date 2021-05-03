@@ -38,7 +38,7 @@ class APIController extends Pragma {
     async request(method='GET', suburl="", data = {}) {
         if (this._requesting) return new Promise(resolve => {
             console.log("BINNING REQUEST", ...arguments)
-            setTimeout(() => this.request(...arguments).then(d => resolve(d)), 500)
+            setTimeout(() => this.request(...arguments).then(d => resolve(d)), 750)
         })
         // if (this._requesting) return new Promise(() => this.bin.push(arguments))
 
@@ -48,6 +48,7 @@ class APIController extends Pragma {
         if (!api_key) return console.log("you're not logged in!")
 
         this.log(`${method}ing`, suburl, data)
+        let start = performance.now()
         this._requesting = true
         data.api_key = api_key 
 
@@ -74,15 +75,15 @@ class APIController extends Pragma {
 
         // this._requesting = false
         // let text = response.text()
-        let ret;
+
+        let ret = await response.text()
+        
         try {
-            ret = response.json() 
-        } catch {
-            ret = response.text() 
-        }
+            ret = JSON.parse(ret)
+        } catch {}
         
         this._requesting = false
-        console.log("done " + method+"ing to", this.url+suburl, ret)
+        this.log(`[${method}] ${this.url+suburl} =>`, ret, `took ${performance.now()-start}ms`)
         return ret
     }
 

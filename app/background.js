@@ -73,12 +73,21 @@ API.define({
         })
 
         return 'ok'
+    },
+
+    async readLink(link) {
+        if (!link) return;
+        // if (link.id) return API.get(`/links/read/${link.id}`, link.params)
+        if (link.url) API.get(`/link/read`, {
+            url: link.url,
+            source: link.params?.source
+        })
+        return 'ok'
     }
 })
 
 API.syncLinks()
 API.syncPrefs()
-
 
 chrome.action.onClicked.addListener((tab) => {
     messenger.sendTo(tab, 'click').then(resp => console.log(resp))
@@ -127,6 +136,11 @@ function linksApiConfiguration() {
     this.onMsg('links:save', async (data, tab, respond) => {
         console.log('saving link as', data)
         respond(await API.saveLink(data))
+    })
+
+    this.onMsg('links:read', async (data, tab, respond) => {
+        console.log('READING!!! article', data)
+        respond(await API.readLink(data))
     })
 }
 

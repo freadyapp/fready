@@ -95,6 +95,8 @@ let _popper = (element) => _p().as(element).define({
         },
     })
 
+
+const source = 'popup' // set source to popup
 export class Popup extends ShadowPragma {
 
     constructor(xfready) {
@@ -136,14 +138,14 @@ export class Popup extends ShadowPragma {
         this.panel.saved.listenTo('click', () => {
             let action = this.xfready.link?.saved ? 'unsave' : 'save'
 
-            this.xfready[action]()
+            this.xfready[action]({ source })
             this.panel[action]() // this.panel.save / this.panel.unsave
             // saveArticle(this.lector.article)
         })
 
 
         this.shadow.find("#read").listenTo('click', () => {
-            this.xfready.toggleReadOrExit()
+            this.xfready.toggleReadOrExit({ source })
             // this.lector
                     // .load()
                     // .render()
@@ -159,8 +161,6 @@ export class Popup extends ShadowPragma {
         console.log(this.popper)
         console.log(this.popper.visibility)
         this.popper.visibility.listenTo('click', () => {       // CHECKBOX display on websites
-            console.log('CLCLCLCLCLCIIICK')
-
             if (this._showOnWebsites) this.hideOnWebsites(); else this.showOnWebsites();
             const showOnWebsites = this._showOnWebsites
 
