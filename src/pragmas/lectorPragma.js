@@ -151,7 +151,7 @@ export class LectorPragma extends ShadowPragma {
             })
 
 
-            let ogSettings = (await this.xfready.getSettings()).lectorPrefs
+            let ogSettings = (await this.xfready.getSettings())?.lectorPrefs
             console.info('og settings are ', ogSettings)
 
             this.lec.settings
