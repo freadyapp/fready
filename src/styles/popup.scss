@@ -198,11 +198,17 @@ p {
         @extend .flex-h-space-around;
         margin-top: 10px;
 
-        > svg {
-            width: 80px;
-            height: auto;
+        > a {
+            width: fit-content;
+            height: 17px;
             opacity: 70%;
             cursor: pointer;
+
+            >svg {
+                width: 80px;
+                height: auto;
+
+            }
 
             &:hover {
                 width: 80px;
