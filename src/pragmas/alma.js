@@ -33,7 +33,7 @@ let element = block`
         ${SVG('full-heart-icon')}
         ${SVG('close-icon')}
 
-        <div class='press-space fade-onload'>Press ${SVG('new-space-white')} to read</div>
+        <div class='press-space displayN'>Press ${SVG('new-space-white')} to read</div>
     </div>
 `.define({
     close: "#close-icon",
@@ -42,6 +42,7 @@ let element = block`
     fullLove: "#full-heart-icon",
     time: ".time",
     etaPopup: ".eta-popup",
+    pressSpace: ".press-space",
 
     save() {
         this.addClass('saved')
@@ -87,6 +88,27 @@ export class Alma extends ShadowPragma {
             this.hide()
         }
 
+        element.read.listenTo('mouseenter', ()=>{
+            element.pressSpace.removeClass('displayN')
+
+            setTimeout(() => {
+                hideElement(element.pressSpace)
+
+
+                // setTimeout(() => {
+                //     element.pressSpace.addClass('displayN')
+                // }, 200);
+                
+            }, 4000);
+
+        })
+
+        element.read.listenTo('mouseleave',()=>{
+            console.log('leaving')
+            hideElement(element.pressSpace)
+        })
+
+        element.read.listenTo('click', triggerRead)
         element.read.listenTo('click', () => triggerRead() )
         Mousetrap.bind("space", () => {
             triggerRead({ source: 'space' })
@@ -149,4 +171,14 @@ export function _alma(){
 
 async function slurpArticle(article) {
     element.time.html(article.eta)
+}
+
+function hideElement(element){
+    element.removeClass('fade-onload')
+    element.addClass('fade-out')
+
+    setTimeout(() => {
+        element.removeClass('fade-out')
+        element.addClass('displayN')
+    }, 100);
 }
