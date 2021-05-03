@@ -108,7 +108,7 @@ export class Xfready extends Pragma {
         this._injected = true
         this.as('html')
 
-        let showOnWebsites = (await this.getSettings()).showOnWebsites !== false
+        let showOnWebsites = (await this.getSettings())?.showOnWebsites !== false
 
         if (!skipAlma && showOnWebsites) {
             this._injectAlma()
