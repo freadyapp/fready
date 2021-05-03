@@ -5336,6 +5336,8 @@
               },
           });
 
+
+      const source$1 = 'popup'; // set source to popup
       class Popup extends ShadowPragma {
 
           constructor(xfready) {
@@ -5377,14 +5379,14 @@
               this.panel.saved.listenTo('click', () => {
                   let action = this.xfready.link?.saved ? 'unsave' : 'save';
 
-                  this.xfready[action]();
+                  this.xfready[action]({ source: source$1 });
                   this.panel[action](); // this.panel.save / this.panel.unsave
                   // saveArticle(this.lector.article)
               });
 
 
               this.shadow.find("#read").listenTo('click', () => {
-                  this.xfready.toggleReadOrExit();
+                  this.xfready.toggleReadOrExit({ source: source$1 });
                   // this.lector
                           // .load()
                           // .render()
@@ -5400,8 +5402,6 @@
               console.log(this.popper);
               console.log(this.popper.visibility);
               this.popper.visibility.listenTo('click', () => {       // CHECKBOX display on websites
-                  console.log('CLCLCLCLCLCIIICK');
-
                   if (this._showOnWebsites) this.hideOnWebsites(); else this.showOnWebsites();
                   const showOnWebsites = this._showOnWebsites;
 
@@ -5520,6 +5520,7 @@
       });
 
 
+      const source = 'alma';
 
       class Alma extends ShadowPragma {
 
@@ -5544,8 +5545,8 @@
               });
 
 
-              const triggerRead = () => {
-                  this.read();
+              const triggerRead = (params) => {
+                  this.read(params);
                   this.hide();
               };
 
@@ -5570,8 +5571,9 @@
               });
 
               element.read.listenTo('click', triggerRead);
+              element.read.listenTo('click', () => triggerRead() );
               mousetrap.bind("space", () => {
-                  triggerRead();
+                  triggerRead({ source: 'space' });
                   return false
               });
 
@@ -5602,18 +5604,19 @@
               })
           }
 
-          read() {
-              this.xfready.read();
+          read(params = { source }) {
+              console.log('-------------------- Alma is reading from', params);
+              this.xfready.read(params);
           }
 
-          save(){
+          save(params = { source }){
               element.save();
-              this.xfready.save();
+              this.xfready.save(params);
           }
 
-          unsave(){
+          unsave(params = { source }){
               element.unsave();
-              this.xfready.unsave();
+              this.xfready.unsave(params);
           }
 
           destroy() {
@@ -5853,15 +5856,19 @@
 
               
               this
-                  .createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
+                  .createEvents('lector:create', 'lector:destroy', 'link:load', 'link:create', 'article:ready', 'read')
                   .on('article:ready', (article) => setBadge(article.eta))
                   .on('updateSetting:showOnWebsites', setting => {
                       if (setting === false) this._ejectAlma();
+                  })
+                  .on('read', (url, params) => {
+                      window.bridge.request("links:read", {
+                          url, params
+                      });
                   });
                
               this.ai = _articleAI();
               this.updateView();
-              
           }
 
           updateView() {
@@ -5947,21 +5954,21 @@
                   // .on('article:load')
                   .on('article:parse', article => {
                       this.article = article;
-                      this.createLink(article);
+                      // this.createLink(article)
                   })
                   .on('destroy', article => {
                       this.triggerEvent('article:exit');
-                  })
-                  .on('render', article => {
-                      this.triggerEvent('article:read');
                   });
+                  // .on('render', article => {
+                  //     this.triggerEvent('link:read', this.link)
+                  // })
 
               if (this.link) this.triggerEvent('link:load', this.link);
               
               this.lector.loadArticle();
           }
 
-          async createLink(article, { saved=null, skipBody=false }={}) {
+          async createLink(article, { saved=null, skipBody=false, source="xfready" }={}) {
               console.time('creating link..............');
 
               await this.link;
@@ -5998,13 +6005,14 @@
               console.timeEnd('creating link..............');
               return new Promise( async resolve => {
                   // create link
-                  await window.bridge.request("links:create", { link });
+                  await window.bridge.request("links:create", { link, source });
 
                   // wait a bit and then get the link back
                   // setTimeout(() => {
                   this.link = await window.bridge.request("links:get", HOST.getURL());
                   // })
 
+                  this.triggerEvent('link:create', this.link, { source });
                   resolve(this.link);
               })
               // return )
@@ -6012,12 +6020,17 @@
 
           toggleReadOrExit() {
               if (this._isReading) return this.exit()
-              return this.read()
+              return this.read(...arguments)
           }
 
-          async read() {
+          async read(params) {
               this._isReading = true;
               await this.lector.load();
+              this.lector.onNext('article:parse', article => {
+                  // this.article = article
+                  this.createLink(article);
+              });
+              this.triggerEvent('read', HOST.getURL(), params);
               return this.lector.render()
           }
 
@@ -6027,17 +6040,19 @@
               return this.lector.exit()
           }
 
-          async save() {
+          async save(params={}) {
               // saveArticle(this.lector.article)
               console.log('saving...');
               // console.log('article is', this.article)
               await this.lector.parseArticle();
               console.log('now after parsearticle is', this.article);
-              return this.createLink(this.article, { saved: true, skipBody: true })
+              // this.triggerEvent('save', HOST.getURL(), params)
+              return this.createLink(this.article, { saved: true, skipBody: true, ...params })
           }
 
-          unsave() {
-              return this.createLink(this.article, { saved: false, skipBody: true })
+          unsave(params={}) {
+              // this.triggerEvent('save', HOST.getURL(), params)
+              return this.createLink(this.article, { saved: false, skipBody: true, ...params })
           }
 
           // static general helpers, handled by the 'core' of xfready

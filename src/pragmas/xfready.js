@@ -49,15 +49,19 @@ export class Xfready extends Pragma {
 
         
         this
-            .createEvents('lector:create', 'lector:destroy', 'link:load', 'article:ready')
+            .createEvents('lector:create', 'lector:destroy', 'link:load', 'link:create', 'article:ready', 'read')
             .on('article:ready', (article) => setBadge(article.eta))
             .on('updateSetting:showOnWebsites', setting => {
                 if (setting === false) this._ejectAlma();
             })
+            .on('read', (url, params) => {
+                window.bridge.request("links:read", {
+                    url, params
+                })
+            })
          
         this.ai = _articleAI()
         this.updateView()
-        
     }
 
     updateView() {
@@ -143,21 +147,21 @@ export class Xfready extends Pragma {
             // .on('article:load')
             .on('article:parse', article => {
                 this.article = article
-                this.createLink(article)
+                // this.createLink(article)
             })
             .on('destroy', article => {
                 this.triggerEvent('article:exit')
             })
-            .on('render', article => {
-                this.triggerEvent('article:read')
-            })
+            // .on('render', article => {
+            //     this.triggerEvent('link:read', this.link)
+            // })
 
         if (this.link) this.triggerEvent('link:load', this.link)
         
         this.lector.loadArticle()
     }
 
-    async createLink(article, { saved=null, skipBody=false }={}) {
+    async createLink(article, { saved=null, skipBody=false, source="xfready" }={}) {
         console.time('creating link..............')
 
         await this.link
@@ -194,13 +198,14 @@ export class Xfready extends Pragma {
         console.timeEnd('creating link..............')
         return new Promise( async resolve => {
             // create link
-            await window.bridge.request("links:create", { link })
+            await window.bridge.request("links:create", { link, source })
 
             // wait a bit and then get the link back
             // setTimeout(() => {
             this.link = await window.bridge.request("links:get", HOST.getURL())
             // })
 
+            this.triggerEvent('link:create', this.link, { source })
             resolve(this.link)
         })
         // return )
@@ -208,12 +213,17 @@ export class Xfready extends Pragma {
 
     toggleReadOrExit() {
         if (this._isReading) return this.exit()
-        return this.read()
+        return this.read(...arguments)
     }
 
-    async read() {
+    async read(params) {
         this._isReading = true
         await this.lector.load()
+        this.lector.onNext('article:parse', article => {
+            // this.article = article
+            this.createLink(article)
+        })
+        this.triggerEvent('read', HOST.getURL(), params)
         return this.lector.render()
     }
 
@@ -223,17 +233,19 @@ export class Xfready extends Pragma {
         return this.lector.exit()
     }
 
-    async save() {
+    async save(params={}) {
         // saveArticle(this.lector.article)
         console.log('saving...')
         // console.log('article is', this.article)
         await this.lector.parseArticle()
         console.log('now after parsearticle is', this.article)
-        return this.createLink(this.article, { saved: true, skipBody: true })
+        // this.triggerEvent('save', HOST.getURL(), params)
+        return this.createLink(this.article, { saved: true, skipBody: true, ...params })
     }
 
-    unsave() {
-        return this.createLink(this.article, { saved: false, skipBody: true })
+    unsave(params={}) {
+        // this.triggerEvent('save', HOST.getURL(), params)
+        return this.createLink(this.article, { saved: false, skipBody: true, ...params })
     }
 
     // static general helpers, handled by the 'core' of xfready

@@ -58,6 +58,7 @@ let element = block`
 })
 
 
+const source = 'alma'
 
 export class Alma extends ShadowPragma {
 
@@ -82,8 +83,8 @@ export class Alma extends ShadowPragma {
         })
 
 
-        const triggerRead = () => {
-            this.read()
+        const triggerRead = (params) => {
+            this.read(params)
             this.hide()
         }
 
@@ -108,8 +109,9 @@ export class Alma extends ShadowPragma {
         })
 
         element.read.listenTo('click', triggerRead)
+        element.read.listenTo('click', () => triggerRead() )
         Mousetrap.bind("space", () => {
-            triggerRead()
+            triggerRead({ source: 'space' })
             return false
         })
 
@@ -140,18 +142,19 @@ export class Alma extends ShadowPragma {
         })
     }
 
-    read() {
-        this.xfready.read()
+    read(params = { source }) {
+        console.log('-------------------- Alma is reading from', params)
+        this.xfready.read(params)
     }
 
-    save(){
+    save(params = { source }){
         element.save()
-        this.xfready.save()
+        this.xfready.save(params)
     }
 
-    unsave(){
+    unsave(params = { source }){
         element.unsave()
-        this.xfready.unsave()
+        this.xfready.unsave(params)
     }
 
     destroy() {

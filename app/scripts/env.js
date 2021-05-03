@@ -7,9 +7,10 @@ const _FREADY_API_URL = _FREADY_ROOT_URL + '/api'
 
 const FREADY_LINKS = {
     welcome: _FREADY_ROOT_URL + "/introducing-xfready2",
-    dashboard: _FREADY_ROOT_URL + "/dashboard",
-    upload: _FREADY_ROOT_URL + "/beta/dashboard?onboarding=true",
-    home: _FREADY_ROOT_URL + "/home"
+    dashboard: _FREADY_ROOT_URL + "/dashboard?ref=xfready",
+    upload: _FREADY_ROOT_URL + "/beta/dashboard?onboarding=true&ref=xfready",
+    home: _FREADY_ROOT_URL + "/home?ref=xfready",
+    bye: _FREADY_ROOT_URL + "/bye-bye:c"
 }
 
 
