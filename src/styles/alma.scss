@@ -48,15 +48,7 @@
         background: rgb(255, 255, 255);
     }
 
-    &:hover {
-
-        .press-space {
-            
-            display: flex;
-         
-
-        }
-    }
+    
 
     &::after {              // BLUE LINE
         content: '';
@@ -90,7 +82,7 @@
         border-radius: 3px;
         color: #fff;
         bottom: -40px;
-        left: 40px;
+        left: 14px;
         font-size: 14px;
         padding: 5px 15px;
         transition: all ease 0.5s;
@@ -101,7 +93,7 @@
         justify-content: center;
         align-items: center;
         align-content: center;
-        display: none;
+        transition: all ease 0.2s;
 
         >svg {
             height: auto;
@@ -160,7 +152,6 @@
         }
     }
 
-    
 
     >svg {
         @extend .transition;
@@ -181,6 +172,8 @@
         &:hover {
             opacity: 1;
         }
+
+        
 
        
 
@@ -308,6 +301,7 @@
     } 
 
     opacity: 0;
+
 }
 
 .fade-onload {
@@ -376,4 +370,8 @@
             opacity: 1;
         }
     }
+}
+
+.displayN {
+    display: none;
 }
