@@ -6,3 +6,5 @@ dist
 .pnp.js
 .DS_Store
 __pycache__/
+
+yarn-error.log
