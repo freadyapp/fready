@@ -52,9 +52,8 @@ export class User {
 
 User.sync()
 
-if (HOST.is("fready", "localhost:3000")) {
+if (HOST.is("fready.co", "www.fready.co", "localhost:3000")) {
     // console.log('user data', User.data)
-    console.log('[xfready] Grabbing user from jolene')
     grabUserFromJolene().then(async data => {
         console.log('data', data)
         await User.sync(data)

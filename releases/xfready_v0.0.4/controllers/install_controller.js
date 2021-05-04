@@ -1,0 +1,1 @@
+// will run once plugin is installed
