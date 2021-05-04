@@ -108,7 +108,6 @@ export class Alma extends ShadowPragma {
             hideElement(element.pressSpace)
         })
 
-        element.read.listenTo('click', triggerRead)
         element.read.listenTo('click', () => triggerRead() )
         Mousetrap.bind("space", () => {
             triggerRead({ source: 'space' })
