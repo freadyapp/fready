@@ -1,8 +1,10 @@
+/*global chrome */
+
 function __onDocLoad__() {
     chrome.runtime.sendMessage("command:inject", (response) => {
         // let name 
         chrome.storage.sync.get('user', data => {
-            let name = data.user.name
+            let name = data.user?.name
 
             console.log(`%c
                 @@@@@@@@@@@@@@@@

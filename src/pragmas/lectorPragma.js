@@ -6,7 +6,12 @@ import { injectStyle, SVG } from "../.build_assets/index";
 import { Lector, helpers } from "lectorjs"
 import { ShadowPragma } from "../misc/shadowPragma"
 
-const wfy = helpers.wfy
+util.addStyles(`
+    .revert-all {
+        all: initial !important;
+    }
+`)
+
 window.Mousetrap = Mousetrap
 
 let popper = block`
@@ -20,9 +25,10 @@ let popper = block`
 `
 
 export class LectorPragma extends ShadowPragma {
-    constructor() {
+    constructor(xfready) {
         console.time('lector construction')
         super()
+        this.xfready = xfready
 
         this.as(_e(`div.`))
             .shadow.append(popper)
@@ -31,11 +37,9 @@ export class LectorPragma extends ShadowPragma {
         window.Mousetrap = Mousetrap
 
         this.injectStyles("sanitized_elements", "syntax_highlight", "lector")
-
         this.createEvents('load', 'article:load', 'article:parse', 'render', 'destroy')
 
         // document.body.appendChild(element)
-
 
         this.shadow.find('#exit').listenTo('click', () => {
             this.exit()
@@ -80,7 +84,7 @@ export class LectorPragma extends ShadowPragma {
         // this.reader.html(this.article.content)
             //    .removeClass('collapsed')
 
-        let wfiedHTML = await bridge.request({ wfy: this.article.content })
+        let wfiedHTML = await window.bridge.request({ wfy: this.article.content })
         // console.log(wfiedHTML)
 
         this.reader.html(wfiedHTML)
@@ -101,6 +105,13 @@ export class LectorPragma extends ShadowPragma {
         // })
     }
 
+    destroy() {
+        return new Promise(resolve => {
+            this.exit()
+            resolve()
+        })
+    }
+
     load() {
         console.time('loading lec....')
         if (this.loaded) return console.warn('lec already loaded')
@@ -111,6 +122,7 @@ export class LectorPragma extends ShadowPragma {
             // console.log(article)
 
             // this.reader.appendTo('html')
+            let exitButton = this.shadow.find('#exit')
             this.lec = (await Lector(this.reader, {
                 wfy: false,
                 onboarding: false,
@@ -120,19 +132,37 @@ export class LectorPragma extends ShadowPragma {
                 fullStyles: true,
                 defaultStyles: true,
                 settings: true,
+                // debug: true,
                 styleInjector: (style, name) => {
                     this._injectCSS(name, style)
                 }
             })).run(function() {
                 this.mark.addClass('billion-z-index')
+                this.settings?.fader?.include(exitButton)
             }).run(() => {
+
                 this.shadow.find('#reader')
                     .removeClass('loading')
+
                 console.log("lec: ", this.lec)
                 this.loaded = true
                 this.triggerEvent('load', this.lec)
                 console.timeEnd('loading lec....')
             })
+
+
+            let ogSettings = (await this.xfready.getSettings())?.lectorPrefs
+            console.info('og settings are ', ogSettings)
+
+            this.lec.settings
+                .on('update', () => {
+                    // console.info(this.toObj())
+                    let lectorPrefs = Object.fromEntries(this.lec.settings.toObj())
+                    this.xfready.updateSettings({lectorPrefs})
+                })
+                .run(function() {
+                    if (ogSettings) this.update(ogSettings)
+                })
 
             // let clone = _e(this.lec.mark.element.cloneNode(true)).appendTo(this.reader)
             // this.lec.mark.element.destroy()
@@ -145,7 +175,10 @@ export class LectorPragma extends ShadowPragma {
     render() {
         console.time('RENDERING')
 
-        this.ogBody = _e('body').clone()
+        this.ogBody = _e('body')
+                        .addClass('revert-all')
+                        .clone()
+
         this.ogScrollTop = window.scrollY 
 
 
@@ -191,11 +224,15 @@ export class LectorPragma extends ShadowPragma {
         
         // console.log('og body is', this.ogBody)
 
-        _e('body').replaceWith(this.ogBody)
-        window.scroll({
-            top: this.ogScrollTop
-        })
+        if (this.ogBody) {
+            _e('body').replaceWith(
+                this.ogBody.removeClass('revert-all')
+            )
 
+            window.scroll({
+                top: this.ogScrollTop
+            })
+        }
         this.element.destroy()
         // _e('html').append(this.ogBody)
         // this.ogBody.appendTo(_e('html'))
@@ -203,6 +240,8 @@ export class LectorPragma extends ShadowPragma {
         this.triggerEvent('destroy')
         return this
     }
+
+
 }
 
 // let injected = false
@@ -217,5 +256,5 @@ export function _lector() {
         // injected = true
     // }
 
-    return new LectorPragma()
+    return new LectorPragma(...arguments)
 }

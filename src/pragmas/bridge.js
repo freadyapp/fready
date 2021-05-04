@@ -1,11 +1,13 @@
 import { Pragma } from "pragmajs"
 
 export class Bridge extends Pragma {
-    constructor(port=chrome.runtime.connect()){
-        super()
-
-        this.port = port 
+    init(port=chrome.runtime.connect()){
         this.createEvents("portMessage", "send", 'message')
+        this.connectToPort(port)
+    }
+
+    connectToPort(port=chrome.runtime.connect()) {
+        this.port = port 
 
         this.port.onMessage.addListener(msg => {
             console.log('received', msg)
@@ -42,11 +44,19 @@ export class Bridge extends Pragma {
         }))
     }
 
-    send(message, key=util.rk8()) {
-        this.port.postMessage({
-            message,
-            key
-        })
+    send(message, key=util.rk8(), retryOnFail=true) {
+        try {
+            this.port.postMessage({
+                message,
+                key
+            })
+        } catch {
+            if (retryOnFail) {
+                this.connectToPort()
+                this.send(message, key, false)
+            }
+            console.error('failed to post message')
+        }
 
         this.triggerEvent("send", key, message)
 

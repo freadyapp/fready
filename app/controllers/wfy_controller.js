@@ -1,3 +1,9 @@
+function isEmptyOrSpaces(str) {
+    return !str || str.trim() === '';
+}
+
+const excludeNodes = [ 'SCRIPT', 'STYLE', 'PRE' ]
+
 class WfyController extends Pragma {
     constructor(html) {
         super()
@@ -6,8 +12,7 @@ class WfyController extends Pragma {
     }
 
     walkDOM(node, callback) {
-        if (node.nodeName != 'SCRIPT'
-            && node.nodeName != 'STYLE') { // ignore javascript
+        if (!excludeNodes.includes(node.nodeName)) {
             callback(node);
             for (var i = 0; i < node.childNodes.length; i++) {
                 this.walkDOM(node.childNodes[i], callback);
@@ -25,7 +30,7 @@ class WfyController extends Pragma {
     }
 
     makeW(txt) {
-        if (txt.length === 0) return null
+        if (isEmptyOrSpaces(txt)) return null;
         var s = this.document.createElement('w');
         s.appendChild(this.makeText(txt));
         return s;
@@ -45,7 +50,6 @@ class WfyController extends Pragma {
                 }
             })
             // simple utility functions to avoid a lot of typing:
-
 
             for (var i = 0; i < textNodes.length; i++) {
                 var n = textNodes[i];

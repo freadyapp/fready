@@ -1,14 +1,15 @@
-
-let __dev__ = true
+let __dev__ = false
 
 const _XFREADY_ENV = __dev__ ? "development" : 'production'
 const _FREADY_ROOT_URL = __dev__ ? "http://localhost:3000" : "https://www.fready.co"
 const _FREADY_API_URL = _FREADY_ROOT_URL + '/api'
 
 const FREADY_LINKS = {
-    welcome: _FREADY_ROOT_URL + "/welcome",
-    dashboard: _FREADY_ROOT_URL + "/dashboard",
-    upload: _FREADY_ROOT_URL + "/beta/dashboard?onboarding=true"
+    welcome: _FREADY_ROOT_URL + "/introducing-xfready2",
+    dashboard: _FREADY_ROOT_URL + "/dashboard?ref=xfready",
+    upload: _FREADY_ROOT_URL + "/beta/dashboard?onboarding=true&ref=xfready",
+    home: _FREADY_ROOT_URL + "/home?ref=xfready",
+    bye: _FREADY_ROOT_URL + "/bye-bye:c"
 }
 
 
