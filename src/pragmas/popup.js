@@ -118,7 +118,13 @@ export class Popup extends ShadowPragma {
                         .on('link:load', article => {
                             article.saved ? this.panel.save() : this.panel.unsave()
                         })
-                        .on('article:read', () => this.panel.read())
+                        .on('article:read', () => {
+                            this.panel.read()
+
+                            setTimeout(() => {
+                                this.hide()
+                            }, 200)
+                        })
                         .on('article:exit', () => this.panel.exit())
         
 
@@ -154,7 +160,7 @@ export class Popup extends ShadowPragma {
         document.addEventListener('click', e => {
             if (e.target?.shadowRoot !== this.root
                 && e.target?.shadowRoot !== this.xfready.alma?.root
-                ) this.hide()
+            ) this.hide()
         })
         
 
