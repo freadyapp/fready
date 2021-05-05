@@ -2,7 +2,7 @@
 > made with ❤ ️by Fready
 
 ## Download it from the Extension Store [here](https://chrome.google.com/webstore/detail/fready/fbfecjjfhcgpocehenopdofhkdjfpcgl?hl=en)
-#### or [ as .crx ]()
+#### or checkout the releases for a .crx file
 
 --- 
 
