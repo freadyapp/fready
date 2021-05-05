@@ -5,6 +5,8 @@ import { Readability } from '@mozilla/readability'
 import { injectStyle, SVG } from "../.build_assets/index";
 import { Lector, helpers } from "lectorjs"
 import { ShadowPragma } from "../misc/shadowPragma"
+import { HOST } from "../misc/helpers";
+import { sanitizeDocument } from "../misc/sanitizer"
 
 util.addStyles(`
     .revert-all {
@@ -54,7 +56,7 @@ export class LectorPragma extends ShadowPragma {
 
     async loadArticle(reload=false) {
         if (!reload && this.article) return this
-        var article = new Readability(document.cloneNode(true)).parse()
+        var article = new Readability(sanitizeDocument(document.cloneNode(true))).parse()
         this.article = article
         this.triggerEvent('article:load', article)
         return this
@@ -84,7 +86,12 @@ export class LectorPragma extends ShadowPragma {
         // this.reader.html(this.article.content)
             //    .removeClass('collapsed')
 
-        let wfiedHTML = await window.bridge.request({ wfy: this.article.content })
+        let wfiedHTML = await window.bridge.request({ 
+            wfy: { 
+                html: this.article.content,
+                url: HOST.getURL()
+            }
+        })
         // console.log(wfiedHTML)
 
         this.reader.html(wfiedHTML)

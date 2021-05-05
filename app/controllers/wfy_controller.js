@@ -5,9 +5,10 @@ function isEmptyOrSpaces(str) {
 const excludeNodes = [ 'SCRIPT', 'STYLE', 'PRE' ]
 
 class WfyController extends Pragma {
-    constructor(html) {
+    constructor(html, url) {
         super()
-        const document = new JSDOM(html).window.document
+        console.log('jsdoming...', html)
+        const document = new JSDOM(html, { url, referrer: url }).window.document
         this.document = document
     }
 
@@ -39,6 +40,7 @@ class WfyController extends Pragma {
     makeText(txt) { return this.document.createTextNode(txt) }
 
     wfy(element=this.document) {
+        console.log("WFYING", element)
         return new Promise(resolve => {
             // setTimeout(() => {
             console.time('wfying...')

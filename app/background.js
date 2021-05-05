@@ -156,10 +156,10 @@ messenger
         const result = self.hljs.highlightAuto(data);
         respond(result.value)
     })
-    .onMsg('wfy', async (html, tab, respond) => {
+    .onMsg('wfy', async ({ html, url }, tab, respond) => {
         console.log('wfying...', tab)
 
-        let controller = new WfyController(html)
+        let controller = new WfyController(html, url)
         let outHTML = await controller.wfy()
         respond(outHTML)
     })
