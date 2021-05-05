@@ -6,6 +6,7 @@ async function digCredential(key){
         })
     })
 }
+
 function toURLParams(obj){
     return new URLSearchParams(obj).toString()
 }
@@ -26,6 +27,13 @@ class APIController extends Pragma {
         this.log()
     }
 
+    isLoggedIn() {
+        return new Promise (
+            resolve => digCredential()
+                            .catch(() => resolve(false))
+                            .then(() => resolve(true))
+                        )
+    }
     log() {
         console.log('[' + this.constructor.name + ']', ...arguments)
     }
