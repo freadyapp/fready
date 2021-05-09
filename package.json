@@ -52,7 +52,7 @@
         "@mozilla/readability": "^0.4.1",
         "babel-eslint": "^10.1.0",
         "highlight.js": "^10.7.2",
-        "lectorjs": "^0.9.3",
+        "lectorjs": "^0.9.6",
         "mousetrap": "^1.6.5",
         "pragmajs": "^0.8.8"
     },
