@@ -138,7 +138,7 @@ export class LectorPragma extends ShadowPragma {
         await Lector(this.reader, {
           wfy: false,
           onboarding: false,
-          scaler: true,
+          scaler: 'font-size',
           experimental: true,
 
           fullStyles: true,
