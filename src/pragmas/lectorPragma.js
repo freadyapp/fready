@@ -131,7 +131,8 @@ export class LectorPragma extends ShadowPragma {
 
       let xfreadySettings = await this.xfready.getSettings()
       let onboarding = !xfreadySettings?.onboardingShown
-      this.xfready.updateSettings({ onboardingShown: true })
+      onboarding = false
+      //   this.xfready.updateSettings({ onboardingShown: true })
 
       this.lec = (
         await Lector(this.reader, {

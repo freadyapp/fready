@@ -3904,10 +3904,10 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lectorjs@^0.9.6:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.6.tgz#696a7c73de8ff415369ae2fcea3eea2e4324d8b3"
-  integrity sha512-cn19xDY/0H5yhAvsBIuI3yHDJs/cnjC2HfuFNT7URZUzmtbuaVo3PncPeEjLarbECdEmvWj2lkVykFdh+CzHPQ==
+lectorjs@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.7.tgz#56d8968fecc47e395a876303774ba08c6cf3f99a"
+  integrity sha512-nvQKFKTSlZACiQv8FuDbagAEmEFRXwblvoKhd0MTKvEOmFUWaW4peUuhYB4e0YYuXKoMkKsXncUpBhuYGSCPVA==
   dependencies:
     animejs "^3.2.1"
     compromise "^13.7.0"
