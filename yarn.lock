@@ -156,7 +156,7 @@
   dependencies:
     "@babel/types" "^7.13.12"
 
-"@babel/helper-module-imports@^7.10.4", "@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.13.12":
+"@babel/helper-module-imports@^7.12.13", "@babel/helper-module-imports@^7.13.12":
   version "7.13.12"
   resolved "https://registry.yarnpkg.com/@babel/helper-module-imports/-/helper-module-imports-7.13.12.tgz#c6a369a6f3621cb25da014078684da9196b61977"
   integrity sha512-4cVvR2/1B693IuOvSI20xqqa/+bl7lqAMR59R4iu39R9aOX8/JoYY1sFaNvUMyMBGnHdwvJgUrzNLoUZxXypxA==
@@ -1113,14 +1113,6 @@
   resolved "https://registry.yarnpkg.com/@mozilla/readability/-/readability-0.4.1.tgz#e112a625b25ac47659d33b37e080748a6d85218b"
   integrity sha512-yar/f0w0fRUVM895s6yd5Z2oIxjG/6c3ROB/uQboSOBaDlri/nqI4aKtdqrldWciTLcdpjB2Z6MiVF2Bl9b8LA==
 
-"@rollup/plugin-babel@^5.3.0":
-  version "5.3.0"
-  resolved "https://registry.yarnpkg.com/@rollup/plugin-babel/-/plugin-babel-5.3.0.tgz#9cb1c5146ddd6a4968ad96f209c50c62f92f9879"
-  integrity sha512-9uIC8HZOnVLrLHxayq/PTzw+uS25E14KPUBh5ktF+18Mjo5yK0ToMMx6epY0uEgkjwJw0aBW4x2horYXh8juWw==
-  dependencies:
-    "@babel/helper-module-imports" "^7.10.4"
-    "@rollup/pluginutils" "^3.1.0"
-
 "@rollup/plugin-commonjs@^17.0.0":
   version "17.1.0"
   resolved "https://registry.yarnpkg.com/@rollup/plugin-commonjs/-/plugin-commonjs-17.1.0.tgz#757ec88737dffa8aa913eb392fade2e45aef2a2d"
@@ -1985,9 +1977,9 @@ component-emitter@^1.2.1:
   integrity sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg==
 
 compromise@^13.7.0:
-  version "13.11.1"
-  resolved "https://registry.yarnpkg.com/compromise/-/compromise-13.11.1.tgz#a0c087f1979130f29b75f23060e5117a3f8217cd"
-  integrity sha512-Mpr9GuugHQ/IcbNAKN+p2Cvmf3/nxqkmKZ+6CM5DwSJmuQQ4WSuTHshVwKYfvrt5FveMsx0pijSyt7WofiJ/3g==
+  version "13.11.2"
+  resolved "https://registry.yarnpkg.com/compromise/-/compromise-13.11.2.tgz#4bc2dbe615fbc6d5c9f3cafe61327c61f427e10a"
+  integrity sha512-sAASylAtghacJm3tTIF2AyekjxNMGyWaIsQ3sDdJT1UcIa6mC7VbNLQBI3eSBitf+LwrvZTgrY1nWOetY4SScw==
   dependencies:
     efrt-unpack "2.2.0"
 
@@ -3912,17 +3904,16 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lectorjs@^0.9.3:
-  version "0.9.3"
-  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.3.tgz#505b5484e7cb5c065182623221bc94f7884adc4e"
-  integrity sha512-f6yF7RlN0A3yNzdbygS7wcNZatuUJ5ZB9XcwxwDsKyZeQTWpiCPFUuy4jB3J9WmwjRUGjSLT4pSRDdGmKi/+Bg==
+lectorjs@^0.9.7:
+  version "0.9.7"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.7.tgz#56d8968fecc47e395a876303774ba08c6cf3f99a"
+  integrity sha512-nvQKFKTSlZACiQv8FuDbagAEmEFRXwblvoKhd0MTKvEOmFUWaW4peUuhYB4e0YYuXKoMkKsXncUpBhuYGSCPVA==
   dependencies:
-    "@babel/plugin-proposal-class-properties" "^7.13.0"
-    "@rollup/plugin-babel" "^5.3.0"
     animejs "^3.2.1"
     compromise "^13.7.0"
     mousetrap "^1.6.5"
     pragmajs "^0.8.8"
+    rollup "^2.47.0"
 
 leven@^3.1.0:
   version "3.1.0"
@@ -4934,6 +4925,13 @@ rollup@^2.36.1:
   version "2.45.2"
   resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.45.2.tgz#8fb85917c9f35605720e92328f3ccbfba6f78b48"
   integrity sha512-kRRU7wXzFHUzBIv0GfoFFIN3m9oteY4uAsKllIpQDId5cfnkWF2J130l+27dzDju0E6MScKiV0ZM5Bw8m4blYQ==
+  optionalDependencies:
+    fsevents "~2.3.1"
+
+rollup@^2.47.0:
+  version "2.47.0"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.47.0.tgz#9d958aeb2c0f6a383cacc0401dff02b6e252664d"
+  integrity sha512-rqBjgq9hQfW0vRmz+0S062ORRNJXvwRpzxhFXORvar/maZqY6za3rgQ/p1Glg+j1hnc1GtYyQCPiAei95uTElg==
   optionalDependencies:
     fsevents "~2.3.1"
 
