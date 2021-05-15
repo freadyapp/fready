@@ -50,5 +50,6 @@ const WHITELIST_PATH_REGEX = /topic|article|news|blog|read|doc|about|info|wiki/i
 const BLACKLIST_SUBS = ['', null, 'home', 'contact', 'splash', 'dashboard', 'pricing']
 
 if (!__dev__) {
-  console.log = console.error = console.warn = console.time = console.timeEnd = () => {}
+  //console.log = console.error = console.warn = console.time = console.timeEnd = () => {}
 }
+
