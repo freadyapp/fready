@@ -2,7 +2,7 @@
   "name": "Fready",
   "action": {},
   "manifest_version": 3,
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Read more focused",
   "permissions": ["tabs", "scripting", "storage"],
 

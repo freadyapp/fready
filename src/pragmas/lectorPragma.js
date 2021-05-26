@@ -61,7 +61,7 @@ export class LectorPragma extends ShadowPragma {
   }
 
   // async parseArticle() {
-  //     if (this._parsed) return true
+  //     if (this._parsed) eturn true
 
   //     console.log('article is', this.article)
 
@@ -136,14 +136,19 @@ export class LectorPragma extends ShadowPragma {
 
       this.lec = (
         await Lector(this.reader, {
+          debug: true,
           wfy: false,
           onboarding: false,
-          scaler: true,
+          scaler: 'font-size',
           experimental: true,
 
           fullStyles: true,
           defaultStyles: true,
           settings: true,
+          autoscroll: true,
+          hintPointer: false,
+          global: true,
+
           onboarding,
           // debug: true,
           styleInjector: (style, name) => {
@@ -262,3 +267,4 @@ export function _lector() {
 
   return new LectorPragma(...arguments)
 }
+
