@@ -146,7 +146,8 @@ export class LectorPragma extends ShadowPragma {
           defaultStyles: true,
           settings: true,
           autoscroll: true,
-          //hintPointer: true,
+          hintPointer: false,
+          global: true,
 
           onboarding,
           // debug: true,

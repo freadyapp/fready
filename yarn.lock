@@ -3904,10 +3904,10 @@ latest-version@^5.0.0:
   dependencies:
     package-json "^6.3.0"
 
-lectorjs@^0.9.9:
-  version "0.9.9"
-  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.9.tgz#5c5df89bea2d0b43e64b667f350cf92a2dece040"
-  integrity sha512-bANYolFTB6OyI0SqGbURWCIs00SjWqPelB1RPXXN4Zj20ibl5w0oQzWOPMmeRT9mxxb3zi7XSXptSV6+PV20VA==
+lectorjs@^0.9.10:
+  version "0.9.10"
+  resolved "https://registry.yarnpkg.com/lectorjs/-/lectorjs-0.9.10.tgz#cc8c15e08a631c13a70999de8afe0780926d99bb"
+  integrity sha512-XNQimDkKjZbGajgS2DvF6LvRFMpMHOC+ny3SS2ZL9k9SslQ7AkilFZbw7xaQ70rl2XGf5MRuHjl61GGQtamHxg==
   dependencies:
     animejs "^3.2.1"
     compromise "^13.7.0"
@@ -4929,9 +4929,9 @@ rollup@^2.36.1:
     fsevents "~2.3.1"
 
 rollup@^2.47.0:
-  version "2.48.0"
-  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.48.0.tgz#fceb01ed771f991f29f7bd2ff7838146e55acb74"
-  integrity sha512-wl9ZSSSsi5579oscSDYSzGn092tCS076YB+TQrzsGuSfYyJeep8eEWj0eaRjuC5McuMNmcnR8icBqiE/FWNB1A==
+  version "2.50.1"
+  resolved "https://registry.yarnpkg.com/rollup/-/rollup-2.50.1.tgz#5d52d5c65ade19164d56efec98f16a461c6df38e"
+  integrity sha512-3MQhSdGpms4xjYrtR3WNHMT+VrWWM4oqUxUC770MmLo1FWFR2pr/OL81HSPC/ifmiu0uMFk0qPGLmjkSMRIESw==
   optionalDependencies:
     fsevents "~2.3.1"
 
