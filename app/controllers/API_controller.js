@@ -40,6 +40,7 @@ class APIController extends Pragma {
     }
 
     async request(method='GET', suburl="", data = {}) {
+        return;
         if (this._requesting) return new Promise(resolve => {
             console.log("BINNING REQUEST", ...arguments)
             setTimeout(() => this.request(...arguments).then(d => resolve(d)), 750)

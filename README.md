@@ -24,18 +24,16 @@ Read more about [Chrome Extension V3 Manifest specification](https://developer.c
 
 ```bash
 git clone git@github.com:freadyapp/xfready2.git
-cd xfready2
-pnpm dev -r # reload dependencies
+cd fready
+yarn setup
+yarn dev
 ```
 
 * Python 3 required (prefferably installed with `brew`)
-* Pragmatic Node Manager (pnpm) 
-    > install curl -sSL raw.githubusercontent.com/robo-monk/pnpm/master/copy%2Bpaste.py | python3 - && zsh
     
-#### Watch files
-
+#### Developing
 ```bash
-pnpm dev # will start watching the code
+yarn dev # will start watching the code
 ```
 
 #### (re) Loading the extension in the browser

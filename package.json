@@ -40,6 +40,7 @@
         "style-loader": "^2.0.0"
     },
     "scripts": {
+		"setup": "yarn install & pip3 install -r .pnpm/requirements.txt",
         "build": "rollup -c",
         "dev-style": "nodemon -w 'src/styles/**' -e css,scss --exec python3 .pnpm/scripts/sass",
         "dev": "nodemon -w 'src/' -e css,scss,js,svg --exec python3 .pnpm/scripts/build",
