@@ -108,16 +108,16 @@ chrome.tabs.onUpdated.addListener((tabId, change) => {
   return false
 })
 
-chrome.runtime.onInstalled.addListener(async reason => {
-  if (!(await API.isLoggedIn())) {
-    chrome.tabs.create({
-      url: FREADY_LINKS.welcome,
-      index: 0,
-    })
-  }
-})
+// chrome.runtime.onInstalled.addListener(async reason => {
+//   if (!(await API.isLoggedIn())) {
+//     chrome.tabs.create({
+//       url: FREADY_LINKS.welcome,
+//       index: 0,
+//     })
+//   }
+// })
 
-chrome.runtime.setUninstallURL(FREADY_LINKS.bye)
+// chrome.runtime.setUninstallURL(FREADY_LINKS.bye)
 
 function linksApiConfiguration() {
   this.onMsg('links:create', async (data, tab, respond) => {
